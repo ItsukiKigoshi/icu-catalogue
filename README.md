@@ -1,3 +1,27 @@
+# icu-catalogue
+
+## Features (tentative)
+
+- Create timetables for registration.
+  - Confirm overlapped courses
+- Major/Graduation Requirement Checker
+
+## Related Repositories
+
+- [Timetable4ICU](https://github.com/kohshi54/Timetable4ICU)
+- [Syllabus.icu](https://github.com/pentaCoxian/nuxt3-syllabus)
+
+## References
+
+- [devserver.icu](https://devserver.icu/api/v3/)
+  - Usage
+    - [https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term-](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
+    - [https://devserver.icu/api/v3/details?id=11151](https://devserver.icu/api/v3/details?id=11151)
+- [Twin:te](http://twinte.net)
+- [Hupass](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -28,9 +52,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
