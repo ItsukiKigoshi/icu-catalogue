@@ -21,7 +21,7 @@ interface TimetableItem {
   section: string | null;
   e: string;
   j: string;
-  schedule: string;
+  schedule: string | null;
   room: string | null;
   comment: string | null;
   maxnum: string | null;
