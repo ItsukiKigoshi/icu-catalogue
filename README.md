@@ -1,4 +1,5 @@
 # icu-catalogue
+[![Deploy Next.js site to Pages](https://github.com/ItsukiKigoshi/icu-catalogue/actions/workflows/nextjs.yml/badge.svg)](https://github.com/ItsukiKigoshi/icu-catalogue/actions/workflows/nextjs.yml)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/axios)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
