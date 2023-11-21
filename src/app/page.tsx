@@ -31,7 +31,10 @@ export default function HomePage() {
             <Grid.Col span={{ base: "auto" }}>
               <Timetable />
             </Grid.Col>
-            <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: 2 }}>
+            <Grid.Col
+              mt={{ base: 5, md: 0 }}
+              span={{ base: 12, md: "content" }}
+            >
               <RequirementTable />
             </Grid.Col>
           </Grid>

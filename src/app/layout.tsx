@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import React from "react";
-import { MantineProvider, ColorSchemeScript, Container } from "@mantine/core";
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../../theme";
 import { Metadata } from "next";
 
