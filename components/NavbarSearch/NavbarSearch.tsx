@@ -1443,7 +1443,11 @@ export function NavbarSearch() {
           />
         }
         rightSectionWidth={70}
-        rightSection={<Code className={classes.searchCode}>Cmd + K</Code>}
+        rightSection={
+          <Code className={classes.searchCode} visibleFrom="md">
+            Cmd + K
+          </Code>
+        }
         styles={{ section: { pointerEvents: "none" } }}
         mb="sm"
       />
