@@ -8,6 +8,7 @@ import {
   SegmentedControl,
   rem,
   Checkbox,
+  ScrollArea,
 } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import classes from "./NavbarSearch.module.css";
@@ -716,26 +717,6 @@ const tabs = {
     },
   ],
   addNew: [
-    {
-      rgno: "20315",
-      season: "Autumn",
-      ay: "2023",
-      no: "GES054",
-      cno: null,
-      lang: "E",
-      section: null,
-      e: "S2: The World of Language Interpreters ",
-      j: "Ｓ２: 通訳の世界",
-      schedule: "5/TH,6/TH,7/TH",
-      room: null,
-      comment: null,
-      maxnum: "(150)",
-      flg: "Face to Face",
-      instructor: "TAMURA, Tomoko",
-      unit: "3",
-      deleted: "false",
-      Label1: null,
-    },
     {
       rgno: "20316",
       season: "Autumn",
@@ -1480,7 +1461,9 @@ export function NavbarSearch() {
         />
       </div>
 
-      <div className={classes.navbarMain}>{courses}</div>
+      <ScrollArea h={"100vh"}>
+        <div className={classes.navbarMain}>{courses}</div>
+      </ScrollArea>
     </nav>
   );
 }

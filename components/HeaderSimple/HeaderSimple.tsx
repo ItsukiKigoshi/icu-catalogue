@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Container, Group, Burger, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Container, Group, Burger, Text, ActionIcon } from "@mantine/core";
 import classes from "./HeaderSimple.module.css";
 import React from "react";
-import { NavbarSearch } from "../NavbarSearch/NavbarSearch";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 const links = [
   { link: "/about", label: "Features" },
@@ -49,6 +48,16 @@ export function HeaderSimple(props: {
         <Text size="lg" fw={700}>
           ICU Catalogue
         </Text>
+        <ActionIcon
+          component="a"
+          href="https://github.com/ItsukiKigoshi/icu-catalogue"
+          variant="filled"
+          color="gray"
+          aria-label="Open in a new tab"
+          target="_blank"
+        >
+          <IconBrandGithub />
+        </ActionIcon>
       </Container>
     </header>
   );
