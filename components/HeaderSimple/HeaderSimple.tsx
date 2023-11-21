@@ -4,6 +4,7 @@ import { Container, Group, Burger, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderSimple.module.css";
 import React from "react";
+import { NavbarSearch } from "../NavbarSearch/NavbarSearch";
 
 const links = [
   { link: "/about", label: "Features" },
@@ -12,9 +13,12 @@ const links = [
   { link: "/community", label: "Community" },
 ];
 
-export function HeaderSimple() {
-  const [opened, { toggle }] = useDisclosure(false);
+export function HeaderSimple(props: {
+  opened: boolean | undefined;
+  toggle: React.MouseEventHandler<HTMLButtonElement> | undefined;
+}) {
   const [active, setActive] = useState(links[0].link);
+
   /*
   const items = links.map((link) => (
     <a
@@ -35,13 +39,16 @@ export function HeaderSimple() {
   return (
     <header>
       <Container size="max" className={classes.inner}>
+        <Burger
+          opened={props.opened}
+          onClick={props.toggle}
+          hiddenFrom="md"
+          size="sm"
+          mr={3}
+        />
         <Text size="lg" fw={700}>
           ICU Catalogue
         </Text>
-        <Group gap={5} visibleFrom="xs">
-          {/* {items} */}
-        </Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
       </Container>
     </header>
   );

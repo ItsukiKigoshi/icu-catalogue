@@ -743,7 +743,7 @@ export function Timetable() {
     <UnstyledButton
       key={day}
       className={classes.item}
-      style={{ height: "60px" }}
+      style={{ height: "30px" }}
     >
       <Text size="lg" mt={3} fw={700}>
         {day}
@@ -752,8 +752,8 @@ export function Timetable() {
   ));
 
   const timetableItems = timetableData.map((item) => (
-    <UnstyledButton key={item.no} className={classes.item}>
-      <Text size="sm" mt={3}>
+    <UnstyledButton key={item.no} className={classes.item} p={1}>
+      <Text size="xs" m={1}>
         {item.e}
       </Text>
     </UnstyledButton>

@@ -1422,7 +1422,7 @@ export function NavbarSearch() {
   const [section, setSection] = useState<"myItems" | "addNew">("myItems");
   const [value, onChange] = useState(false);
 
-  const links = tabs[section].map((item) => (
+  const courses = tabs[section].map((item) => (
     <UnstyledButton
       key={item.e}
       onClick={() => onChange(!value)}
@@ -1480,7 +1480,7 @@ export function NavbarSearch() {
         />
       </div>
 
-      <div className={classes.navbarMain}>{links}</div>
+      <div className={classes.navbarMain}>{courses}</div>
     </nav>
   );
 }
