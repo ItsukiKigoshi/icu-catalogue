@@ -15,7 +15,9 @@ Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](htt
 
 - Create timetables for registration.
   - Confirm overlapped courses
-- Major/Graduation Requirement Checker
+- Major/Graduation/Kyoshoku, Gakugeiin Requirement Checker
+- Show total units
+- Export to Google Calendar, icuMAP
 
 ## Related Repositories
 
@@ -23,13 +25,24 @@ Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](htt
 - [Syllabus.icu](https://github.com/pentaCoxian/nuxt3-syllabus)
 
 ## References
-
+### Websites
 - [devserver.icu](https://devserver.icu/api/v3/)
   - Usage
     - [https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term-](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
     - [https://devserver.icu/api/v3/details?id=11151](https://devserver.icu/api/v3/details?id=11151)
 - [Twin:te](http://twinte.net)
 - [Hupass](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
+- UTokyo Catalog
+
+### Articles
+- [大学の時間割をカレンダーアプリで表示出来るようにするアプリを作った](https://zenn.dev/mochi/articles/class-2-ical)
+- [時間割表を作成するサイトを作ってみた | Zenn](https://zenn.dev/501a/articles/1772f7ce5aa384)
+	- [時間割表を作成するサイトをバージョンアップ！](https://zenn.dev/501a/articles/480a9c3b3715ca)
+- [時間割変更アプリの説明 - Qiita](https://qiita.com/moririn2528/items/e10070d47275fd10f169)
+- [Reactで時間割アプリを作ってみた - Qiita](https://qiita.com/kaki765/items/79d1235f5344877c56a5)
+- [筑波大学 KdBっぽいなにか](https://make-it-tsukuba.github.io/alternative-tsukuba-kdb/)
+	- [筑波大シラバス「KdBもどき」を作ったその後どうなった？ - 11/13開催 関西オープンフォーラム2021 / Kansai Open Forum](https://youtu.be/r7pAAJ6YWrw)
+	- [筑波大の授業DBがメンテ、困った新入生が代替ツールを“爆速開発”　その背景を本人に聞いた（1/2 ページ） - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2104/13/news126.html)
 
 ---
 
