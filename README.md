@@ -30,8 +30,8 @@ Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](htt
     - [https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term-](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
     - [https://devserver.icu/api/v3/details?id=11151](https://devserver.icu/api/v3/details?id=11151)
 - [Twin:te](http://twinte.net)
-- [Hupass](https://devserver.icu/api/v3/search?q=宇宙&term=Spring%20Term)
-- UTokyo Catalog
+- [Hupass](https://hupass.hu-jagajaga.com/)
+- [UTokyo Catalog](http://catalog.he.u-tokyo.ac.jp)
 
 ### Articles
 - [大学の時間割をカレンダーアプリで表示出来るようにするアプリを作った](https://zenn.dev/mochi/articles/class-2-ical)
