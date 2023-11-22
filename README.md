@@ -6,7 +6,7 @@
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
 
 ## We are looking for collaborators. 
-Please contact us via Discord (@itsukikigoshi) or [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi), or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
+Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
 
 ## UI (tentative)
 [<img width="1680" alt="Screenshot 2023-11-22 at 12 16 57" src="https://github.com/ItsukiKigoshi/icu-catalogue/assets/67095865/5486626f-b0c4-43e2-9f6a-5d6d0affd53b">](https://itsukikigoshi.github.io/icu-catalogue/)
