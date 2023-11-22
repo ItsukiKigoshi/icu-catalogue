@@ -13,7 +13,7 @@ Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](htt
 ## Features (tentative)
 
 - Create timetables for registration.
-  - Confirm overlapped courses
+  - Confirm course conflicts
 - Major/Graduation/Kyoshoku, Gakugeiin Requirement Checker
 - Show total units
 - Export to Google Calendar, icuMAP
