@@ -1400,7 +1400,7 @@ const tabs = {
   ],
 };
 export function NavbarSearch() {
-  const [section, setSection] = useState<"addNew" | "myItems">("myItems");
+  const [section, setSection] = useState<"addNew" | "myItems">("addNew");
   const [value, onChange] = useState(false);
 
   const courses = tabs[section].map((item) => (
