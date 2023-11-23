@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   Container,
   Group,
@@ -8,45 +7,34 @@ import {
   ActionIcon,
   useComputedColorScheme,
   useMantineColorScheme,
+  Modal,
+  SegmentedControl,
+  Card,
+  Switch,
+  NativeSelect,
+  Divider,
+  Input,
 } from "@mantine/core";
 import classes from "./HeaderSimple.module.css";
 import React from "react";
 import cx from "clsx";
-import { IconBrandGithub, IconMoon, IconSun } from "@tabler/icons-react";
-
-const links = [
-  { link: "/about", label: "Features" },
-  { link: "/pricing", label: "Pricing" },
-  { link: "/learn", label: "Learn" },
-  { link: "/community", label: "Community" },
-];
+import {
+  IconBrandGithub,
+  IconSettings,
+  IconMoon,
+  IconSun,
+} from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
 
 export function HeaderSimple(props: {
   opened: boolean | undefined;
   toggle: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }) {
-  const [active, setActive] = useState(links[0].link);
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
-
-  /*
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={classes.link}
-      data-active={active === link.link || undefined}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-      }}
-    >
-      {link.label}
-    </a>
-  ));
-  */
+  const [modalOpened, { open, close }] = useDisclosure(false);
 
   return (
     <header>
@@ -76,16 +64,79 @@ export function HeaderSimple(props: {
             <IconBrandGithub />
           </ActionIcon>
           <ActionIcon
-            onClick={() =>
-              setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-            }
+            color="gray"
             variant="default"
             size="xl"
-            aria-label="Toggle color scheme"
+            aria-label="Settings"
+            onClick={open}
           >
-            <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-            <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+            <IconSettings />
           </ActionIcon>
+
+          {/* Modal can be another component. */}
+          <Modal opened={modalOpened} onClose={close} title="Settings" centered>
+            <Group
+              justify="space-between"
+              className={classes.item}
+              wrap="nowrap"
+              gap="xl"
+            >
+              <Text>Term</Text>
+              <NativeSelect
+                data={[
+                  "Not Specified",
+                  "Spring 2023",
+                  "Autumn 2023",
+                  "Winter 2023",
+                ]}
+              />
+            </Group>
+            <Group
+              justify="space-between"
+              className={classes.item}
+              wrap="nowrap"
+              gap="xl"
+            >
+              <Text>ELA / JLP Core</Text>
+              <Input placeholder='Enter Section (e.g."5A")' />
+            </Group>
+            <Group
+              justify="space-between"
+              className={classes.item}
+              wrap="nowrap"
+              gap="xl"
+            >
+              <Text>ELA / JLP AS</Text>
+              <Input placeholder='Enter Section (e.g."5AS1")' />
+            </Group>
+            <Group
+              justify="space-between"
+              className={classes.item}
+              wrap="nowrap"
+              gap="xl"
+            >
+              <Text>Colour Scheme</Text>
+              <ActionIcon
+                onClick={() =>
+                  setColorScheme(
+                    computedColorScheme === "light" ? "dark" : "light"
+                  )
+                }
+                variant="default"
+                size="xl"
+                aria-label="Toggle color scheme"
+              >
+                <IconSun
+                  className={cx(classes.icon, classes.light)}
+                  stroke={1.5}
+                />
+                <IconMoon
+                  className={cx(classes.icon, classes.dark)}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Group>
+          </Modal>
         </Group>
       </Container>
     </header>

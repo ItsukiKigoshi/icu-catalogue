@@ -41,6 +41,13 @@
   height: rem(22px);
 }
 
+.item {
+  & + & {
+    padding-top: var(--mantine-spacing-sm);
+    margin-top: var(--mantine-spacing-sm);
+  }
+}
+
 .dark {
   @mixin dark {
     display: none;
