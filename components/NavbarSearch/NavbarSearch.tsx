@@ -1400,7 +1400,7 @@ const tabs = {
   ],
 };
 export function NavbarSearch() {
-  const [section, setSection] = useState<"addNew" | "myItems">("myItems");
+  const [section, setSection] = useState<"myItems" | "addNew">("myItems");
   const [value, onChange] = useState(false);
 
   const courses = tabs[section].map((item) => (
@@ -1459,8 +1459,8 @@ export function NavbarSearch() {
           transitionTimingFunction="ease"
           fullWidth
           data={[
-            { label: "Add New", value: "addNew" },
             { label: "My List", value: "myItems" },
+            { label: "Add New", value: "addNew" },
           ]}
         />
       </div>
