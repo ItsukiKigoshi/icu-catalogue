@@ -96,7 +96,9 @@ export default function RequirementTable() {
             "Art and Cultural Heritage",
           ]}
         />
-        <SegmentedControl data={["None", "Major 2", "Minor"]} />
+
+        {/* If "Major 2 / Minor" is not selected, this SegmentedControl will be disabled */}
+        <SegmentedControl data={["Major", "Minor"]} />
       </Stack>
     </SimpleGrid>
   );
