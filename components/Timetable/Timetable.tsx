@@ -9,6 +9,8 @@ import {
 } from "@mantine/core";
 import classes from "./Timetable.module.css";
 import React from "react";
+import { time } from "console";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 interface TimetableItem {
   rgno: string;
@@ -770,105 +772,43 @@ export function Timetable() {
     ));
   }
 
+  type ScheduleItem = [string, number, string];
+  const schedule: ScheduleItem[] = [
+    ["8:50", 1, "10:00"],
+    ["10:10", 2, "11:20"],
+    ["11:30", 3, "12:40"],
+    ["13:50", 4, "15:00"],
+    ["15:10", 5, "16:20"],
+    ["16:30", 6, "17:40"],
+    ["17:50", 7, "19:00"],
+  ];
+
+  const timetable: JSX.Element[] = schedule.map((item) => (
+    <>
+      <Card key={item[2]} className={classes.item} p={1}>
+        <Text size="xs" c="dimmed">
+          {item[0]}
+        </Text>
+        <Text size="md" my="10">
+          {item[1]}
+        </Text>
+        <Text size="xs" c="dimmed">
+          {item[2]}
+        </Text>
+      </Card>
+      {timetableItems[item[1] - 1]}
+    </>
+  ));
+
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <Group justify="space-between">
-        <Text className={classes.title}>Timetable</Text>
-        <Anchor size="xs" c="dimmed" style={{ lineHeight: 1 }}></Anchor>
-      </Group>
-      <SimpleGrid cols={6} spacing="xs" verticalSpacing="xs" mt="md">
-        <Card></Card>
+      <SimpleGrid cols={6} spacing="xs" verticalSpacing="xs">
+        <Card
+          className={classes.item}
+          style={{ backgroundColor: "transparent", height: "30px" }}
+        ></Card>
         {weekDayItems}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            8:50
-          </Text>
-          <Text size="md" my="10">
-            1
-          </Text>
-          <Text size="xs" c="dimmed">
-            10:00
-          </Text>
-        </Card>
-        {timetableItems[0]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            10:10
-          </Text>
-          <Text size="md" my="10">
-            2
-          </Text>
-          <Text size="xs" c="dimmed">
-            11:20
-          </Text>
-        </Card>
-        {timetableItems[1]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            11:30
-          </Text>
-          <Text size="md" my="10">
-            3
-          </Text>
-          <Text size="xs" c="dimmed">
-            12:40
-          </Text>
-        </Card>
-        {timetableItems[2]}
-        <Card className={classes.item} p={1}>
-          <Text size="md" my="10">
-            Lunch
-          </Text>
-        </Card>
-        {timetableItems[2]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            13:50
-          </Text>
-          <Text size="md" my="10">
-            4
-          </Text>
-          <Text size="xs" c="dimmed">
-            15:00
-          </Text>
-        </Card>
-        {timetableItems[3]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            15:10
-          </Text>
-          <Text size="md" my="10">
-            5
-          </Text>
-          <Text size="xs" c="dimmed">
-            16:20
-          </Text>
-        </Card>
-        {timetableItems[4]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            16:30
-          </Text>
-          <Text size="md" my="10">
-            6
-          </Text>
-          <Text size="xs" c="dimmed">
-            17:40
-          </Text>
-        </Card>
-        {timetableItems[5]}
-        <Card className={classes.item} p={1}>
-          <Text size="xs" c="dimmed">
-            17:50
-          </Text>
-          <Text size="md" my="10">
-            7
-          </Text>
-          <Text size="xs" c="dimmed">
-            19:00
-          </Text>
-        </Card>
-        {timetableItems[6]}
+        {timetable}
       </SimpleGrid>
     </Card>
   );
