@@ -98,7 +98,7 @@ export default function RequirementTable() {
         />
 
         {/* If "Major 2 / Minor" is not selected, this SegmentedControl will be disabled */}
-        <SegmentedControl data={["Major", "Minor"]} />
+        <SegmentedControl data={["Major 2", "Minor"]} />
       </Stack>
     </SimpleGrid>
   );
