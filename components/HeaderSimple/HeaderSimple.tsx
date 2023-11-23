@@ -98,7 +98,7 @@ export function HeaderSimple(props: {
               gap="xl"
             >
               <Text>ELA / JLP Core</Text>
-              <Input placeholder='Enter Section (e.g."5A")' />
+              <Input data-autofocus placeholder='Enter Section (e.g."5A")' />
             </Group>
             <Group
               justify="space-between"
