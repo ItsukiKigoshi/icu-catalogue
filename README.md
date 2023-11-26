@@ -2,7 +2,6 @@
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
-[![Deploy Next.js site to Pages](https://github.com/ItsukiKigoshi/icu-catalogue/actions/workflows/nextjs.yml/badge.svg)](https://github.com/ItsukiKigoshi/icu-catalogue/actions/workflows/nextjs.yml)
 
 ## We are looking for collaborators. 
 Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
