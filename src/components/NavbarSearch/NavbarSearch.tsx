@@ -39,7 +39,7 @@ export function NavbarSearch() {
       key={item.title_e}
       onClick={() => onChange(!value)}
       className={classes.button}
-      my={10}
+      mb={10}
     >
       <Flex align="center">
         <Checkbox
