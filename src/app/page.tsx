@@ -1,12 +1,12 @@
 "use client";
+import { Header } from "@/src/components/Header/Header";
 import { NavbarSearch } from "@/src/components/NavbarSearch/NavbarSearch";
 import RequirementTable from "@/src/components/RequirementTable/RequirementTable";
 import { Timetable } from "@/src/components/Timetable/Timetable";
 import { AppShell, Grid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { HeaderSimple } from "../components/HeaderSimple/HeaderSimple";
 
-export default function HomePage() {
+export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
   return (
     <AppShell
@@ -20,7 +20,7 @@ export default function HomePage() {
       h="100vh"
     >
       <AppShell.Header>
-        <HeaderSimple opened={opened} toggle={toggle} />
+        <Header opened={opened} toggle={toggle} />
       </AppShell.Header>
       <AppShell.Navbar>
         <NavbarSearch />
