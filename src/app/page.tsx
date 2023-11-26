@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
-import { HeaderSimple } from "../../components/HeaderSimple/HeaderSimple";
-import { Timetable } from "@/components/Timetable/Timetable";
-import { AppShell, Grid } from "@mantine/core";
 import { NavbarSearch } from "@/components/NavbarSearch/NavbarSearch";
 import RequirementTable from "@/components/RequirementTable/RequirementTable";
+import { Timetable } from "@/components/Timetable/Timetable";
+import { AppShell, Grid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { HeaderSimple } from "../../components/HeaderSimple/HeaderSimple";
 
 export default function HomePage() {
   const [opened, { toggle }] = useDisclosure(false);

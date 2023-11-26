@@ -1,30 +1,28 @@
 "use client";
 import {
+  ActionIcon,
+  Burger,
   Container,
   Group,
-  Burger,
+  Input,
+  Modal,
+  NativeSelect,
   Text,
-  ActionIcon,
   useComputedColorScheme,
   useMantineColorScheme,
-  Modal,
-  SegmentedControl,
-  Card,
-  Switch,
-  NativeSelect,
-  Divider,
-  Input,
 } from "@mantine/core";
-import classes from "./HeaderSimple.module.css";
-import React from "react";
-import cx from "clsx";
+import { useDisclosure } from "@mantine/hooks";
 import {
   IconBrandGithub,
-  IconSettings,
   IconMoon,
+  IconSettings,
   IconSun,
 } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
+
+import cx from "clsx";
+import React from "react";
+
+import classes from "./HeaderSimple.module.css";
 
 export function HeaderSimple(props: {
   opened: boolean | undefined;

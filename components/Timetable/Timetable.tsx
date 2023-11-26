@@ -1,16 +1,6 @@
 "use client";
-import {
-  Card,
-  Text,
-  SimpleGrid,
-  Anchor,
-  Group,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, SimpleGrid, Text, useMantineTheme } from "@mantine/core";
 import classes from "./Timetable.module.css";
-import React from "react";
-import { time } from "console";
-import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 interface TimetableItem {
   rgno: string;

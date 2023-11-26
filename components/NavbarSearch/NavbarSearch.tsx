@@ -1,15 +1,16 @@
 "use client";
-import { useState } from "react";
 import {
-  TextInput,
-  Code,
-  UnstyledButton,
-  Text,
-  SegmentedControl,
-  rem,
   Checkbox,
+  Code,
   ScrollArea,
+  SegmentedControl,
+  Text,
+  TextInput,
+  UnstyledButton,
+  rem,
 } from "@mantine/core";
+import { useState } from "react";
+
 import { IconSearch } from "@tabler/icons-react";
 import classes from "./NavbarSearch.module.css";
 

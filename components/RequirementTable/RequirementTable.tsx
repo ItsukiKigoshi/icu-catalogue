@@ -3,7 +3,6 @@ import {
   Card,
   Group,
   NativeSelect,
-  ScrollArea,
   SegmentedControl,
   SimpleGrid,
   Stack,
