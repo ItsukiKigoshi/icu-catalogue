@@ -40,3 +40,5 @@ next-env.d.ts
 **/public/sw.js.map
 **/public/workbox-*.js
 **/public/workbox-*.js.map
+
+src/app/fetch/
