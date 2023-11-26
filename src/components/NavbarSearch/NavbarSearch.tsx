@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Flex,
   ScrollArea,
   SegmentedControl,
   Text,
@@ -40,24 +41,24 @@ export function NavbarSearch() {
       className={classes.button}
       my={10}
     >
-      <Checkbox
-        checked={value}
-        onChange={() => {}}
-        tabIndex={-1}
-        size="md"
-        mr="xl"
-        styles={{ input: { cursor: "pointer" } }}
-        aria-hidden
-      />
-
-      <div>
-        <Text fz="sm" mb={7} lh={1}>
-          {item.title_e}
-        </Text>
-        <Text fz="sm" c="dimmed">
-          {item.cno}
-        </Text>
-      </div>
+      <Flex align="center">
+        <Checkbox
+          checked={value}
+          onChange={() => {}}
+          tabIndex={-1}
+          size="md"
+          mr="xl"
+          aria-hidden
+        />
+        <div>
+          <Text fz="sm" c="dimmed">
+            {item.cno}
+          </Text>
+          <Text fz="sm" mt={7} lh={1}>
+            {item.title_e}
+          </Text>
+        </div>
+      </Flex>
     </UnstyledButton>
   ));
 
