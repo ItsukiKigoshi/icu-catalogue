@@ -18,28 +18,38 @@ import classes from "./NavbarSearch.module.css";
 export function NavbarSearch() {
   const [section, setSection] = useState<"addNew" | "myItems">("addNew");
   const [value, onChange] = useState(false);
-  const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [addNews, setAddNews] = useState<Lecture[]>([]);
+  const [myItems, setMyItems] = useState<Lecture[]>([]);
 
   useEffect(() => {
     const fetchLectures = async () => {
-      const result = await getLectures();
-      setLectures(result);
+      const result = await getLectures("microeconomics");
+      setAddNews(result);
+    };
+
+    fetchLectures();
+  }, []);
+
+  useEffect(() => {
+    const fetchLectures = async () => {
+      const result = await getLectures("calculus");
+      setMyItems(result);
     };
 
     fetchLectures();
   }, []);
 
   const tabs = {
-    addNew: lectures,
-    myItems: lectures,
+    addNew: addNews,
+    myItems: myItems,
   };
 
   const courses = tabs[section].map((item) => (
     <UnstyledButton
-      key={item.title_e}
+      key={item.regno}
       onClick={() => onChange(!value)}
       className={classes.button}
-      mb={10}
+      mb={8}
     >
       <Flex align="center">
         <Checkbox
@@ -54,7 +64,7 @@ export function NavbarSearch() {
           <Text fz="sm" c="dimmed">
             {item.cno}
           </Text>
-          <Text fz="sm" mt={7} lh={1}>
+          <Text fz="sm" mt={2} lh={1}>
             {item.title_e}
           </Text>
         </div>
@@ -87,10 +97,11 @@ export function NavbarSearch() {
             { label: "Add New", value: "addNew" },
             { label: "My List", value: "myItems" },
           ]}
+          mb="0"
         />
       </div>
 
-      <ScrollArea h={"100vh"}>
+      <ScrollArea>
         <div className={classes.navbarMain}>{courses}</div>
       </ScrollArea>
     </nav>
