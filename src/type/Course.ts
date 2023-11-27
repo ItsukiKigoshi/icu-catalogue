@@ -1,4 +1,4 @@
-export type Lecture = {
+export type Course = {
   cno: string;
   term: string;
   title_j: string;

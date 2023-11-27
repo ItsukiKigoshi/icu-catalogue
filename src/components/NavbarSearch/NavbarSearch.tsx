@@ -4,87 +4,87 @@ import {
   ScrollArea,
   SegmentedControl,
   Text,
-  TextInput,
   UnstyledButton,
-  rem,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import getLectures from "@/src/libs/getLectures";
-import { Lecture } from "@/src/type/Lecture";
-import { IconSearch } from "@tabler/icons-react";
+import { Course } from "@/src/type/Course";
 import classes from "./NavbarSearch.module.css";
+import SearchCourses from "./SearchCourses";
 
 export function NavbarSearch() {
-  const [section, setSection] = useState<"addNew" | "myItems">("addNew");
+  const [section, setSection] = useState<"addNew" | "myList">("addNew");
   const [value, onChange] = useState(false);
-  const [addNews, setAddNews] = useState<Lecture[]>([]);
-  const [myItems, setMyItems] = useState<Lecture[]>([]);
+
+  const [addNewItems, setAddNewItems] = useState<Course[]>([]);
+  const [myListItems, setMyListItems] = useState<Course[]>([]);
 
   useEffect(() => {
-    const fetchLectures = async () => {
-      const result = await getLectures("microeconomics");
-      setAddNews(result);
+    const getAddNewItems = async () => {
+      const response = await fetch("/api/courses");
+      const addNewResponses = await response.json();
+      setAddNewItems(addNewResponses);
     };
 
-    fetchLectures();
+    getAddNewItems();
   }, []);
 
   useEffect(() => {
-    const fetchLectures = async () => {
-      const result = await getLectures("calculus");
-      setMyItems(result);
+    const getMyListItems = async () => {
+      const response = await fetch("/api/courses");
+      const myListResponses = await response.json();
+      setMyListItems(myListResponses);
     };
 
-    fetchLectures();
+    getMyListItems();
   }, []);
 
   const tabs = {
-    addNew: addNews,
-    myItems: myItems,
+    addNew: addNewItems,
+    myList: myListItems,
   };
 
-  const courses = tabs[section].map((item) => (
-    <UnstyledButton
-      key={item.regno}
-      onClick={() => onChange(!value)}
-      className={classes.button}
-      mb={8}
-    >
-      <Flex align="center">
-        <Checkbox
-          checked={value}
-          onChange={() => {}}
-          tabIndex={-1}
-          size="md"
-          mr="xl"
-          aria-hidden
-        />
-        <div>
-          <Text fz="sm" c="dimmed">
-            {item.cno}
-          </Text>
-          <Text fz="sm" mt={2} lh={1}>
-            {item.title_e}
-          </Text>
-        </div>
+  // Show the courses in the selected tab, and if there are no courses, show "No Results"
+  const courses =
+    tabs[section].length > 0 ? (
+      tabs[section].map((item) => (
+        <UnstyledButton
+          key={item.regno}
+          onClick={() => onChange(!value)}
+          className={classes.button}
+          mb={8}
+        >
+          <Flex align="center">
+            <Checkbox
+              checked={value}
+              onChange={() => {}}
+              tabIndex={-1}
+              size="md"
+              mr="xl"
+              aria-hidden
+            />
+            <div>
+              <Text fz="sm" c="dimmed">
+                {item.cno}
+              </Text>
+              <Text fz="sm" mt={2} lh={1}>
+                {item.title_e}
+              </Text>
+            </div>
+          </Flex>
+        </UnstyledButton>
+      ))
+    ) : (
+      <Flex justify="center">
+        <Text>No Results</Text>
       </Flex>
-    </UnstyledButton>
-  ));
+    );
 
   return (
     <nav className={classes.navbar}>
-      <TextInput
-        placeholder="Search"
-        size="xs"
-        leftSection={
-          <IconSearch
-            style={{ width: rem(12), height: rem(12) }}
-            stroke={1.5}
-          />
-        }
-        styles={{ section: { pointerEvents: "none" } }}
-        mb="sm"
+      {/* Search Feature is now only available for AddNewItems */}
+      <SearchCourses
+        getSearchResults={(results: Course[]) => setAddNewItems(results)}
       />
 
       <div>
@@ -95,7 +95,7 @@ export function NavbarSearch() {
           fullWidth
           data={[
             { label: "Add New", value: "addNew" },
-            { label: "My List", value: "myItems" },
+            { label: "My List", value: "myList" },
           ]}
           mb="0"
         />
