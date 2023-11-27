@@ -28,8 +28,8 @@ export default function SearchCourses({
 
   return (
     <div>
-      {/* onSubmit can be replaced with onChange according to a load of API Server */}
-      <form onSubmit={handleSubmit}>
+      {/* onChange can be replaced with onSubmit according to a load of API Server */}
+      <form onChange={handleSubmit}>
         <TextInput
           placeholder="Search Courses"
           size="xs"
