@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Burger,
+  Button,
   Container,
   Group,
   Input,
@@ -10,7 +11,7 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import {
   IconBrandGithub,
   IconMoon,
@@ -28,11 +29,12 @@ export function Header(props: {
   toggle: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }) {
   const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme("light", {
+
+  const computedColorScheme = useComputedColorScheme(useColorScheme(), {
     getInitialValueInEffect: true,
   });
-  const [modalOpened, { open, close }] = useDisclosure(false);
 
+  const [modalOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
       <Container size="max" className={classes.inner}>
@@ -113,25 +115,34 @@ export function Header(props: {
               gap="xl"
             >
               <Text>Colour Scheme</Text>
-              <ActionIcon
-                onClick={() =>
-                  setColorScheme(
-                    computedColorScheme === "light" ? "dark" : "light"
-                  )
-                }
-                variant="default"
-                size="xl"
-                aria-label="Toggle color scheme"
-              >
-                <IconSun
-                  className={cx(classes.icon, classes.light)}
-                  stroke={1.5}
-                />
-                <IconMoon
-                  className={cx(classes.icon, classes.dark)}
-                  stroke={1.5}
-                />
-              </ActionIcon>
+              <Group>
+                <Button
+                  onClick={() =>
+                    setColorScheme(
+                      computedColorScheme === "light" ? "dark" : "light"
+                    )
+                  }
+                  variant="default"
+                  size="sm"
+                  aria-label="Toggle color scheme"
+                >
+                  <IconSun
+                    className={cx(classes.icon, classes.light)}
+                    stroke={1.5}
+                  />
+                  <IconMoon
+                    className={cx(classes.icon, classes.dark)}
+                    stroke={1.5}
+                  />
+                </Button>
+                <Button
+                  onClick={() => setColorScheme("auto")}
+                  variant="default"
+                  size="sm"
+                >
+                  Reset
+                </Button>
+              </Group>
             </Group>
           </Modal>
         </Group>

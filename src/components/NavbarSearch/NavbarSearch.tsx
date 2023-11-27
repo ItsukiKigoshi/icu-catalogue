@@ -49,10 +49,14 @@ export function NavbarSearch() {
   const courses =
     tabs[section].length > 0 || currentQuery === "" ? (
       <>
-        <Text>
-          {tabs[section].length} Results for "{currentQuery}"
-        </Text>
-
+        {/* How to handle the state (currentQuery === "")?  */}
+        {currentQuery !== "" ? (
+          <Text>
+            {tabs[section].length} Results for "{currentQuery}"
+          </Text>
+        ) : (
+          <></>
+        )}
         {tabs[section].map((item) => (
           <UnstyledButton
             key={item.regno}

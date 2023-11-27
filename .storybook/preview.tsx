@@ -30,6 +30,8 @@ export const decorators = [
     <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
   ),
   (renderStory: any) => (
-    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+    <MantineProvider theme={theme} defaultColorScheme="auto">
+      {renderStory()}
+    </MantineProvider>
   ),
 ];
