@@ -7,6 +7,9 @@ import { addons } from "@storybook/preview-api";
 import React, { useEffect } from "react";
 import { DARK_MODE_EVENT_NAME } from "storybook-dark-mode";
 
+// theme.ts file from previous step
+import { theme } from "../src/app/theme";
+
 const channel = addons.getChannel();
 
 function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
@@ -26,5 +29,7 @@ export const decorators = [
   (renderStory: any) => (
     <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
   ),
-  (renderStory: any) => <MantineProvider>{renderStory()}</MantineProvider>,
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+  ),
 ];
