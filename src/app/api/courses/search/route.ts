@@ -3,7 +3,7 @@ import { Course } from "@/src/type/Course";
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
 
-export async function fetchCourses(): Promise<Course[]> {
+async function fetchCourses(): Promise<Course[]> {
   const file = await fs.readFile(
     process.cwd() + "/src/data/icuCourses2023.json",
     "utf8"
