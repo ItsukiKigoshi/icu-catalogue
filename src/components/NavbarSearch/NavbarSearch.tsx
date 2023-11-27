@@ -29,15 +29,15 @@ export function NavbarSearch() {
     getAddNewItems();
   }, []);
 
-  useEffect(() => {
-    const getMyListItems = async () => {
-      const response = await fetch("/api/courses");
-      const myListResponses = await response.json();
-      setMyListItems(myListResponses);
-    };
+  // useEffect(() => {
+  //   const getMyListItems = async () => {
+  //     const response = await fetch("/api/courses");
+  //     const myListResponses = await response.json();
+  //     setMyListItems(myListResponses);
+  //   };
 
-    getMyListItems();
-  }, []);
+  //   getMyListItems();
+  // }, []);
 
   const tabs = {
     addNew: addNewItems,
@@ -47,34 +47,40 @@ export function NavbarSearch() {
   const [currentQuery, setCurrentQuery] = useState("");
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const courses =
-    tabs[section].length > 0 ? (
-      tabs[section].map((item) => (
-        <UnstyledButton
-          key={item.regno}
-          onClick={() => onChange(!value)}
-          className={classes.button}
-          mb={8}
-        >
-          <Flex align="center">
-            <Checkbox
-              checked={value}
-              onChange={() => {}}
-              tabIndex={-1}
-              size="md"
-              mr="xl"
-              aria-hidden
-            />
-            <div>
-              <Text fz="sm" c="dimmed">
-                {item.cno}
-              </Text>
-              <Text fz="sm" mt={2} lh={1}>
-                {item.title_e}
-              </Text>
-            </div>
-          </Flex>
-        </UnstyledButton>
-      ))
+    tabs[section].length > 0 || currentQuery === "" ? (
+      <>
+        <Text>
+          {tabs[section].length} Results for "{currentQuery}"
+        </Text>
+
+        {tabs[section].map((item) => (
+          <UnstyledButton
+            key={item.regno}
+            onClick={() => onChange(!value)}
+            className={classes.button}
+            mb={8}
+          >
+            <Flex align="center">
+              <Checkbox
+                checked={value}
+                onChange={() => {}}
+                tabIndex={-1}
+                size="md"
+                mr="xl"
+                aria-hidden
+              />
+              <div>
+                <Text fz="sm" c="dimmed">
+                  {item.cno}
+                </Text>
+                <Text fz="sm" mt={2} lh={1}>
+                  {item.title_e}
+                </Text>
+              </div>
+            </Flex>
+          </UnstyledButton>
+        ))}
+      </>
     ) : (
       <Flex justify="center">
         <Text>No Results for "{currentQuery}"</Text>
