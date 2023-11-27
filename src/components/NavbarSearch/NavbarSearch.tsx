@@ -44,6 +44,7 @@ export function NavbarSearch() {
     myList: myListItems,
   };
 
+  const [currentQuery, setCurrentQuery] = useState("");
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const courses =
     tabs[section].length > 0 ? (
@@ -76,7 +77,7 @@ export function NavbarSearch() {
       ))
     ) : (
       <Flex justify="center">
-        <Text>No Results</Text>
+        <Text>No Results for "{currentQuery}"</Text>
       </Flex>
     );
 
@@ -85,6 +86,9 @@ export function NavbarSearch() {
       {/* Search Feature is now only available for AddNewItems */}
       <SearchCourses
         getSearchResults={(results: Course[]) => setAddNewItems(results)}
+        getCurrentQuery={(currentQuery: string) =>
+          setCurrentQuery(currentQuery)
+        }
       />
 
       <div>

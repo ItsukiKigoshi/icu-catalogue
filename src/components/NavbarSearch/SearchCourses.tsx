@@ -6,35 +6,28 @@ import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 
 type GetSearchResults = (results: Course[]) => void;
+type GetCurrentQuery = (query: string) => void;
 
 export default function SearchCourses({
   getSearchResults,
+  getCurrentQuery,
 }: {
   getSearchResults: GetSearchResults;
+  getCurrentQuery: GetCurrentQuery;
 }): JSX.Element {
   const [query, setQuery] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const response = await fetch(`/api/courses/search?query=${query}`);
     const course = await response.json();
 
+    getCurrentQuery(query);
     getSearchResults(course);
   };
 
   return (
     <div>
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search Courses"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="submit">Search</button>
-      </form> */}
-
       {/* onSubmit can be replaced with onChange according to a load of API Server */}
       <form onSubmit={handleSubmit}>
         <TextInput
