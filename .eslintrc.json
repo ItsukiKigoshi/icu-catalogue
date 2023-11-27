@@ -9,7 +9,8 @@
     "next/core-web-vitals",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
-    "prettier/react"
+    "prettier/react",
+    "plugin:storybook/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,7 +20,12 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "import", "unused-imports"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import",
+    "unused-imports"
+  ],
   "rules": {
     "sort-imports": 0,
     "import/order": [
@@ -46,7 +52,9 @@
             "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["builtin"],
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
         "alphabetize": {
           "order": "asc"
         },
@@ -55,7 +63,9 @@
     ],
     "@typescript-eslint/consistent-type-imports": [
       "error",
-      { "prefer": "type-imports" }
+      {
+        "prefer": "type-imports"
+      }
     ],
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports-ts": "warn"

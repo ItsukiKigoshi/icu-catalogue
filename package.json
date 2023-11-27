@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@mantine/carousel": "^7.2.2",
@@ -34,15 +36,32 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/addon-styling-webpack": "^0.0.5",
+    "@storybook/blocks": "^7.5.3",
+    "@storybook/nextjs": "^7.5.3",
+    "@storybook/react": "^7.5.3",
+    "@storybook/testing-library": "^0.2.2",
     "@types/jest": "^29.5.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "eslint-plugin-storybook": "^0.6.15",
     "postcss": "^8.4.31",
     "postcss-preset-mantine": "^1.11.0",
     "postcss-simple-vars": "^7.0.1",
+    "storybook": "^7.5.3",
+    "storybook-addon-mantine": "^3.0.1",
+    "storybook-dark-mode": "^3.0.3",
     "typescript": "^5"
-  }
+  },
+  "resolutions": {
+    "jackspeak": "2.1.1"
+  },
+  "packageManager": "yarn@4.0.2"
 }
