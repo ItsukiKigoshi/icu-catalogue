@@ -140,7 +140,7 @@ export function Header(props: {
                   variant="default"
                   size="sm"
                 >
-                  Reset
+                  System
                 </Button>
               </Group>
             </Group>
