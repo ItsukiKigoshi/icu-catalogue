@@ -30,7 +30,7 @@ async function fetchCourses(): Promise<Course[]> {
 export async function GET(request: Request) {
   const courses = await fetchCourses();
   const { searchParams } = new URL(request.url);
-  //   console.log(request.url);
+  console.log(request.url);
   const query: string = searchParams.get("query") || "";
   //   console.log(`query: ${query}`);
 
@@ -38,7 +38,6 @@ export async function GET(request: Request) {
     query === ""
       ? courses
       : courses.filter((course) => {
-          // Search query has bug. Some courses are not shown.
           return (
             course.title_e.toLowerCase().includes(query.toLocaleLowerCase()) ||
             course.summary_e
