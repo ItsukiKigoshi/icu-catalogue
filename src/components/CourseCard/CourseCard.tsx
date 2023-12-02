@@ -1,12 +1,18 @@
-import { Course } from "@/src/type/Course";
+import { CourseWithCheck } from "@/src/type/Course";
 import { Checkbox, Flex, Text, UnstyledButton } from "@mantine/core";
 import classes from "./CourseCard.module.css";
 
-export default function CourseCard(props: { item: Course }) {
+export default function CourseCard(props: { item: CourseWithCheck }) {
   return (
     <UnstyledButton key={props.item.regno} className={classes.button} mb={8}>
       <Flex align="center">
-        <Checkbox tabIndex={-1} size="md" mr="xl" aria-hidden />
+        <Checkbox
+          checked={props.item.checked}
+          tabIndex={-1}
+          size="md"
+          mr="xl"
+          aria-hidden
+        />
         <div>
           <Text fz="sm" c="dimmed">
             {props.item.cno}

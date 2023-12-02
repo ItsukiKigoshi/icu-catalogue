@@ -1,7 +1,7 @@
 import { Flex, ScrollArea, SegmentedControl, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import { Course } from "@/src/type/Course";
+import { Course, CourseWithCheck } from "@/src/type/Course";
 import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
 import SearchCourses from "./SearchCourses";
@@ -9,17 +9,32 @@ import SearchCourses from "./SearchCourses";
 export function NavbarSearch() {
   const [section, setSection] = useState<"addNew" | "myList">("addNew");
 
-  const [addNewItems, setAddNewItems] = useState<Course[]>([]);
-  const [myListItems, setMyListItems] = useState<Course[]>([]);
+  const [addNewItems, setAddNewItems] = useState<CourseWithCheck[]>([]);
+  const [myListItems, setMyListItems] = useState<CourseWithCheck[]>([]);
+
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const getAddNewItems = async () => {
       const response = await fetch("/api/courses");
       const addNewResponses = await response.json();
-      setAddNewItems(addNewResponses);
+
+      const addNewResponsesWithCheck = addNewResponses.map((item: Course) => {
+        return { ...item, checked: false };
+      });
+      setAddNewItems(addNewResponsesWithCheck);
     };
 
     getAddNewItems();
+  }, []);
+
+  useEffect(() => {
+    const getMyListItems = async () => {
+      // Only get the courses that are checked
+      const response = myListItems.filter((item) => item.checked === true);
+    };
+
+    getMyListItems();
   }, []);
 
   const tabs = {
@@ -28,6 +43,7 @@ export function NavbarSearch() {
   };
 
   const [currentQuery, setCurrentQuery] = useState("");
+
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const courses =
     tabs[section].length > 0 || currentQuery === "" ? (
@@ -50,11 +66,15 @@ export function NavbarSearch() {
       </Flex>
     );
 
+  console.log(addNewItems);
+
   return (
     <nav className={classes.navbar}>
       {/* Search Feature is now only available for AddNewItems */}
       <SearchCourses
-        getSearchResults={(results: Course[]) => setAddNewItems(results)}
+        getSearchResults={(results: CourseWithCheck[]) =>
+          setAddNewItems(results)
+        }
         getCurrentQuery={(currentQuery: string) =>
           setCurrentQuery(currentQuery)
         }

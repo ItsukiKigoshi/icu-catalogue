@@ -1,4 +1,4 @@
-export type Course = {
+export interface Course {
   cno: string;
   term: string;
   title_j: string;
@@ -7,4 +7,8 @@ export type Course = {
   lang: string;
   summary_e: string;
   summary_j: string;
-};
+}
+
+export interface CourseWithCheck extends Course {
+  checked: boolean;
+}
