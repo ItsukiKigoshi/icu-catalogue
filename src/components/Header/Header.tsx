@@ -114,7 +114,7 @@ export function Header(props: {
               wrap="nowrap"
               gap="xl"
             >
-              <Text>Colour Scheme</Text>
+              <Text>Colour</Text>
               <Group>
                 <Button
                   onClick={() =>
