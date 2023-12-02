@@ -1,20 +1,13 @@
-import {
-  Checkbox,
-  Flex,
-  ScrollArea,
-  SegmentedControl,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
+import { Flex, ScrollArea, SegmentedControl, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import { Course } from "@/src/type/Course";
+import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
 import SearchCourses from "./SearchCourses";
 
 export function NavbarSearch() {
   const [section, setSection] = useState<"addNew" | "myList">("addNew");
-  const [value, onChange] = useState(false);
 
   const [addNewItems, setAddNewItems] = useState<Course[]>([]);
   const [myListItems, setMyListItems] = useState<Course[]>([]);
@@ -28,16 +21,6 @@ export function NavbarSearch() {
 
     getAddNewItems();
   }, []);
-
-  // useEffect(() => {
-  //   const getMyListItems = async () => {
-  //     const response = await fetch("/api/courses");
-  //     const myListResponses = await response.json();
-  //     setMyListItems(myListResponses);
-  //   };
-
-  //   getMyListItems();
-  // }, []);
 
   const tabs = {
     addNew: addNewItems,
@@ -58,31 +41,7 @@ export function NavbarSearch() {
           <></>
         )}
         {tabs[section].map((item) => (
-          <UnstyledButton
-            key={item.regno}
-            onClick={() => onChange(!value)}
-            className={classes.button}
-            mb={8}
-          >
-            <Flex align="center">
-              <Checkbox
-                checked={value}
-                onChange={() => {}}
-                tabIndex={-1}
-                size="md"
-                mr="xl"
-                aria-hidden
-              />
-              <div>
-                <Text fz="sm" c="dimmed">
-                  {item.cno}
-                </Text>
-                <Text fz="sm" mt={2} lh={1}>
-                  {item.title_e}
-                </Text>
-              </div>
-            </Flex>
-          </UnstyledButton>
+          <CourseCard item={item} />
         ))}
       </>
     ) : (
