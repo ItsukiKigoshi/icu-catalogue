@@ -1,13 +1,17 @@
-import { CourseWithCheck } from "@/src/type/Course";
+import { CourseWithCheck } from "@/src/type/Types";
 import { Checkbox, Flex, Text, UnstyledButton } from "@mantine/core";
 import classes from "./CourseCard.module.css";
 
-export default function CourseCard(props: { item: CourseWithCheck }) {
+export default function CourseCard(props: {
+  item: CourseWithCheck;
+  toggleCheck: (regno: number) => () => void;
+}) {
   return (
     <UnstyledButton key={props.item.regno} className={classes.button} mb={8}>
       <Flex align="center">
         <Checkbox
           checked={props.item.checked}
+          onChange={props.toggleCheck(props.item.regno)}
           tabIndex={-1}
           size="md"
           mr="xl"

@@ -1,7 +1,7 @@
-import { Flex, ScrollArea, SegmentedControl, Text } from "@mantine/core";
+import { Flex, ScrollArea, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import { Course, CourseWithCheck } from "@/src/type/Course";
+import { Course, CourseWithCheck } from "@/src/type/Types";
 import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
 import SearchCourses from "./SearchCourses";
@@ -11,8 +11,6 @@ export function NavbarSearch() {
 
   const [addNewItems, setAddNewItems] = useState<CourseWithCheck[]>([]);
   const [myListItems, setMyListItems] = useState<CourseWithCheck[]>([]);
-
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const getAddNewItems = async () => {
@@ -28,14 +26,30 @@ export function NavbarSearch() {
     getAddNewItems();
   }, []);
 
+  const toggleCheck = (regno: number) => {
+    return () => {
+      setAddNewItems(
+        addNewItems.map((item) => {
+          if (item.regno === regno) {
+            console.log(`${item.regno}: ${item.checked}`);
+            return { ...item, checked: !item.checked };
+          } else {
+            return item;
+          }
+        })
+      );
+    };
+  };
+
   useEffect(() => {
     const getMyListItems = async () => {
       // Only get the courses that are checked
-      const response = myListItems.filter((item) => item.checked === true);
+      const response = addNewItems.filter((item) => item.checked === true);
+      setMyListItems(response);
     };
 
     getMyListItems();
-  }, []);
+  }, [addNewItems]);
 
   const tabs = {
     addNew: addNewItems,
@@ -57,7 +71,7 @@ export function NavbarSearch() {
           <></>
         )}
         {tabs[section].map((item) => (
-          <CourseCard item={item} />
+          <CourseCard item={item} toggleCheck={toggleCheck} />
         ))}
       </>
     ) : (
@@ -65,8 +79,6 @@ export function NavbarSearch() {
         <Text>No Results for "{currentQuery}"</Text>
       </Flex>
     );
-
-  console.log(addNewItems);
 
   return (
     <nav className={classes.navbar}>
@@ -80,7 +92,7 @@ export function NavbarSearch() {
         }
       />
 
-      <div>
+      {/* <div>
         <SegmentedControl
           value={section}
           onChange={(value: any) => setSection(value)}
@@ -92,7 +104,7 @@ export function NavbarSearch() {
           ]}
           mb="0"
         />
-      </div>
+      </div> */}
 
       <ScrollArea>
         <div className={classes.navbarMain}>{courses}</div>
