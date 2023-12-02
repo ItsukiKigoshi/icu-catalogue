@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import SearchCourses from "../../components/NavbarSearch/SearchCourses";
+import SearchCourses from "../../components/Navbar/SearchCourses";
 
 const meta = {
   title: "Molecules/SeachCourses",

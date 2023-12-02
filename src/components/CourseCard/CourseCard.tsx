@@ -1,5 +1,5 @@
 import { Course } from "@/src/type/Types";
-import { Flex, Text, UnstyledButton } from "@mantine/core";
+import { Checkbox, Flex, Text, UnstyledButton } from "@mantine/core";
 import classes from "./CourseCard.module.css";
 
 export default function CourseCard(props: {
@@ -7,23 +7,20 @@ export default function CourseCard(props: {
   toggleIsEnrolled: (regno: number) => () => void;
 }) {
   return (
-    <UnstyledButton key={props.course.regno} className={classes.button} mb={8}>
+    <UnstyledButton
+      key={props.course.regno}
+      className={classes.button}
+      mb={8}
+      onClick={props.toggleIsEnrolled(props.course.regno)}
+    >
       <Flex align="center">
-        {/* <ActionIcon
-          variant="default"
-          onClick={props.toggleIsEnrolled(props.course.regno)}
-          mr="xl"
-        >
-          {props.course.isEnrolled ? <IconMinus /> : <IconPlus />}
-        </ActionIcon> */}
-        <input
-          type="checkbox"
-          checked={props.course.isEnrolled}
-          onChange={props.toggleIsEnrolled(props.course.regno)}
-        />
+        <Checkbox checked={props.course.isEnrolled} variant="default" mr="xl" />
         <div>
-          <Text fz="sm" mt={2} lh={1}>
+          <Text size="sm" mt={2} lh={1}>
             {props.course.e}
+          </Text>
+          <Text size="xs" c="dimmed">
+            {props.course.instructor}
           </Text>
         </div>
       </Flex>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { NavbarSearch } from "../../components/NavbarSearch/NavbarSearch";
+import { NavbarSearch } from "../../components/Navbar/NavbarSearch";
 
 const meta = {
   title: "Organisms/NavbarSearch",

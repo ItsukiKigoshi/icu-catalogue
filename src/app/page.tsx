@@ -3,7 +3,7 @@ import { AppShell, Grid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { Header } from "../components/Header/Header";
-import { NavbarSearch } from "../components/NavbarSearch/NavbarSearch";
+import { Navbar } from "../components/Navbar/Navbar";
 import RequirementTable from "../components/RequirementTable/RequirementTable";
 import { Timetable } from "../components/Timetable/Timetable";
 
@@ -81,12 +81,7 @@ export default function Page() {
         <Header opened={opened} toggle={toggle} />
       </AppShell.Header>
       <AppShell.Navbar>
-        <NavbarSearch courses={courses} toggleIsEnrolled={toggleIsEnrolled} />
-        {courses
-          .filter((course) => course.isEnrolled)
-          .map((course) => (
-            <p key={course.regno}>{course.e}</p>
-          ))}
+        <Navbar courses={courses} toggleIsEnrolled={toggleIsEnrolled} />
       </AppShell.Navbar>
       <AppShell.Main>
         <Grid justify="flex-start" gutter="md" align="stretch">

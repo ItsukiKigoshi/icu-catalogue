@@ -6,7 +6,7 @@ import classes from "./Timetable.module.css";
 export function Timetable(props: { courses: Course[] }) {
   const theme = useMantineTheme();
 
-  const weekDays: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  const weekDays: string[] = ["M", "TU", "W", "TH", "F"];
   const weekDayItems = weekDays.map((day) => (
     <Card key={day} className={classes.item} style={{ height: "30px" }}>
       <Text size="lg" mt={3} fw={700}>
@@ -58,36 +58,42 @@ export function Timetable(props: { courses: Course[] }) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <SimpleGrid cols={6} spacing="xs" verticalSpacing="xs">
+        {/* Empty Card */}
         <Card
           className={classes.item}
           style={{ backgroundColor: "transparent", height: "30px" }}
         ></Card>
+
+        {/* Card for weekdays */}
         {weekDayItems}
+
+        {/*  Show time (1st Period ~ 7th Period) */}
         <Stack>{schedule}</Stack>
 
-        <Stack>
-          {Array(7)
-            .fill(0)
-            .map((_, i) => {
-              return (
-                <Card className={classes.item} p={1}>
-                  {timetable[`${i + 1}/M`]?.map((course) => {
-                    return (
-                      <Text size="xs" c="dimmed">
-                        {course.e}
-                      </Text>
-                    );
-                  })}
-                </Card>
-              );
-            })}
-        </Stack>
+        {/* Show timetable for all weekdays */}
+        {weekDays.map((day) => {
+          return (
+            // Set timetable column for each day (M,TU,W,TH,F)
+            <Stack key={day}>
+              {Array(7)
+                .fill(0)
+                .map((_, i) => {
+                  return (
+                    <Card key={i} className={classes.item} p={1}>
+                      {timetable[`${i + 1}/${day}`]?.map((course) => {
+                        return (
+                          <Text key={course.regno} size="xs" c="dimmed">
+                            {course.e}
+                          </Text>
+                        );
+                      })}
+                    </Card>
+                  );
+                })}
+            </Stack>
+          );
+        })}
       </SimpleGrid>
-      {enrolledCourses.map((course) => (
-        <p key={course.regno}>
-          {course.e}: {course.schedule}
-        </p>
-      ))}
     </Card>
   );
 }
