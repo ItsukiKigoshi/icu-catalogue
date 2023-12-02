@@ -1,38 +1,37 @@
 import { Flex, ScrollArea, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import { Course, CourseWithCheck } from "@/src/type/Types";
+import { Course, CourseWithAdded } from "@/src/type/Types";
 import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
 import SearchCourses from "./SearchCourses";
 
-export function NavbarSearch() {
-  const [section, setSection] = useState<"addNew" | "myList">("addNew");
-
-  const [addNewItems, setAddNewItems] = useState<CourseWithCheck[]>([]);
-  const [myListItems, setMyListItems] = useState<CourseWithCheck[]>([]);
+export function NavbarSearch(props: {
+  setTimetableData: (data: CourseWithAdded[][]) => void;
+}) {
+  const [courses, setCourses] = useState<CourseWithAdded[]>([]);
 
   useEffect(() => {
-    const getAddNewItems = async () => {
+    const getCourses = async () => {
       const response = await fetch("/api/courses");
-      const addNewResponses = await response.json();
+      const jsonResponse = await response.json();
 
-      const addNewResponsesWithCheck = addNewResponses.map((item: Course) => {
-        return { ...item, checked: false };
+      const coursesAdded = jsonResponse.map((item: Course) => {
+        return { ...item, added: false };
       });
-      setAddNewItems(addNewResponsesWithCheck);
+      setCourses(coursesAdded);
     };
 
-    getAddNewItems();
+    getCourses();
   }, []);
 
   const toggleCheck = (regno: number) => {
     return () => {
-      setAddNewItems(
-        addNewItems.map((item) => {
+      setCourses(
+        courses.map((item) => {
           if (item.regno === regno) {
-            console.log(`${item.regno}: ${item.checked}`);
-            return { ...item, checked: !item.checked };
+            console.log(`${item.regno}: ${item.added}`);
+            return { ...item, added: !item.added };
           } else {
             return item;
           }
@@ -41,36 +40,21 @@ export function NavbarSearch() {
     };
   };
 
-  useEffect(() => {
-    const getMyListItems = async () => {
-      // Only get the courses that are checked
-      const response = addNewItems.filter((item) => item.checked === true);
-      setMyListItems(response);
-    };
-
-    getMyListItems();
-  }, [addNewItems]);
-
-  const tabs = {
-    addNew: addNewItems,
-    myList: myListItems,
-  };
-
   const [currentQuery, setCurrentQuery] = useState("");
 
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
-  const courses =
-    tabs[section].length > 0 || currentQuery === "" ? (
+  const results =
+    courses.length > 0 || currentQuery === "" ? (
       <>
         {/* How to handle the state (currentQuery === "")?  */}
         {currentQuery !== "" ? (
           <Text>
-            {tabs[section].length} Results for "{currentQuery}"
+            {courses.length} Results for "{currentQuery}"
           </Text>
         ) : (
           <></>
         )}
-        {tabs[section].map((item) => (
+        {courses.map((item) => (
           <CourseCard item={item} toggleCheck={toggleCheck} />
         ))}
       </>
@@ -82,32 +66,16 @@ export function NavbarSearch() {
 
   return (
     <nav className={classes.navbar}>
-      {/* Search Feature is now only available for AddNewItems */}
+      {/* Search Feature is now only available for courses */}
       <SearchCourses
-        getSearchResults={(results: CourseWithCheck[]) =>
-          setAddNewItems(results)
-        }
+        getSearchResults={(results: CourseWithAdded[]) => setCourses(results)}
         getCurrentQuery={(currentQuery: string) =>
           setCurrentQuery(currentQuery)
         }
       />
 
-      {/* <div>
-        <SegmentedControl
-          value={section}
-          onChange={(value: any) => setSection(value)}
-          transitionTimingFunction="ease"
-          fullWidth
-          data={[
-            { label: "Add New", value: "addNew" },
-            { label: "My List", value: "myList" },
-          ]}
-          mb="0"
-        />
-      </div> */}
-
       <ScrollArea>
-        <div className={classes.navbarMain}>{courses}</div>
+        <div className={classes.navbarMain}>{results}</div>
       </ScrollArea>
     </nav>
   );

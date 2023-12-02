@@ -743,7 +743,7 @@ export default function Page() {
         <Header opened={opened} toggle={toggle} />
       </AppShell.Header>
       <AppShell.Navbar>
-        <NavbarSearch />
+        <NavbarSearch setTimetableData={setTimetableData} />
       </AppShell.Navbar>
       <AppShell.Main>
         <Grid justify="flex-start" gutter="md" align="stretch">

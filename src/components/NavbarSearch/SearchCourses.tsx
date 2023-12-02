@@ -1,11 +1,11 @@
 "use client";
 
-import { CourseWithCheck } from "@/src/type/Course";
+import { CourseWithAdded } from "@/src/type/Types";
 import { TextInput, rem } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 
-type GetSearchResults = (results: CourseWithCheck[]) => void;
+type GetSearchResults = (results: CourseWithAdded[]) => void;
 type GetCurrentQuery = (query: string) => void;
 
 export default function SearchCourses({

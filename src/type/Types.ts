@@ -9,8 +9,8 @@ export interface Course {
   summary_j: string;
 }
 
-export interface CourseWithCheck extends Course {
-  checked: boolean;
+export interface CourseWithAdded extends Course {
+  added: boolean;
 }
 
 export interface TimetableItem {
