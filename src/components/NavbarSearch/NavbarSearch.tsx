@@ -6,9 +6,7 @@ import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
 import SearchCourses from "./SearchCourses";
 
-export function NavbarSearch(props: {
-  setTimetableData: (data: CourseWithAdded[][]) => void;
-}) {
+export function NavbarSearch() {
   const [courses, setCourses] = useState<CourseWithAdded[]>([]);
 
   useEffect(() => {
