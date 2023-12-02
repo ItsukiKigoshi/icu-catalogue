@@ -1,35 +1,13 @@
 export interface Course {
-  cno: string;
-  term: string;
-  title_j: string;
-  title_e: string;
   regno: number;
-  lang: string;
-  summary_e: string;
-  summary_j: string;
-}
-
-export interface CourseWithAdded extends Course {
-  added: boolean;
-}
-
-export interface TimetableItem {
-  rgno: string;
   season: string;
   ay: string;
   no: string;
-  cno: string | null;
   lang: string;
-  section: string | null;
   e: string;
   j: string;
-  schedule: string | null;
-  room: string | null;
-  comment: string | null;
-  maxnum: string | null;
-  flg: string;
   instructor: string;
+  schedule: string[] | null;
   unit: string;
-  deleted: string;
-  Label1: string | null;
+  isEnrolled: boolean;
 }

@@ -1,28 +1,29 @@
-import { CourseWithAdded } from "@/src/type/Types";
-import { ActionIcon, Flex, Text, UnstyledButton } from "@mantine/core";
-import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { Course } from "@/src/type/Types";
+import { Flex, Text, UnstyledButton } from "@mantine/core";
 import classes from "./CourseCard.module.css";
 
 export default function CourseCard(props: {
-  item: CourseWithAdded;
-  toggleCheck: (regno: number) => () => void;
+  course: Course;
+  toggleIsEnrolled: (regno: number) => () => void;
 }) {
   return (
-    <UnstyledButton key={props.item.regno} className={classes.button} mb={8}>
+    <UnstyledButton key={props.course.regno} className={classes.button} mb={8}>
       <Flex align="center">
-        <ActionIcon
+        {/* <ActionIcon
           variant="default"
-          onClick={props.toggleCheck(props.item.regno)}
+          onClick={props.toggleIsEnrolled(props.course.regno)}
           mr="xl"
         >
-          {props.item.added ? <IconMinus /> : <IconPlus />}
-        </ActionIcon>
+          {props.course.isEnrolled ? <IconMinus /> : <IconPlus />}
+        </ActionIcon> */}
+        <input
+          type="checkbox"
+          checked={props.course.isEnrolled}
+          onChange={props.toggleIsEnrolled(props.course.regno)}
+        />
         <div>
-          <Text fz="sm" c="dimmed">
-            {props.item.cno}
-          </Text>
           <Text fz="sm" mt={2} lh={1}>
-            {props.item.title_e}
+            {props.course.e}
           </Text>
         </div>
       </Flex>

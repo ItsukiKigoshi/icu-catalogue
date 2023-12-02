@@ -1,9 +1,9 @@
 "use client";
-import { TimetableItem } from "@/src/type/Types";
-import { Card, SimpleGrid, Text, useMantineTheme } from "@mantine/core";
+import { Course } from "@/src/type/Types";
+import { Card, SimpleGrid, Stack, Text, useMantineTheme } from "@mantine/core";
 import classes from "./Timetable.module.css";
 
-export function Timetable(props: { timetableData: TimetableItem[][] }) {
+export function Timetable(props: { courses: Course[] }) {
   const theme = useMantineTheme();
 
   const weekDays: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -15,18 +15,8 @@ export function Timetable(props: { timetableData: TimetableItem[][] }) {
     </Card>
   ));
 
-  const timetableItems: JSX.Element[][] = [];
-
-  for (let i = 0; i < props.timetableData.length; i++) {
-    timetableItems[i] = props.timetableData[i].map((item) => (
-      <Card key={item.no} className={classes.item} p={1}>
-        <Text size="xs">{item.e}</Text>
-      </Card>
-    ));
-  }
-
   type ScheduleItem = [string, number, string];
-  const schedule: ScheduleItem[] = [
+  const scheduleItems: ScheduleItem[] = [
     ["8:50", 1, "10:00"],
     ["10:10", 2, "11:20"],
     ["11:30", 3, "12:40"],
@@ -36,7 +26,7 @@ export function Timetable(props: { timetableData: TimetableItem[][] }) {
     ["17:50", 7, "19:00"],
   ];
 
-  const timetable: JSX.Element[] = schedule.map((item) => (
+  const schedule: JSX.Element[] = scheduleItems.map((item) => (
     <>
       <Card key={item[2]} className={classes.item} p={1}>
         <Text size="xs" c="dimmed">
@@ -49,9 +39,21 @@ export function Timetable(props: { timetableData: TimetableItem[][] }) {
           {item[2]}
         </Text>
       </Card>
-      {timetableItems[item[1] - 1]}
     </>
   ));
+
+  const timetable: { [key: string]: Course[] } = {};
+
+  const enrolledCourses = props.courses.filter((course) => course.isEnrolled);
+  enrolledCourses.forEach((course) => {
+    course.schedule?.forEach((entry) => {
+      const [time, day] = entry.split("/");
+      if (!timetable[`${time}/${day}`]) {
+        timetable[`${time}/${day}`] = [];
+      }
+      timetable[`${time}/${day}`].push(course);
+    });
+  });
 
   return (
     <Card withBorder radius="md" className={classes.card}>
@@ -61,8 +63,31 @@ export function Timetable(props: { timetableData: TimetableItem[][] }) {
           style={{ backgroundColor: "transparent", height: "30px" }}
         ></Card>
         {weekDayItems}
-        {timetable}
+        <Stack>{schedule}</Stack>
+
+        <Stack>
+          {Array(7)
+            .fill(0)
+            .map((_, i) => {
+              return (
+                <Card className={classes.item} p={1}>
+                  {timetable[`${i + 1}/M`]?.map((course) => {
+                    return (
+                      <Text size="xs" c="dimmed">
+                        {course.e}
+                      </Text>
+                    );
+                  })}
+                </Card>
+              );
+            })}
+        </Stack>
       </SimpleGrid>
+      {enrolledCourses.map((course) => (
+        <p key={course.regno}>
+          {course.e}: {course.schedule}
+        </p>
+      ))}
     </Card>
   );
 }

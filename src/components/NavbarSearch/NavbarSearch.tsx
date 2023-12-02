@@ -1,76 +1,35 @@
-import { Flex, ScrollArea, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { ScrollArea, TextInput, rem } from "@mantine/core";
 
-import { Course, CourseWithAdded } from "@/src/type/Types";
+import { Course } from "@/src/type/Types";
+import { IconSearch } from "@tabler/icons-react";
 import CourseCard from "../CourseCard/CourseCard";
 import classes from "./NavbarSearch.module.css";
-import SearchCourses from "./SearchCourses";
 
-export function NavbarSearch() {
-  const [courses, setCourses] = useState<CourseWithAdded[]>([]);
-
-  useEffect(() => {
-    const getCourses = async () => {
-      const response = await fetch("/api/courses");
-      const jsonResponse = await response.json();
-
-      const coursesAdded = jsonResponse.map((item: Course) => {
-        return { ...item, added: false };
-      });
-      setCourses(coursesAdded);
-    };
-
-    getCourses();
-  }, []);
-
-  const toggleCheck = (regno: number) => {
-    return () => {
-      setCourses(
-        courses.map((item) => {
-          if (item.regno === regno) {
-            console.log(`${item.regno}: ${item.added}`);
-            return { ...item, added: !item.added };
-          } else {
-            return item;
-          }
-        })
-      );
-    };
-  };
-
-  const [currentQuery, setCurrentQuery] = useState("");
-
+export function NavbarSearch(props: {
+  courses: Course[];
+  toggleIsEnrolled: (regno: number) => () => void;
+}) {
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
-  const results =
-    courses.length > 0 || currentQuery === "" ? (
-      <>
-        {/* How to handle the state (currentQuery === "")?  */}
-        {currentQuery !== "" ? (
-          <Text>
-            {courses.length} Results for "{currentQuery}"
-          </Text>
-        ) : (
-          <></>
-        )}
-        {courses.map((item) => (
-          <CourseCard item={item} toggleCheck={toggleCheck} />
-        ))}
-      </>
-    ) : (
-      <Flex justify="center">
-        <Text>No Results for "{currentQuery}"</Text>
-      </Flex>
-    );
+  const results = props.courses.map((course) => (
+    <CourseCard course={course} toggleIsEnrolled={props.toggleIsEnrolled} />
+  ));
 
   return (
     <nav className={classes.navbar}>
-      {/* Search Feature is now only available for courses */}
-      <SearchCourses
-        getSearchResults={(results: CourseWithAdded[]) => setCourses(results)}
-        getCurrentQuery={(currentQuery: string) =>
-          setCurrentQuery(currentQuery)
-        }
-      />
+      <form>
+        <TextInput
+          placeholder="Search Courses"
+          size="xs"
+          leftSection={
+            <IconSearch
+              style={{ width: rem(12), height: rem(12) }}
+              stroke={1.5}
+            />
+          }
+          styles={{ section: { pointerEvents: "none" } }}
+          mb="sm"
+        />
+      </form>
 
       <ScrollArea>
         <div className={classes.navbarMain}>{results}</div>
