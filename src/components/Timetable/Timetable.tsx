@@ -6,7 +6,7 @@ import classes from "./Timetable.module.css";
 export function Timetable(props: { courses: Course[] }) {
   const theme = useMantineTheme();
 
-  const weekDays: string[] = ["M", "TU", "W", "TH", "F"];
+  const weekDays: string[] = ["M", "TU", "W", "TH", "F", "SA"];
   const weekDayItems = weekDays.map((day) => (
     <Card key={day} className={classes.item} style={{ height: "30px" }}>
       <Text size="lg" mt={3} fw={700}>
@@ -57,12 +57,17 @@ export function Timetable(props: { courses: Course[] }) {
 
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <SimpleGrid cols={6} spacing="xs" verticalSpacing="xs">
+      <SimpleGrid cols={7} spacing="xs" verticalSpacing="xs">
         {/* Empty Card */}
         <Card
           className={classes.item}
           style={{ backgroundColor: "transparent", height: "30px" }}
-        ></Card>
+        >
+          <Text size="md" fw="bold">
+            Sum:
+            {enrolledCourses.reduce((sum, course) => sum + course.unit, 0)}
+          </Text>
+        </Card>
 
         {/* Card for weekdays */}
         {weekDayItems}
@@ -82,7 +87,7 @@ export function Timetable(props: { courses: Course[] }) {
                     <Card key={i} className={classes.item} p={1}>
                       {timetable[`${i + 1}/${day}`]?.map((course) => {
                         return (
-                          <Text key={course.regno} size="xs" c="dimmed">
+                          <Text key={course.regno} size="xs" fw="bold">
                             {course.e}
                           </Text>
                         );

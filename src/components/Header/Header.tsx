@@ -42,7 +42,7 @@ export function Header(props: {
           <Burger
             opened={props.opened}
             onClick={props.toggle}
-            hiddenFrom="md"
+            hiddenFrom="sm"
             size="sm"
             mr={3}
           />
