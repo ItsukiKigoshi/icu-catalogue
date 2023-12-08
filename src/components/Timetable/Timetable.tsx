@@ -73,13 +73,13 @@ export function Timetable(props: { courses: Course[] }) {
         {weekDayItems}
 
         {/*  Show time (1st Period ~ 7th Period) */}
-        <Stack>{schedule}</Stack>
+        <Stack gap="xs">{schedule}</Stack>
 
         {/* Show timetable for all weekdays */}
         {weekDays.map((day) => {
           return (
             // Set timetable column for each day (M,TU,W,TH,F)
-            <Stack key={day}>
+            <Stack key={day} gap="xs">
               {Array(7)
                 .fill(0)
                 .map((_, i) => {
