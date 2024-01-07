@@ -12,20 +12,26 @@ export default function Page() {
 
   // Get the value of a certain key in the local storage
   const getLocalStorageValue = (key: string, initValue: string) => {
-    const item = localStorage.getItem(key);
-
-    return item ? item : initValue;
+    if (typeof window !== "undefined") {
+      const item = localStorage.getItem(key);
+      return item ? item : initValue;
+    }
+    return initValue;
   };
 
-  const useLocalStorage = (key: string, initValue: object) => {
-    const [value, setValue] = useState(() =>
-      JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue)))
-    );
+  const useLocalStorage = (key: string, initValue: Course[]) => {
+    const [value, setValue] = useState<Course[]>([]);
+
+    useEffect(() => {
+      setValue(
+        JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue)))
+      );
+    }, []);
 
     useEffect(() => {
       const callback = (event: StorageEvent) => {
         if (event.key === key) {
-          setValue((value: object) =>
+          setValue((value: Course[]) =>
             JSON.parse(localStorage.getItem(key) ?? JSON.stringify(value))
           );
         }
@@ -38,14 +44,14 @@ export default function Page() {
     }, [key]);
 
     const setLocalStorageValue = useCallback(
-      (setStateAction: object | ((prevState: object) => object)) => {
-        const newValue =
+      (setStateAction: Course[] | ((prevState: Course[]) => Course[])) => {
+        const newValue: Course[] =
           setStateAction instanceof Function
             ? setStateAction(value)
             : setStateAction;
 
         localStorage.setItem(key, JSON.stringify(newValue));
-        setValue(() => newValue);
+        setValue(newValue);
       },
       [key, value]
     );
