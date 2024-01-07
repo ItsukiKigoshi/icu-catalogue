@@ -19,6 +19,7 @@ export default function Page() {
     return initValue;
   };
 
+  // Set the value of a certain key in the local storage
   const useLocalStorage = (key: string, initValue: Course[]) => {
     const [value, setValue] = useState<Course[]>([]);
 
@@ -59,6 +60,7 @@ export default function Page() {
     return [value, setLocalStorageValue] as const;
   };
 
+  // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage("courses", [
     {
       regno: 99999,
