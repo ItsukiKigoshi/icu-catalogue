@@ -70,8 +70,6 @@ export default function Page() {
     },
   ]);
 
-  useLocalStorage("courses", courses);
-
   // Toggle the isEnrolled property of a certain course
   // Usage: toggleIsEnrolled(regno)
   const toggleIsEnrolled = (regno: number) => {
