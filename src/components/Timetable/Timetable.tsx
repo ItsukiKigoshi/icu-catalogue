@@ -58,14 +58,13 @@ export function Timetable(props: { courses: Course[] }) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <SimpleGrid cols={7} spacing="xs" verticalSpacing="xs">
-        {/* Empty Card */}
         <Card
           className={classes.item}
           style={{ backgroundColor: "transparent", height: "30px" }}
         >
           <Text size="md" fw="bold">
-            Sum:
-            {enrolledCourses.reduce((sum, course) => sum + course.unit, 0)}
+            {enrolledCourses.reduce((sum, course) => sum + course.unit, 0)}{" "}
+            Units
           </Text>
         </Card>
 
