@@ -1,7 +1,7 @@
 "use client";
 import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
 import { Navbar } from "../components/Navbar/Navbar";
 import { Timetable } from "../components/Timetable/Timetable";
@@ -10,7 +10,56 @@ import { Course } from "../type/Types";
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
 
-  const [courses, setCourses] = useState([
+  // Get the value of a certain key in the local storage
+  const getLocalStorageValue = (key: string, initValue: string) => {
+    if (typeof window !== "undefined") {
+      const item = localStorage.getItem(key);
+      return item ? item : initValue;
+    }
+    return initValue;
+  };
+
+  const useLocalStorage = (key: string, initValue: Course[]) => {
+    const [value, setValue] = useState<Course[]>([]);
+
+    useEffect(() => {
+      setValue(
+        JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue)))
+      );
+    }, []);
+
+    useEffect(() => {
+      const callback = (event: StorageEvent) => {
+        if (event.key === key) {
+          setValue((value: Course[]) =>
+            JSON.parse(localStorage.getItem(key) ?? JSON.stringify(value))
+          );
+        }
+      };
+
+      window.addEventListener("storage", callback);
+      return () => {
+        window.removeEventListener("storage", callback);
+      };
+    }, [key]);
+
+    const setLocalStorageValue = useCallback(
+      (setStateAction: Course[] | ((prevState: Course[]) => Course[])) => {
+        const newValue: Course[] =
+          setStateAction instanceof Function
+            ? setStateAction(value)
+            : setStateAction;
+
+        localStorage.setItem(key, JSON.stringify(newValue));
+        setValue(newValue);
+      },
+      [key, value]
+    );
+
+    return [value, setLocalStorageValue] as const;
+  };
+
+  const [courses, setCourses] = useLocalStorage("courses", [
     {
       regno: 99999,
       season: "Spring",
@@ -31,7 +80,7 @@ export default function Page() {
   // Usage: toggleIsEnrolled(regno)
   const toggleIsEnrolled = (regno: number) => {
     setCourses(
-      courses.map((course) => {
+      courses.map((course: Course) => {
         if (course.regno === regno) {
           return { ...course, isEnrolled: !course.isEnrolled };
         } else {
@@ -50,7 +99,7 @@ export default function Page() {
   // Delete a certain course from the list "courses"
   // Usage: deleteCourse(regno: number)
   const deleteCourse = (regno: number) => {
-    setCourses(courses.filter((course) => course.regno !== regno));
+    setCourses(courses.filter((course: Course) => course.regno !== regno));
   };
 
   return (
