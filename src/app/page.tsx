@@ -1,7 +1,7 @@
 "use client";
 import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
 import { Navbar } from "../components/Navbar/Navbar";
 import { Timetable } from "../components/Timetable/Timetable";
@@ -10,7 +10,50 @@ import { Course } from "../type/Types";
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
 
-  const [courses, setCourses] = useState([
+  // Get the value of a certain key in the local storage
+  const getLocalStorageValue = (key: string, initValue: string) => {
+    const item = localStorage.getItem(key);
+
+    return item ? item : initValue;
+  };
+
+  const useLocalStorage = (key: string, initValue: object) => {
+    const [value, setValue] = useState(() =>
+      JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue)))
+    );
+
+    useEffect(() => {
+      const callback = (event: StorageEvent) => {
+        if (event.key === key) {
+          setValue((value: object) =>
+            JSON.parse(localStorage.getItem(key) ?? JSON.stringify(value))
+          );
+        }
+      };
+
+      window.addEventListener("storage", callback);
+      return () => {
+        window.removeEventListener("storage", callback);
+      };
+    }, [key]);
+
+    const setLocalStorageValue = useCallback(
+      (setStateAction: object | ((prevState: object) => object)) => {
+        const newValue =
+          setStateAction instanceof Function
+            ? setStateAction(value)
+            : setStateAction;
+
+        localStorage.setItem(key, JSON.stringify(newValue));
+        setValue(() => newValue);
+      },
+      [key, value]
+    );
+
+    return [value, setLocalStorageValue] as const;
+  };
+
+  const [courses, setCourses] = useLocalStorage("courses", [
     {
       regno: 99999,
       season: "Spring",
@@ -27,11 +70,13 @@ export default function Page() {
     },
   ]);
 
+  useLocalStorage("courses", courses);
+
   // Toggle the isEnrolled property of a certain course
   // Usage: toggleIsEnrolled(regno)
   const toggleIsEnrolled = (regno: number) => {
     setCourses(
-      courses.map((course) => {
+      courses.map((course: Course) => {
         if (course.regno === regno) {
           return { ...course, isEnrolled: !course.isEnrolled };
         } else {
@@ -50,7 +95,7 @@ export default function Page() {
   // Delete a certain course from the list "courses"
   // Usage: deleteCourse(regno: number)
   const deleteCourse = (regno: number) => {
-    setCourses(courses.filter((course) => course.regno !== regno));
+    setCourses(courses.filter((course: Course) => course.regno !== regno));
   };
 
   return (
