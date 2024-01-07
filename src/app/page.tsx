@@ -1,64 +1,14 @@
 "use client";
 import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
 import { Navbar } from "../components/Navbar/Navbar";
 import { Timetable } from "../components/Timetable/Timetable";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course } from "../type/Types";
 
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
-
-  // Get the value of a certain key in the local storage
-  const getLocalStorageValue = (key: string, initValue: string) => {
-    if (typeof window !== "undefined") {
-      const item = localStorage.getItem(key);
-      return item ? item : initValue;
-    }
-    return initValue;
-  };
-
-  // Set the value of a certain key in the local storage
-  const useLocalStorage = (key: string, initValue: Course[]) => {
-    const [value, setValue] = useState<Course[]>([]);
-
-    useEffect(() => {
-      setValue(
-        JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue)))
-      );
-    }, []);
-
-    useEffect(() => {
-      const callback = (event: StorageEvent) => {
-        if (event.key === key) {
-          setValue((value: Course[]) =>
-            JSON.parse(localStorage.getItem(key) ?? JSON.stringify(value))
-          );
-        }
-      };
-
-      window.addEventListener("storage", callback);
-      return () => {
-        window.removeEventListener("storage", callback);
-      };
-    }, [key]);
-
-    const setLocalStorageValue = useCallback(
-      (setStateAction: Course[] | ((prevState: Course[]) => Course[])) => {
-        const newValue: Course[] =
-          setStateAction instanceof Function
-            ? setStateAction(value)
-            : setStateAction;
-
-        localStorage.setItem(key, JSON.stringify(newValue));
-        setValue(newValue);
-      },
-      [key, value]
-    );
-
-    return [value, setLocalStorageValue] as const;
-  };
 
   // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage("courses", [
