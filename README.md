@@ -19,6 +19,7 @@ Please contact us via Discord (@itsukikigoshi), [Instagram (@itsukikigoshi)](htt
 
 ## Related Repositories
 
+- [icu-catalogue-api](https://github.com/itsukikigoshi/icu-catalogue-api)
 - [Timetable4ICU](https://github.com/kohshi54/Timetable4ICU)
 - [Syllabus.icu](https://github.com/pentaCoxian/nuxt3-syllabus)
 
