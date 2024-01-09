@@ -11,7 +11,7 @@ export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
 
   // Get the list of courses from the local storage
-  const [courses, setCourses] = useLocalStorage("courses", [
+  const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
     {
       regno: 99999,
       season: "Spring",
