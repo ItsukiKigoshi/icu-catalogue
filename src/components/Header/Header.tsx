@@ -24,7 +24,7 @@ export function Header(props: {
             mr={3}
           />
           <Text size="lg" fw={700}>
-            ICU Catalogue (Preview)
+            ICU Catalogue
           </Text>
         </Group>
         <Group gap={5}>
