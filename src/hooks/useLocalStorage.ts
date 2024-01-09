@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { Course } from "../type/Types";
 
 // Get the value of a certain key in the local storage
 const getLocalStorageValue = (key: string, initValue: string) => {
@@ -11,8 +10,8 @@ const getLocalStorageValue = (key: string, initValue: string) => {
 };
 
 // Set the value of a certain key in the local storage
-export const useLocalStorage = (key: string, initValue: Course[]) => {
-  const [value, setValue] = useState<Course[]>([]);
+export const useLocalStorage = <T>(key: string, initValue: T) => {
+  const [value, setValue] = useState<T>(initValue);
   useEffect(() => {
     setValue(JSON.parse(getLocalStorageValue(key, JSON.stringify(initValue))));
   }, []);
@@ -20,7 +19,7 @@ export const useLocalStorage = (key: string, initValue: Course[]) => {
   useEffect(() => {
     const callback = (event: StorageEvent) => {
       if (event.key === key) {
-        setValue((value: Course[]) =>
+        setValue((value: T) =>
           JSON.parse(localStorage.getItem(key) ?? JSON.stringify(value))
         );
       }
@@ -33,8 +32,8 @@ export const useLocalStorage = (key: string, initValue: Course[]) => {
   }, [key]);
 
   const setLocalStorageValue = useCallback(
-    (setStateAction: Course[] | ((prevState: Course[]) => Course[])) => {
-      const newValue: Course[] =
+    (setStateAction: T | ((prevState: T) => T)) => {
+      const newValue: T =
         setStateAction instanceof Function
           ? setStateAction(value)
           : setStateAction;

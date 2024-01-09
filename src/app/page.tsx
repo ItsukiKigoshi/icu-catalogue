@@ -1,5 +1,5 @@
 "use client";
-import { AppShell } from "@mantine/core";
+import { AppShell, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Header } from "../components/Header/Header";
 import { Navbar } from "../components/Navbar/Navbar";
@@ -11,7 +11,7 @@ export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
 
   // Get the list of courses from the local storage
-  const [courses, setCourses] = useLocalStorage("courses", [
+  const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
     {
       regno: 99999,
       season: "Spring",
@@ -86,6 +86,18 @@ export default function Page() {
             <RequirementTable />
           </Grid.Col> */}
           {/* </Grid> */}
+          <Flex
+            gap="md"
+            justify="center"
+            align="center"
+            direction="row"
+            wrap="wrap"
+          >
+            <Text fw="bold">
+              🚧 This App is still under development. Do not store any important
+              data here!
+            </Text>
+          </Flex>
         </AppShell.Main>
       </AppShell>
     </>
