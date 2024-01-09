@@ -1,5 +1,5 @@
 "use client";
-import { AppShell } from "@mantine/core";
+import { AppShell, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Header } from "../components/Header/Header";
 import { Navbar } from "../components/Navbar/Navbar";
@@ -78,14 +78,26 @@ export default function Page() {
           />
         </AppShell.Navbar>
         <AppShell.Main>
-          {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
-          {/* <Grid.Col span={{ base: "auto" }}> */}
-          <Timetable courses={courses} />
-          {/* </Grid.Col> */}
-          {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
+          <Flex
+            gap="md"
+            justify="center"
+            align="center"
+            direction="row"
+            wrap="wrap"
+          >
+            {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
+            {/* <Grid.Col span={{ base: "auto" }}> */}
+            <Timetable courses={courses} />
+            {/* </Grid.Col> */}
+            {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
             <RequirementTable />
           </Grid.Col> */}
-          {/* </Grid> */}
+            {/* </Grid> */}
+            <Text fw="bold">
+              🚧 This App is still under development. Do not store any important
+              data here!
+            </Text>
+          </Flex>
         </AppShell.Main>
       </AppShell>
     </>
