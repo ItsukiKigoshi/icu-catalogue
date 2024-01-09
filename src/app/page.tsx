@@ -78,6 +78,14 @@ export default function Page() {
           />
         </AppShell.Navbar>
         <AppShell.Main>
+          {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
+          {/* <Grid.Col span={{ base: "auto" }}> */}
+          <Timetable courses={courses} />
+          {/* </Grid.Col> */}
+          {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
+            <RequirementTable />
+          </Grid.Col> */}
+          {/* </Grid> */}
           <Flex
             gap="md"
             justify="center"
@@ -85,14 +93,6 @@ export default function Page() {
             direction="row"
             wrap="wrap"
           >
-            {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
-            {/* <Grid.Col span={{ base: "auto" }}> */}
-            <Timetable courses={courses} />
-            {/* </Grid.Col> */}
-            {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
-            <RequirementTable />
-          </Grid.Col> */}
-            {/* </Grid> */}
             <Text fw="bold">
               🚧 This App is still under development. Do not store any important
               data here!
