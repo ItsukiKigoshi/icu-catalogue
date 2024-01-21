@@ -25,6 +25,7 @@ export default function Page() {
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
       isEnrolled: true,
+      color: "#ff0000",
     },
   ]);
 
