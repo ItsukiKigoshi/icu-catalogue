@@ -1,8 +1,8 @@
 import { Flex, ScrollArea, Text } from "@mantine/core";
 
+import AddCourse from "@/src/components/AddCourse";
+import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
-import AddCourse from "../AddCourse/AddCourse";
-import CourseCard from "../CourseCard/CourseCard";
 import classes from "./Navbar.module.css";
 
 export function Navbar(props: {

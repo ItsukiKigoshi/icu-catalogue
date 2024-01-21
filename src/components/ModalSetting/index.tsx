@@ -1,21 +1,20 @@
 import {
-    Button,
-    Group,
-    Input,
-    Modal,
-    NativeSelect,
-    Text,
-    useComputedColorScheme,
-    useMantineColorScheme,
+  Button,
+  Group,
+  Input,
+  Modal,
+  NativeSelect,
+  Text,
+  useComputedColorScheme,
+  useMantineColorScheme,
 } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
 import { IconMoon, IconSun } from "@tabler/icons-react";
-import cx from "clsx";
 import classes from "./ModalSetting.module.css";
 
 export default function ModalSetting(props: {
-    modalOpened: boolean;
-    close: () => void;
+  modalOpened: boolean;
+  close: () => void;
 }) {
   const { setColorScheme } = useMantineColorScheme();
 
@@ -74,8 +73,11 @@ export default function ModalSetting(props: {
             size="sm"
             aria-label="Toggle color scheme"
           >
-            <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-            <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+            {computedColorScheme === "light" ? (
+              <IconSun stroke={1.5} />
+            ) : (
+              <IconMoon stroke={1.5} />
+            )}
           </Button>
           <Button
             onClick={() => setColorScheme("auto")}
