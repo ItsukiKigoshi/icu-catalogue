@@ -4,7 +4,7 @@ import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 
 import React from "react";
 
-import ModalSetting from "../ModalSetting/ModalSetting";
+import ModalSetting from "../ModalSetting";
 import classes from "./Header.module.css";
 
 export function Header(props: {

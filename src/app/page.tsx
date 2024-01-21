@@ -1,9 +1,9 @@
 "use client";
 import { AppShell, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Header } from "../components/Header/Header";
-import { Navbar } from "../components/Navbar/Navbar";
-import { Timetable } from "../components/Timetable/Timetable";
+import { Header } from "../components/Header";
+import { Navbar } from "../components/Navbar";
+import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course } from "../type/Types";
 
