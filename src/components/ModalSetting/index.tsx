@@ -73,7 +73,7 @@ export default function ModalSetting(props: {
             size="sm"
             aria-label="Toggle color scheme"
           >
-            {computedColorScheme === "light" ? (
+            {computedColorScheme === "dark" ? (
               <IconSun stroke={1.5} />
             ) : (
               <IconMoon stroke={1.5} />
