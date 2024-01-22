@@ -77,6 +77,7 @@ export default function AddCourse(props: {
         unit: unit,
         modified: new Date(),
         isEnrolled: true, // Default value, update as needed
+        color: "#000000", // Default value, update as needed
       };
 
       return course;

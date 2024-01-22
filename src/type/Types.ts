@@ -11,4 +11,5 @@ export interface Course {
   unit: number;
   modified: Date;
   isEnrolled: boolean;
+  color: string;
 }

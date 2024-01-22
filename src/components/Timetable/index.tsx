@@ -1,11 +1,9 @@
 "use client";
 import { Course } from "@/src/type/Types";
-import { Card, SimpleGrid, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
 import classes from "./Timetable.module.css";
 
 export function Timetable(props: { courses: Course[] }) {
-  const theme = useMantineTheme();
-
   const weekDays: string[] = ["M", "TU", "W", "TH", "F", "SA"];
   const weekDayItems = weekDays.map((day) => (
     <Card key={day} className={classes.item} style={{ height: "30px" }}>

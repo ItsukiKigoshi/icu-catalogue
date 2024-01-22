@@ -1,4 +1,4 @@
-import ModalConfirm from "@/src/components/ModalConfirm/ModalConfirm";
+import ModalConfirm from "@/src/components/ModalConfirm";
 import { Course } from "@/src/type/Types";
 import {
   ActionIcon,

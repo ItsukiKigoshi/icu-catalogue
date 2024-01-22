@@ -4,8 +4,7 @@ import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 
 import React from "react";
 
-import ModalSetting from "../ModalSetting/ModalSetting";
-import classes from "./Header.module.css";
+import ModalSetting from "../ModalSetting";
 
 export function Header(props: {
   opened: boolean;
@@ -14,7 +13,15 @@ export function Header(props: {
   const [modalOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
-      <Container size="max" className={classes.inner}>
+      <Container
+        size="max"
+        style={{
+          height: "56px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Group gap={5}>
           <Burger
             opened={props.opened}
