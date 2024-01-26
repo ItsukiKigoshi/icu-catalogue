@@ -4,15 +4,18 @@ import {
   ActionIcon,
   AppShell,
   Card,
+  Divider,
   Flex,
+  Grid,
   ScrollArea,
   Stack,
   Text,
   TextInput,
+  UnstyledButton,
   rem,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconChevronLeft, IconSearch } from "@tabler/icons-react";
+import { IconChevronLeft, IconPlus, IconSearch } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { theme } from "../theme";
@@ -39,11 +42,25 @@ export default function page() {
   };
 
   const results = courses.map((course) => (
-    <Card key={course.regno} shadow="sm" radius="md" padding="md">
-      <Text fw={500}>{course.title_e}</Text>
-      <Text size="sm" c="dimmed" lineClamp={2}>
-        {course.summary_e}
-      </Text>
+    <Card p={0}>
+      <Grid>
+        <Grid.Col span="auto">
+          <UnstyledButton key={course.regno} w="100%" p="md">
+            <Text fw={500}>{course.title_e}</Text>
+            <Text size="sm" c="dimmed" lineClamp={2}>
+              {course.summary_e}
+            </Text>
+          </UnstyledButton>
+        </Grid.Col>
+        <Divider orientation="vertical" my="md" mx={0} />
+        <Grid.Col span="content" p="md">
+          <Stack align="center" justify="center" h="100%">
+            <ActionIcon size="md" color="gray">
+              <IconPlus />
+            </ActionIcon>
+          </Stack>
+        </Grid.Col>
+      </Grid>
     </Card>
   ));
 
