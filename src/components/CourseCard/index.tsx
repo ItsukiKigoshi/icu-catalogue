@@ -3,15 +3,14 @@ import { Course } from "@/src/type/Types";
 import {
   ActionIcon,
   Card,
-  Checkbox,
-  Flex,
+  Divider,
   Grid,
+  Stack,
   Text,
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconTrash } from "@tabler/icons-react";
-import classes from "./CourseCard.module.css";
+import { IconEye, IconEyeOff, IconTrash } from "@tabler/icons-react";
 
 export default function CourseCard(props: {
   course: Course;
@@ -21,45 +20,46 @@ export default function CourseCard(props: {
   const [modalOpened, { open, close }] = useDisclosure(false);
 
   return (
-    <Card key={props.course.regno} mb={8} className={classes.button}>
-      <Grid align="center">
+    <Card p={0}>
+      <Grid>
         <Grid.Col span="auto">
           <UnstyledButton
             onClick={() => {
               props.toggleIsEnrolled(props.course.regno);
             }}
+            key={props.course.regno}
+            w="100%"
+            p="md"
           >
-            <Flex align="center">
-              <Checkbox
-                checked={props.course.isEnrolled}
-                onChange={() => {
-                  props.toggleIsEnrolled(props.course.regno);
-                }}
-                variant="default"
-                mr="xl"
-              />
-              <div>
-                <Text size="xs" c="dimmed">
-                  {props.course.no} ･ {props.course.unit}
-                </Text>
-                <Text size="sm" lh={1} py={4}>
-                  {props.course.e} ({props.course.lang})
-                </Text>
-                <Text size="xs" c="dimmed">
-                  {props.course.schedule?.map((s, i) =>
-                    i === props.course.schedule!.length - 1 ? s : s + ", "
-                  )}
-                </Text>
-              </div>
-            </Flex>
+            <Text size="xs" c="dimmed">
+              {props.course.no} ･ {props.course.unit}
+            </Text>
+            <Text size="sm" lh={1} py={4}>
+              {props.course.e} ({props.course.lang})
+            </Text>
+            <Text size="xs" c="dimmed">
+              {props.course.schedule?.map((s, i) =>
+                i === props.course.schedule!.length - 1 ? s : s + ", "
+              )}
+            </Text>
           </UnstyledButton>
         </Grid.Col>
-        <Grid.Col span="content">
-          <Flex align="center">
+        <Divider orientation="vertical" my="md" mx={0} />
+        <Grid.Col span="content" p="md">
+          <Stack align="center">
+            <ActionIcon
+              onClick={() => {
+                props.toggleIsEnrolled(props.course.regno);
+              }}
+              color="gray"
+            >
+              {props.course.isEnrolled ? <IconEye /> : <IconEyeOff />}
+            </ActionIcon>
+
             <ActionIcon size="sm" onClick={open} color="red">
               <IconTrash />
             </ActionIcon>
-          </Flex>
+          </Stack>
         </Grid.Col>
       </Grid>
       <ModalConfirm

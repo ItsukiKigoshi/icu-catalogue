@@ -1,6 +1,9 @@
 "use client";
-import { AppShell, Flex, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { AppShell, Button, Flex, em } from "@mantine/core";
+import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { IconCalendar, IconList, IconSearch } from "@tabler/icons-react";
+import Link from "next/link";
+import { useEffect } from "react";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
@@ -9,6 +12,14 @@ import { Course } from "../type/Types";
 
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      toggleDisplayMode("timetable");
+    }
+  }, [isMobile]);
 
   // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
@@ -56,51 +67,69 @@ export default function Page() {
   };
 
   return (
-    <>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: "400px",
-          breakpoint: "sm",
-          collapsed: { mobile: !opened },
-        }}
-        padding="md"
-        h="100vh"
-      >
-        <AppShell.Header>
-          <Header opened={opened} toggle={toggle} />
-        </AppShell.Header>
-        <AppShell.Navbar>
+    <AppShell
+      header={{ height: 60 }}
+      footer={{ height: 60 }}
+      navbar={{
+        width: "400px",
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="sm"
+      h="100vh"
+      w="100vw"
+    >
+      <AppShell.Header>
+        <Header />
+      </AppShell.Header>
+
+      <AppShell.Navbar>
+        <Navbar
+          courses={courses}
+          toggleIsEnrolled={toggleIsEnrolled}
+          addCourse={addCourse}
+          deleteCourse={deleteCourse}
+        />
+      </AppShell.Navbar>
+      <AppShell.Main h="100vh">
+        {displayMode === "timetable" ? (
+          <Timetable courses={courses} />
+        ) : (
           <Navbar
             courses={courses}
             toggleIsEnrolled={toggleIsEnrolled}
             addCourse={addCourse}
             deleteCourse={deleteCourse}
           />
-        </AppShell.Navbar>
-        <AppShell.Main>
-          {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
-          {/* <Grid.Col span={{ base: "auto" }}> */}
-          <Timetable courses={courses} />
-          {/* </Grid.Col> */}
-          {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
-            <RequirementTable />
-          </Grid.Col> */}
-          {/* </Grid> */}
-          <Flex
-            gap="md"
-            justify="center"
-            align="center"
-            direction="row"
-            wrap="wrap"
+        )}
+      </AppShell.Main>
+      <AppShell.Footer
+        withBorder={false}
+        style={{ background: "rgba(0,0,0,0)" }}
+      >
+        <Flex gap="md" mih={50} justify="center" align="center" direction="row">
+          <Button
+            variant="filled"
+            size="lg"
+            leftSection={<IconSearch />}
+            component={Link}
+            href="/search"
           >
-            <Text fw="bold">
-              🚧 This App is still under development. Do not store any important
-              data here!
-            </Text>
-          </Flex>
-        </AppShell.Main>
-      </AppShell>
-    </>
+            Search
+          </Button>
+          <Button
+            hiddenFrom="sm"
+            size="lg"
+            color="gray"
+            mr={3}
+            onClick={() => {
+              toggleDisplayMode();
+            }}
+          >
+            {displayMode === "list" ? <IconList /> : <IconCalendar />}
+          </Button>
+        </Flex>
+      </AppShell.Footer>
+    </AppShell>
   );
 }

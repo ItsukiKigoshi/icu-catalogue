@@ -1,9 +1,9 @@
-import { Flex, ScrollArea, Text } from "@mantine/core";
+"use client";
+import { Badge, ScrollArea, Stack } from "@mantine/core";
 
-import AddCourse from "@/src/components/AddCourse";
 import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
-import classes from "./Navbar.module.css";
+import { IconHeart } from "@tabler/icons-react";
 
 export function Navbar(props: {
   courses: Course[];
@@ -30,18 +30,13 @@ export function Navbar(props: {
     ));
 
   return (
-    <nav className={classes.navbar}>
-      <Flex justify="center">
-        <Text size="lg" fw="bold" mb={5}>
-          My List
-        </Text>
-      </Flex>
-
-      <AddCourse addCourse={props.addCourse} courses={props.courses} />
-
+    <Stack justify="flex-start" p="sm">
+      <Badge size="lg" leftSection={<IconHeart />} fullWidth>
+        Favourites
+      </Badge>
       <ScrollArea>
-        <div className={classes.navbarMain}>{results}</div>
+        <Stack>{results}</Stack>
       </ScrollArea>
-    </nav>
+    </Stack>
   );
 }

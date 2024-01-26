@@ -1,15 +1,10 @@
-import { ActionIcon, Burger, Container, Group, Text } from "@mantine/core";
+import { ActionIcon, Container, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 
-import React from "react";
-
 import ModalSetting from "../ModalSetting";
 
-export function Header(props: {
-  opened: boolean;
-  toggle: React.MouseEventHandler<HTMLButtonElement>;
-}) {
+export function Header() {
   const [modalOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
@@ -23,13 +18,6 @@ export function Header(props: {
         }}
       >
         <Group gap={5}>
-          <Burger
-            opened={props.opened}
-            onClick={props.toggle}
-            hiddenFrom="sm"
-            size="sm"
-            mr={3}
-          />
           <Text size="lg" fw={700}>
             ICU Catalogue
           </Text>
