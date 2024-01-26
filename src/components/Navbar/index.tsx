@@ -3,7 +3,7 @@ import { Badge, ScrollArea, Stack } from "@mantine/core";
 
 import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
-import { IconHeart } from "@tabler/icons-react";
+import { IconList } from "@tabler/icons-react";
 
 export function Navbar(props: {
   courses: Course[];
@@ -31,8 +31,8 @@ export function Navbar(props: {
 
   return (
     <Stack justify="flex-start" p="sm">
-      <Badge size="lg" leftSection={<IconHeart />} fullWidth>
-        Favourites
+      <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
+        My List
       </Badge>
       <ScrollArea>
         <Stack>{results}</Stack>
