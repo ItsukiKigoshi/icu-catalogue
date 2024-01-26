@@ -2135,15 +2135,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/form@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "@mantine/form@npm:7.2.2"
+"@mantine/form@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "@mantine/form@npm:7.5.0"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
-    klona: "npm:^2.0.5"
+    klona: "npm:^2.0.6"
   peerDependencies:
     react: ^18.2.0
-  checksum: 2fca2378c995c240894a7cbc01f7d23cc494575f9d77142656ea4d838a4e159557fe3a3ed0f862e7f4cd277c2addfff19679a3313b3b7ff347b380b0c33704c6
+  checksum: 946c300d5cecfe35ad15e0e48f6b8b1c3c442571624e21e40c86f550cc2814229312692e304d57b7be43a4c745270efb22a72ad6df9947eb59a94651677537b5
   languageName: node
   linkType: hard
 
@@ -9730,7 +9730,7 @@ __metadata:
     "@mantine/dates": "npm:^7.2.2"
     "@mantine/dropzone": "npm:^7.2.2"
     "@mantine/ds": "npm:^7.2.2"
-    "@mantine/form": "npm:^7.2.2"
+    "@mantine/form": "npm:^7.5.0"
     "@mantine/hooks": "npm:^7.2.2"
     "@mantine/modals": "npm:^7.2.2"
     "@mantine/notifications": "npm:^7.2.2"
@@ -10837,7 +10837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.4, klona@npm:^2.0.5":
+"klona@npm:^2.0.4, klona@npm:^2.0.6":
   version: 2.0.6
   resolution: "klona@npm:2.0.6"
   checksum: 94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
