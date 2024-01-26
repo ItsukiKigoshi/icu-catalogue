@@ -15,7 +15,11 @@ import {
   rem,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconChevronLeft, IconPlus, IconSearch } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconPlaylistAdd,
+  IconSearch,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { theme } from "../theme";
@@ -56,7 +60,7 @@ export default function page() {
         <Grid.Col span="content" p="md">
           <Stack align="center" justify="center" h="100%">
             <ActionIcon size="md" color="gray">
-              <IconPlus />
+              <IconPlaylistAdd />
             </ActionIcon>
           </Stack>
         </Grid.Col>
