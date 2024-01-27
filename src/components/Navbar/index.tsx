@@ -3,7 +3,10 @@ import { Badge, ScrollArea, Stack } from "@mantine/core";
 
 import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
+import { useDisclosure } from "@mantine/hooks";
 import { IconList } from "@tabler/icons-react";
+import { useState } from "react";
+import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
@@ -11,6 +14,11 @@ export function Navbar(props: {
   addCourse: (course: Course) => void;
   deleteCourse: (regno: number) => void;
 }) {
+  const [modalDetailOpened, { open, close }] = useDisclosure(false);
+  const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
+    Course[]
+  >([]);
+
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const results = props.courses
     // Sort the courses by their no property
@@ -22,11 +30,17 @@ export function Navbar(props: {
       }
     })
     .map((course) => (
-      <CourseCard
-        course={course}
-        toggleIsEnrolled={props.toggleIsEnrolled}
-        deleteCourse={props.deleteCourse}
-      />
+      <div key={course.regno}>
+        <CourseCard
+          course={course}
+          toggleIsEnrolled={props.toggleIsEnrolled}
+          deleteCourse={props.deleteCourse}
+          open={() => {
+            setModalDetailFocusedCourse([course]);
+            open();
+          }}
+        />
+      </div>
     ));
 
   return (
@@ -37,6 +51,13 @@ export function Navbar(props: {
       <ScrollArea>
         <Stack>{results}</Stack>
       </ScrollArea>
+      <ModalDetail
+        courses={modalDetailFocusedCourse}
+        modalDetailOpened={modalDetailOpened}
+        close={() => {
+          close();
+        }}
+      />
     </Stack>
   );
 }
