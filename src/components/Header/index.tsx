@@ -5,7 +5,7 @@ import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 import ModalSetting from "../ModalSetting";
 
 export function Header() {
-  const [modalOpened, { open, close }] = useDisclosure(false);
+  const [modalSettingOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
       <Container
@@ -43,7 +43,7 @@ export function Header() {
           >
             <IconSettings />
           </ActionIcon>
-          <ModalSetting modalOpened={modalOpened} close={close} />
+          <ModalSetting modalSettingOpened={modalSettingOpened} close={close} />
         </Group>
       </Container>
     </header>

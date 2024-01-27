@@ -13,7 +13,7 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import classes from "./ModalSetting.module.css";
 
 export default function ModalSetting(props: {
-  modalOpened: boolean;
+  modalSettingOpened: boolean;
   close: () => void;
 }) {
   const { setColorScheme } = useMantineColorScheme();
@@ -23,7 +23,7 @@ export default function ModalSetting(props: {
   });
   return (
     <Modal
-      opened={props.modalOpened}
+      opened={props.modalSettingOpened}
       onClose={props.close}
       title="Settings"
       centered
