@@ -7,20 +7,22 @@ export default function ModalDetail(props: {
   modalDetailOpened: boolean;
   close: () => void;
 }) {
-  const courseInfo: JSX.Element = (
-    <>
+  const CourseInfo: React.FC<{ course: Course }> = (props: {
+    course: Course;
+  }) => {
+    return (
       <Stack>
         <Text>
-          {props.courses[0].no} ･ {props.courses[0].unit}
+          {props.course?.no} ･ {props.course?.unit}
         </Text>
         <Text>
-          {props.courses[0].schedule?.map((s, i) =>
-            i === props.courses[0].schedule!.length - 1 ? s : s + ", "
+          {props.course?.schedule?.map((s, i) =>
+            i === props.course?.schedule!.length - 1 ? s : s + ", "
           )}
         </Text>
       </Stack>
-    </>
-  );
+    );
+  };
 
   return (
     <Modal.Root opened={props.modalDetailOpened} onClose={props.close} centered>
@@ -40,8 +42,8 @@ export default function ModalDetail(props: {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {props.courses.length === 1 ? (
-            <>{courseInfo}</>
+          {props.courses?.length === 1 ? (
+            <CourseInfo course={props.courses?.[0]} />
           ) : (
             <Accordion defaultValue={props.courses?.[0]?.e}>
               {props.courses?.map((course) => (
@@ -51,7 +53,9 @@ export default function ModalDetail(props: {
                       {course.e} ({course.lang})
                     </Text>
                   </Accordion.Control>
-                  <Accordion.Panel>{courseInfo}</Accordion.Panel>
+                  <Accordion.Panel>
+                    <CourseInfo course={course} />
+                  </Accordion.Panel>
                 </Accordion.Item>
               ))}
             </Accordion>
