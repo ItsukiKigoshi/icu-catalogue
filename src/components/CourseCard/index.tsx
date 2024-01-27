@@ -14,10 +14,11 @@ import { IconEye, IconEyeOff, IconTrash } from "@tabler/icons-react";
 
 export default function CourseCard(props: {
   course: Course;
+  open: () => void;
   toggleIsEnrolled: (regno: number) => void;
   deleteCourse: (regno: number) => void;
 }) {
-  const [modalOpened, { open, close }] = useDisclosure(false);
+  const [modalConfirmOpened, { open, close }] = useDisclosure(false);
 
   return (
     <Card p={0}>
@@ -25,7 +26,7 @@ export default function CourseCard(props: {
         <Grid.Col span="auto">
           <UnstyledButton
             onClick={() => {
-              props.toggleIsEnrolled(props.course.regno);
+              props.open();
             }}
             key={props.course.regno}
             w="100%"
@@ -45,8 +46,8 @@ export default function CourseCard(props: {
           </UnstyledButton>
         </Grid.Col>
         <Divider orientation="vertical" my="md" mx={0} />
-        <Grid.Col span="content" p="md">
-          <Stack align="center">
+        <Grid.Col span="content">
+          <Stack align="center" h="100%" p="md">
             <ActionIcon
               onClick={() => {
                 props.toggleIsEnrolled(props.course.regno);
@@ -56,7 +57,7 @@ export default function CourseCard(props: {
               {props.course.isEnrolled ? <IconEye /> : <IconEyeOff />}
             </ActionIcon>
 
-            <ActionIcon size="sm" onClick={open} color="red">
+            <ActionIcon onClick={open} color="red">
               <IconTrash />
             </ActionIcon>
           </Stack>
@@ -65,7 +66,7 @@ export default function CourseCard(props: {
       <ModalConfirm
         course={props.course}
         deleteCourse={props.deleteCourse}
-        modalOpened={modalOpened}
+        modalConfirmOpened={modalConfirmOpened}
         close={close}
       />
     </Card>
