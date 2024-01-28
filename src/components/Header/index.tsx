@@ -4,7 +4,10 @@ import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 
 import ModalSetting from "../ModalSetting";
 
-export function Header() {
+export function Header(props: {
+  weekdays: string[];
+  toggleSaturday: () => void;
+}) {
   const [modalSettingOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
@@ -43,7 +46,14 @@ export function Header() {
           >
             <IconSettings />
           </ActionIcon>
-          <ModalSetting modalSettingOpened={modalSettingOpened} close={close} />
+          <ModalSetting
+            modalSettingOpened={modalSettingOpened}
+            close={close}
+            weekdays={props.weekdays}
+            toggleSaturday={() => {
+              props.toggleSaturday();
+            }}
+          />
         </Group>
       </Container>
     </header>

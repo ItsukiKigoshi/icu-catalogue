@@ -5,13 +5,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import ModalDetail from "../ModalDetail";
 
-export function Timetable(props: { courses: Course[] }) {
+export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
     Course[]
   >([]);
-
-  const weekDays: string[] = ["M", "TU", "W", "TH", "F", "SA"];
 
   type ScheduleItem = [string, number, string];
   const scheduleItems: ScheduleItem[] = [
@@ -40,7 +38,7 @@ export function Timetable(props: { courses: Course[] }) {
   return (
     <Stack h="100%" gap="0">
       <Grid gutter="0" align="stretch">
-        <Grid.Col span={1.5}>
+        <Grid.Col span={1}>
           <Card radius="0" withBorder p="4">
             <Stack align="center" justify="center" gap="0" h="100%">
               <Flex justify="center" align="center" gap="4px">
@@ -57,9 +55,9 @@ export function Timetable(props: { courses: Course[] }) {
             </Stack>
           </Card>
         </Grid.Col>
-        {weekDays.map((day) => {
+        {props.weekdays.map((day) => {
           return (
-            <Grid.Col span={1.75}>
+            <Grid.Col span={11 / props.weekdays.length}>
               <Card radius="0" withBorder p="4">
                 <Stack align="center" justify="center" gap="0" h="100%">
                   <Text size="md" fw="bold">
@@ -77,7 +75,7 @@ export function Timetable(props: { courses: Course[] }) {
         .map((_, i) => {
           return (
             <Grid key={scheduleItems[i][1]} gutter="0" align="stretch">
-              <Grid.Col span={1.5}>
+              <Grid.Col span={1}>
                 <Card radius="0" withBorder h="100%" p="4">
                   <Stack align="center" justify="center" gap="0" h="100%">
                     <Text size="xs" c="dimmed">
@@ -90,9 +88,9 @@ export function Timetable(props: { courses: Course[] }) {
                   </Stack>
                 </Card>
               </Grid.Col>
-              {weekDays.map((day) => {
+              {props.weekdays.map((day) => {
                 return (
-                  <Grid.Col span={1.75}>
+                  <Grid.Col span={11 / props.weekdays.length}>
                     <Card radius="0" withBorder h="100%" p="4">
                       <UnstyledButton
                         onClick={() => {
@@ -112,12 +110,7 @@ export function Timetable(props: { courses: Course[] }) {
                         >
                           {timetable[`${scheduleItems[i][1]}/${day}`]?.map(
                             (course) => (
-                              <Text
-                                key={course.regno}
-                                size="sm"
-                                fw="750"
-                                lineClamp={2}
-                              >
+                              <Text key={course.regno} size="xs" lineClamp={2}>
                                 {course.e}
                               </Text>
                             )

@@ -15,6 +15,11 @@ export default function Page() {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
 
+  const [weekdays, toggleSaturday] = useToggle([
+    ["M", "TU", "W", "TH", "F"],
+    ["M", "TU", "W", "TH", "F", "SA"],
+  ]);
+
   useEffect(() => {
     if (!isMobile) {
       toggleDisplayMode("timetable");
@@ -75,12 +80,17 @@ export default function Page() {
         breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
-      padding="sm"
+      padding="0"
       h="100vh"
       w="100vw"
     >
       <AppShell.Header>
-        <Header />
+        <Header
+          weekdays={weekdays}
+          toggleSaturday={() => {
+            toggleSaturday();
+          }}
+        />
       </AppShell.Header>
 
       <AppShell.Navbar>
@@ -93,7 +103,7 @@ export default function Page() {
       </AppShell.Navbar>
       <AppShell.Main h="100vh">
         {displayMode === "timetable" ? (
-          <Timetable courses={courses} />
+          <Timetable courses={courses} weekdays={weekdays} />
         ) : (
           <Navbar
             courses={courses}

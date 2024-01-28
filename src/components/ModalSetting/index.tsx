@@ -1,9 +1,9 @@
 import {
   Button,
+  Checkbox,
   Group,
   Input,
   Modal,
-  NativeSelect,
   Text,
   useComputedColorScheme,
   useMantineColorScheme,
@@ -15,6 +15,8 @@ import classes from "./ModalSetting.module.css";
 export default function ModalSetting(props: {
   modalSettingOpened: boolean;
   close: () => void;
+  weekdays: string[];
+  toggleSaturday: () => void;
 }) {
   const { setColorScheme } = useMantineColorScheme();
 
@@ -34,9 +36,12 @@ export default function ModalSetting(props: {
         wrap="nowrap"
         gap="xl"
       >
-        <Text>Term</Text>
-        <NativeSelect
-          data={["Not Specified", "Spring 2023", "Autumn 2023", "Winter 2023"]}
+        <Text>Saturday</Text>
+        <Checkbox
+          checked={props.weekdays.length === 6}
+          onChange={() => {
+            props.toggleSaturday();
+          }}
         />
       </Group>
       <Group
