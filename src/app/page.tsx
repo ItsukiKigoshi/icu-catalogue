@@ -1,11 +1,12 @@
 "use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { spotlight } from "@mantine/spotlight";
 import { IconCalendar, IconList, IconSearch } from "@tabler/icons-react";
-import Link from "next/link";
 import { useEffect } from "react";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
+import SpotlightSearch from "../components/SpotlightSearch";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course } from "../type/Types";
@@ -122,8 +123,7 @@ export default function Page() {
             variant="filled"
             size="lg"
             leftSection={<IconSearch />}
-            component={Link}
-            href="/search"
+            onClick={spotlight.open}
           >
             Search
           </Button>
@@ -140,6 +140,7 @@ export default function Page() {
           </Button>
         </Flex>
       </AppShell.Footer>
+      <SpotlightSearch />
     </AppShell>
   );
 }

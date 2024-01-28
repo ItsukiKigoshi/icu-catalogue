@@ -2197,17 +2197,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/spotlight@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "@mantine/spotlight@npm:7.2.2"
+"@mantine/spotlight@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "@mantine/spotlight@npm:7.5.0"
   dependencies:
-    "@mantine/store": "npm:7.2.2"
+    "@mantine/store": "npm:7.5.0"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.5.0
+    "@mantine/hooks": 7.5.0
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 830c444c1f9d8f74c2eeffa86bbafdf92c7090ea100f9595fd3fdff765f094ad9cf466030bf17371cc70196d840d57736709da22629e1d705172a8915f704439
+  checksum: afd8765eca5a55afe99c23bea86d98e4b8c86f641a8e8e7566ce21df0329a1574df304542394a0bd1f0948936074b0e551bc8f33711c5ff912e016234b40b4c4
   languageName: node
   linkType: hard
 
@@ -2217,6 +2217,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 71ec7eaf6cbede9b32bfeda5a389f7629ca8221ce53d080953ab0306e31fe80fb37965ae0eb9a0e46dccfe89ba24473c9fea3e8c27336273ffaab3c5590ae33f
+  languageName: node
+  linkType: hard
+
+"@mantine/store@npm:7.5.0":
+  version: 7.5.0
+  resolution: "@mantine/store@npm:7.5.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 30812a8d3f0f80ffcc49d3196387b2dce25369c034eff364a80421921f8396bf3a4c7042a8be019d2bd394d82140bf51b9670a6a13e23f8a23f1535fa8b2237f
   languageName: node
   linkType: hard
 
@@ -9735,7 +9744,7 @@ __metadata:
     "@mantine/modals": "npm:^7.2.2"
     "@mantine/notifications": "npm:^7.2.2"
     "@mantine/nprogress": "npm:^7.2.2"
-    "@mantine/spotlight": "npm:^7.2.2"
+    "@mantine/spotlight": "npm:^7.5.0"
     "@mantine/tiptap": "npm:^7.2.2"
     "@storybook/addon-essentials": "npm:^7.5.3"
     "@storybook/addon-interactions": "npm:^7.5.3"
