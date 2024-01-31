@@ -1,12 +1,10 @@
 "use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
-import { spotlight } from "@mantine/spotlight";
-import { IconCalendar, IconList, IconSearch } from "@tabler/icons-react";
+import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
-import SpotlightSearch from "../components/SpotlightSearch";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course } from "../type/Types";
@@ -42,7 +40,7 @@ export default function Page() {
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
       isEnrolled: true,
-      color: "#ff0000",
+      color: "red",
     },
   ]);
 
@@ -119,14 +117,14 @@ export default function Page() {
         style={{ background: "rgba(0,0,0,0)" }}
       >
         <Flex gap="md" mih={50} justify="center" align="center" direction="row">
-          <Button
+          {/* <Button
             variant="filled"
             size="lg"
             leftSection={<IconSearch />}
             onClick={spotlight.open}
           >
             Search
-          </Button>
+          </Button> */}
           <Button
             hiddenFrom="sm"
             size="lg"
@@ -140,7 +138,7 @@ export default function Page() {
           </Button>
         </Flex>
       </AppShell.Footer>
-      <SpotlightSearch />
+      {/* <SpotlightSearch /> */}
     </AppShell>
   );
 }
