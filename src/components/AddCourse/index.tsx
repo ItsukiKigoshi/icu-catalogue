@@ -1,6 +1,14 @@
 import { Course } from "@/src/type/Types";
-import { TextInput, rem } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
+import {
+  ActionIcon,
+  Grid,
+  Group,
+  HoverCard,
+  Text,
+  TextInput,
+  rem,
+} from "@mantine/core";
+import { IconPlus, IconQuestionMark } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 export default function AddCourse(props: {
@@ -115,17 +123,46 @@ export default function AddCourse(props: {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextInput
-        placeholder="Add Course"
-        leftSection={
-          <IconPlus style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
-        }
-        styles={{ section: { pointerEvents: "none" } }}
-        value={query}
-        error={errorMessage}
-        onChange={(e) => setQuery(e.currentTarget.value)}
-      />
-    </form>
+    <Grid align="center" p="xs">
+      <Grid.Col span="auto">
+        <form onSubmit={handleSubmit}>
+          <TextInput
+            m="0"
+            placeholder="Add Course"
+            w="100%"
+            leftSection={
+              <IconPlus
+                style={{ width: rem(12), height: rem(12) }}
+                stroke={1.5}
+              />
+            }
+            styles={{ section: { pointerEvents: "none" } }}
+            value={query}
+            error={errorMessage}
+            onChange={(e) => setQuery(e.currentTarget.value)}
+          />
+        </form>
+      </Grid.Col>
+      <Grid.Col span="content">
+        <Group justify="center">
+          <HoverCard>
+            <HoverCard.Target>
+              <ActionIcon
+                color="gray"
+                size="lg"
+                component="a"
+                href="https://github.com/ItsukiKigoshi/icu-catalogue/releases/tag/v0.0.0"
+                target="_blank"
+              >
+                <IconQuestionMark />
+              </ActionIcon>
+            </HoverCard.Target>
+            <HoverCard.Dropdown>
+              <Text>Copy & Paste from Course Offerings!</Text>
+            </HoverCard.Dropdown>
+          </HoverCard>
+        </Group>
+      </Grid.Col>
+    </Grid>
   );
 }
