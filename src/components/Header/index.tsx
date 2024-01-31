@@ -1,4 +1,10 @@
-import { ActionIcon, Container, Group, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Container,
+  Group,
+  NativeSelect,
+  Text,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 
@@ -9,6 +15,7 @@ export function Header(props: {
   toggleSaturday: () => void;
 }) {
   const [modalSettingOpened, { open, close }] = useDisclosure(false);
+
   return (
     <header>
       <Container
@@ -24,6 +31,9 @@ export function Header(props: {
           <Text size="lg" fw={700}>
             ICU Catalogue
           </Text>
+        </Group>
+        <Group gap={5}>
+          <NativeSelect data={terms} />
         </Group>
         <Group gap={5}>
           <ActionIcon
