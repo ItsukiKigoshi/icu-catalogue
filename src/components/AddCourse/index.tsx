@@ -121,7 +121,7 @@ export default function AddCourse(props: {
   };
 
   return (
-    <Grid align="center" p="xs">
+    <Grid p="xs">
       <Grid.Col span="auto">
         <form onSubmit={handleSubmit}>
           <TextInput
