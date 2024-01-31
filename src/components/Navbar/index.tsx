@@ -1,9 +1,12 @@
-import { Flex, ScrollArea, Text } from "@mantine/core";
+"use client";
+import { Badge, ScrollArea, Stack } from "@mantine/core";
 
-import AddCourse from "@/src/components/AddCourse";
 import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
-import classes from "./Navbar.module.css";
+import { useDisclosure } from "@mantine/hooks";
+import { IconList } from "@tabler/icons-react";
+import { useState } from "react";
+import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
@@ -11,6 +14,11 @@ export function Navbar(props: {
   addCourse: (course: Course) => void;
   deleteCourse: (regno: number) => void;
 }) {
+  const [modalDetailOpened, { open, close }] = useDisclosure(false);
+  const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
+    Course[]
+  >([]);
+
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const results = props.courses
     // Sort the courses by their no property
@@ -22,26 +30,34 @@ export function Navbar(props: {
       }
     })
     .map((course) => (
-      <CourseCard
-        course={course}
-        toggleIsEnrolled={props.toggleIsEnrolled}
-        deleteCourse={props.deleteCourse}
-      />
+      <div key={course.regno}>
+        <CourseCard
+          course={course}
+          toggleIsEnrolled={props.toggleIsEnrolled}
+          deleteCourse={props.deleteCourse}
+          open={() => {
+            setModalDetailFocusedCourse([course]);
+            open();
+          }}
+        />
+      </div>
     ));
 
   return (
-    <nav className={classes.navbar}>
-      <Flex justify="center">
-        <Text size="lg" fw="bold" mb={5}>
-          My List
-        </Text>
-      </Flex>
-
-      <AddCourse addCourse={props.addCourse} courses={props.courses} />
-
+    <Stack justify="flex-start" p="sm">
+      <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
+        My List
+      </Badge>
       <ScrollArea>
-        <div className={classes.navbarMain}>{results}</div>
+        <Stack>{results}</Stack>
       </ScrollArea>
-    </nav>
+      <ModalDetail
+        courses={modalDetailFocusedCourse}
+        modalDetailOpened={modalDetailOpened}
+        close={() => {
+          close();
+        }}
+      />
+    </Stack>
   );
 }

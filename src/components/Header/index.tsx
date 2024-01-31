@@ -1,16 +1,14 @@
-import { ActionIcon, Burger, Container, Group, Text } from "@mantine/core";
+import { ActionIcon, Container, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
-
-import React from "react";
 
 import ModalSetting from "../ModalSetting";
 
 export function Header(props: {
-  opened: boolean;
-  toggle: React.MouseEventHandler<HTMLButtonElement>;
+  weekdays: string[];
+  toggleSaturday: () => void;
 }) {
-  const [modalOpened, { open, close }] = useDisclosure(false);
+  const [modalSettingOpened, { open, close }] = useDisclosure(false);
   return (
     <header>
       <Container
@@ -23,13 +21,6 @@ export function Header(props: {
         }}
       >
         <Group gap={5}>
-          <Burger
-            opened={props.opened}
-            onClick={props.toggle}
-            hiddenFrom="sm"
-            size="sm"
-            mr={3}
-          />
           <Text size="lg" fw={700}>
             ICU Catalogue
           </Text>
@@ -55,7 +46,14 @@ export function Header(props: {
           >
             <IconSettings />
           </ActionIcon>
-          <ModalSetting modalOpened={modalOpened} close={close} />
+          <ModalSetting
+            modalSettingOpened={modalSettingOpened}
+            close={close}
+            weekdays={props.weekdays}
+            toggleSaturday={() => {
+              props.toggleSaturday();
+            }}
+          />
         </Group>
       </Container>
     </header>

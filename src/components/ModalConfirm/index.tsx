@@ -4,12 +4,12 @@ import { Button, Group, Modal } from "@mantine/core";
 export default function ModalConfirm(props: {
   course: Course;
   deleteCourse: (regno: number) => void;
-  modalOpened: boolean;
+  modalConfirmOpened: boolean;
   close: () => void;
 }) {
   return (
     <Modal
-      opened={props.modalOpened}
+      opened={props.modalConfirmOpened}
       onClose={props.close}
       title={`Are you sure to delete "${props.course.e}"?`}
       centered
