@@ -76,7 +76,7 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
           return (
             <Grid key={scheduleItems[i][1]} gutter="0" align="stretch">
               <Grid.Col span={1}>
-                <Card radius="0" withBorder h="100%" p="4">
+                <Card radius="0" withBorder h="100%" mih="12vh" p="4">
                   <Stack align="center" justify="center" gap="0" h="100%">
                     <Text size="xs" c="dimmed">
                       {scheduleItems[i][0]}
@@ -91,7 +91,7 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
               {props.weekdays.map((day) => {
                 return (
                   <Grid.Col span={11 / props.weekdays.length}>
-                    <Card radius="0" withBorder h="100%" p="4">
+                    <Card radius="0" withBorder h="100%" mih="12vh" p="4">
                       <UnstyledButton
                         onClick={() => {
                           setModalDetailFocusedCourse(
@@ -102,15 +102,16 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
                         h="100%"
                         disabled={!timetable[`${scheduleItems[i][1]}/${day}`]}
                       >
-                        <Stack
-                          align="center"
-                          justify="flex-start"
-                          gap="0"
-                          h="100%"
-                        >
+                        <Stack align="center" justify="center" gap="0" h="100%">
                           {timetable[`${scheduleItems[i][1]}/${day}`]?.map(
                             (course) => (
-                              <Text key={course.regno} size="xs" lineClamp={2}>
+                              <Text
+                                key={course.regno}
+                                size="xs"
+                                fw={700}
+                                m="xs"
+                                lineClamp={2}
+                              >
                                 {course.e}
                               </Text>
                             )
