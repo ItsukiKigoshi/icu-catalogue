@@ -5,7 +5,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import ModalDetail from "../ModalDetail";
 
-export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
+export function Timetable(props: {
+  courses: Course[];
+  weekdays: string[];
+  toggleIsEnrolled: (regno: number) => void;
+}) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
     Course[]
@@ -102,14 +106,13 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
                         h="100%"
                         disabled={!timetable[`${scheduleItems[i][1]}/${day}`]}
                       >
-                        <Stack align="center" justify="center" gap="0" h="100%">
+                        <Stack align="center" justify="center" h="100%">
                           {timetable[`${scheduleItems[i][1]}/${day}`]?.map(
                             (course) => (
                               <Text
                                 key={course.regno}
                                 size="xs"
                                 fw={700}
-                                m="xs"
                                 lineClamp={2}
                               >
                                 {course.e}
@@ -127,6 +130,7 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
         })}
       <ModalDetail
         courses={modalDetailFocusedCourse}
+        toggleIsEnrolled={props.toggleIsEnrolled}
         modalDetailOpened={modalDetailOpened}
         close={() => {
           close();
