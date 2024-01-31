@@ -6,7 +6,8 @@ import { useState } from "react";
 import ModalDetail from "../ModalDetail";
 
 export function Timetable(props: {
-  courses: Course[];
+  timetable: { [key: string]: Course[] };
+  enrolledCourses: Course[];
   weekdays: string[];
   toggleIsEnrolled: (regno: number) => void;
 }) {
@@ -26,19 +27,6 @@ export function Timetable(props: {
     ["17:50", 7, "19:00"],
   ];
 
-  const timetable: { [key: string]: Course[] } = {};
-
-  const enrolledCourses = props.courses.filter((course) => course.isEnrolled);
-  enrolledCourses.forEach((course) => {
-    course.schedule?.forEach((entry) => {
-      const [time, day] = entry.split("/");
-      if (!timetable[`${time}/${day}`]) {
-        timetable[`${time}/${day}`] = [];
-      }
-      timetable[`${time}/${day}`].push(course);
-    });
-  });
-
   return (
     <Stack h="100%" gap="0">
       <Grid gutter="0" align="stretch">
@@ -47,7 +35,7 @@ export function Timetable(props: {
             <Stack align="center" justify="center" gap="0" h="100%">
               <Flex justify="center" align="center" gap="4px">
                 <Text size="md" fw="bold">
-                  {enrolledCourses.reduce(
+                  {props.enrolledCourses.reduce(
                     (sum, course) => sum + course.unit,
                     0
                   )}
@@ -99,26 +87,28 @@ export function Timetable(props: {
                       <UnstyledButton
                         onClick={() => {
                           setModalDetailFocusedCourse(
-                            timetable[`${scheduleItems[i][1]}/${day}`]
+                            props.timetable[`${scheduleItems[i][1]}/${day}`]
                           );
                           open();
                         }}
                         h="100%"
-                        disabled={!timetable[`${scheduleItems[i][1]}/${day}`]}
+                        disabled={
+                          !props.timetable[`${scheduleItems[i][1]}/${day}`]
+                        }
                       >
                         <Stack align="center" justify="center" h="100%">
-                          {timetable[`${scheduleItems[i][1]}/${day}`]?.map(
-                            (course) => (
-                              <Text
-                                key={course.regno}
-                                size="xs"
-                                fw={700}
-                                lineClamp={2}
-                              >
-                                {course.e}
-                              </Text>
-                            )
-                          )}
+                          {props.timetable[
+                            `${scheduleItems[i][1]}/${day}`
+                          ]?.map((course) => (
+                            <Text
+                              key={course.regno}
+                              size="xs"
+                              fw={700}
+                              lineClamp={2}
+                            >
+                              {course.e}
+                            </Text>
+                          ))}
                         </Stack>
                       </UnstyledButton>
                     </Card>

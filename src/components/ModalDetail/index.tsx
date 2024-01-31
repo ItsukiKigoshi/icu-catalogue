@@ -1,12 +1,25 @@
 import { Course } from "@/src/type/Types";
 import { Accordion, Button, Group, Modal, Stack, Text } from "@mantine/core";
-import { IconX } from "@tabler/icons-react";
+import { IconExternalLink, IconX } from "@tabler/icons-react";
 
 export default function ModalDetail(props: {
   courses: Course[];
   modalDetailOpened: boolean;
   close: () => void;
 }) {
+  const seasonToNumber = (season: string) => {
+    switch (season) {
+      case "Spring":
+        return 1;
+      case "Autumn":
+        return 2;
+      case "Winter":
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
   const CourseInfo: React.FC<{ course: Course }> = (props: {
     course: Course;
   }) => {
@@ -20,6 +33,20 @@ export default function ModalDetail(props: {
             i === props.course?.schedule!.length - 1 ? s : s + ", "
           )}
         </Text>
+        <Group justify="center" grow p="xs">
+          <Button
+            leftSection={<IconExternalLink />}
+            component="a"
+            href={`https://campus.icu.ac.jp/public/ehandbook/PreviewSyllabus.aspx?regno=${
+              props.course.regno
+            }&year=${props.course.ay}&term=${seasonToNumber(
+              props.course.season
+            )}`}
+            target="_blank"
+          >
+            Syllabus
+          </Button>
+        </Group>
       </Stack>
     );
   };

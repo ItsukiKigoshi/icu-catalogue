@@ -2,7 +2,7 @@
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { IconCalendar, IconList } from "@tabler/icons-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
@@ -12,13 +12,22 @@ import { Course } from "../type/Types";
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-  const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
 
   const [weekdays, toggleSaturday] = useToggle([
     ["M", "TU", "W", "TH", "F"],
     ["M", "TU", "W", "TH", "F", "SA"],
   ]);
 
+  const terms = [
+    { label: "2024S", ay: "2024", season: "Spring", value: "2024S" },
+    { label: "2024A", ay: "2024", season: "Autumn", value: "2024A" },
+    { label: "2024W", ay: "2024", season: "Winter", value: "2024W" },
+  ];
+  const [selectedTermValue, setselectedTermValue] = useState(terms[0].value);
+
+  const selectedTerm = terms.find((term) => term.value === selectedTermValue);
+
+  const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
   useEffect(() => {
     if (!isMobile) {
       toggleDisplayMode("timetable");
@@ -28,12 +37,12 @@ export default function Page() {
   // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
     {
-      regno: 99999,
+      regno: 99997,
       season: "Spring",
-      ay: 2022,
+      ay: 2024,
       no: "CS101",
       lang: "E",
-      e: "Example Course",
+      e: "Example Spring Course",
       j: "科目例",
       schedule: ["3/M", "3/W", "3/F"],
       instructor: "John Doe",
@@ -42,7 +51,57 @@ export default function Page() {
       isEnrolled: true,
       color: "orange 2",
     },
+    {
+      regno: 99998,
+      season: "Autumn",
+      ay: 2024,
+      no: "CS101",
+      lang: "E",
+      e: "Example Autumn Course",
+      j: "科目例",
+      schedule: ["3/M", "3/W", "3/F"],
+      instructor: "John Doe",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+      unit: 3,
+      isEnrolled: true,
+      color: "pink 2",
+    },
+    {
+      regno: 99999,
+      season: "Winter",
+      ay: 2024,
+      no: "CS101",
+      lang: "E",
+      e: "Example Winter Course",
+      j: "科目例",
+      schedule: ["3/M", "3/W", "3/F"],
+      instructor: "John Doe",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+      unit: 3,
+      isEnrolled: true,
+      color: "green 2",
+    },
   ]);
+
+  const timetable: { [key: string]: Course[] } = {};
+  const coursesInSelectedTerm = courses.filter(
+    (course) =>
+      course.season === selectedTerm?.season &&
+      course.ay.toString() === selectedTerm?.ay
+  );
+
+  const enrolledCourses = coursesInSelectedTerm.filter(
+    (course) => course.isEnrolled
+  );
+  coursesInSelectedTerm.forEach((course) => {
+    course.schedule?.forEach((entry) => {
+      const [time, day] = entry.split("/");
+      if (!timetable[`${time}/${day}`]) {
+        timetable[`${time}/${day}`] = [];
+      }
+      timetable[`${time}/${day}`].push(course);
+    });
+  });
 
   // Toggle the isEnrolled property of a certain course
   // Usage: toggleIsEnrolled(regno)
@@ -88,12 +147,15 @@ export default function Page() {
           toggleSaturday={() => {
             toggleSaturday();
           }}
+          terms={terms}
+          selectedTermValue={selectedTermValue}
+          setselectedTermValue={setselectedTermValue}
         />
       </AppShell.Header>
 
       <AppShell.Navbar>
         <Navbar
-          courses={courses}
+          courses={coursesInSelectedTerm}
           toggleIsEnrolled={toggleIsEnrolled}
           addCourse={addCourse}
           deleteCourse={deleteCourse}
@@ -102,13 +164,14 @@ export default function Page() {
       <AppShell.Main h="100vh">
         {displayMode === "timetable" ? (
           <Timetable
-            courses={courses}
+            timetable={timetable}
+            enrolledCourses={enrolledCourses}
             toggleIsEnrolled={toggleIsEnrolled}
             weekdays={weekdays}
           />
         ) : (
           <Navbar
-            courses={courses}
+            courses={coursesInSelectedTerm}
             toggleIsEnrolled={toggleIsEnrolled}
             addCourse={addCourse}
             deleteCourse={deleteCourse}

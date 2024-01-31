@@ -13,6 +13,9 @@ import ModalSetting from "../ModalSetting";
 export function Header(props: {
   weekdays: string[];
   toggleSaturday: () => void;
+  terms: { value: string; ay: string; season: string; label: string }[];
+  selectedTermValue: string;
+  setselectedTermValue: (value: string) => void;
 }) {
   const [modalSettingOpened, { open, close }] = useDisclosure(false);
 
@@ -33,7 +36,13 @@ export function Header(props: {
           </Text>
         </Group>
         <Group gap={5}>
-          <NativeSelect data={terms} />
+          <NativeSelect
+            value={props.selectedTermValue}
+            onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+              props.setselectedTermValue(event.currentTarget.value)
+            }
+            data={props.terms}
+          />
         </Group>
         <Group gap={5}>
           <ActionIcon
