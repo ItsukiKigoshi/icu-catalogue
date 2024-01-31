@@ -1,6 +1,8 @@
 "use client";
-import { AppShell, Flex, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { AppShell, Button, Flex, em } from "@mantine/core";
+import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { IconCalendar, IconList } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
@@ -9,25 +11,97 @@ import { Course } from "../type/Types";
 
 export default function Page() {
   const [opened, { toggle }] = useDisclosure(false);
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
+  const [weekdays, toggleSaturday] = useToggle([
+    ["M", "TU", "W", "TH", "F"],
+    ["M", "TU", "W", "TH", "F", "SA"],
+  ]);
+
+  const terms = [
+    { label: "2024S", ay: "2024", season: "Spring", value: "2024S" },
+    { label: "2024A", ay: "2024", season: "Autumn", value: "2024A" },
+    { label: "2024W", ay: "2024", season: "Winter", value: "2024W" },
+  ];
+  const [selectedTermValue, setselectedTermValue] = useState(terms[0].value);
+
+  const selectedTerm = terms.find((term) => term.value === selectedTermValue);
+
+  const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
+  useEffect(() => {
+    if (!isMobile) {
+      toggleDisplayMode("timetable");
+    }
+  }, [isMobile]);
 
   // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
     {
-      regno: 99999,
+      regno: 99997,
       season: "Spring",
-      ay: 2022,
+      ay: 2024,
       no: "CS101",
       lang: "E",
-      e: "Example Course",
+      e: "Example Spring Course",
       j: "科目例",
       schedule: ["3/M", "3/W", "3/F"],
       instructor: "John Doe",
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
       isEnrolled: true,
-      color: "#ff0000",
+      color: "orange 2",
+    },
+    {
+      regno: 99998,
+      season: "Autumn",
+      ay: 2024,
+      no: "CS101",
+      lang: "E",
+      e: "Example Autumn Course",
+      j: "科目例",
+      schedule: ["3/M", "3/W", "3/F"],
+      instructor: "John Doe",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+      unit: 3,
+      isEnrolled: true,
+      color: "pink 2",
+    },
+    {
+      regno: 99999,
+      season: "Winter",
+      ay: 2024,
+      no: "CS101",
+      lang: "E",
+      e: "Example Winter Course",
+      j: "科目例",
+      schedule: ["3/M", "3/W", "3/F"],
+      instructor: "John Doe",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+      unit: 3,
+      isEnrolled: true,
+      color: "green 2",
     },
   ]);
+
+  const timetable: { [key: string]: Course[] } = {};
+  const coursesInSelectedTerm = courses.filter(
+    (course) =>
+      course.season === selectedTerm?.season &&
+      course.ay.toString() === selectedTerm?.ay
+  );
+
+  const enrolledCourses = coursesInSelectedTerm.filter(
+    (course) => course.isEnrolled
+  );
+  coursesInSelectedTerm.forEach((course) => {
+    course.schedule?.forEach((entry) => {
+      const [time, day] = entry.split("/");
+      if (!timetable[`${time}/${day}`]) {
+        timetable[`${time}/${day}`] = [];
+      }
+      timetable[`${time}/${day}`].push(course);
+    });
+  });
 
   // Toggle the isEnrolled property of a certain course
   // Usage: toggleIsEnrolled(regno)
@@ -56,51 +130,82 @@ export default function Page() {
   };
 
   return (
-    <>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: "400px",
-          breakpoint: "sm",
-          collapsed: { mobile: !opened },
-        }}
-        padding="md"
-        h="100vh"
-      >
-        <AppShell.Header>
-          <Header opened={opened} toggle={toggle} />
-        </AppShell.Header>
-        <AppShell.Navbar>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: "400px",
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="0"
+      h="100vh"
+      w="100vw"
+    >
+      <AppShell.Header>
+        <Header
+          weekdays={weekdays}
+          toggleSaturday={() => {
+            toggleSaturday();
+          }}
+          terms={terms}
+          selectedTermValue={selectedTermValue}
+          setselectedTermValue={setselectedTermValue}
+        />
+      </AppShell.Header>
+
+      <AppShell.Navbar>
+        <Navbar
+          courses={coursesInSelectedTerm}
+          toggleIsEnrolled={toggleIsEnrolled}
+          addCourse={addCourse}
+          deleteCourse={deleteCourse}
+        />
+      </AppShell.Navbar>
+      <AppShell.Main h="100vh">
+        {displayMode === "timetable" ? (
+          <Timetable
+            timetable={timetable}
+            enrolledCourses={enrolledCourses}
+            toggleIsEnrolled={toggleIsEnrolled}
+            weekdays={weekdays}
+          />
+        ) : (
           <Navbar
-            courses={courses}
+            courses={coursesInSelectedTerm}
             toggleIsEnrolled={toggleIsEnrolled}
             addCourse={addCourse}
             deleteCourse={deleteCourse}
           />
-        </AppShell.Navbar>
-        <AppShell.Main>
-          {/* <Grid justify="flex-start" gutter="sm" align="stretch"> */}
-          {/* <Grid.Col span={{ base: "auto" }}> */}
-          <Timetable courses={courses} />
-          {/* </Grid.Col> */}
-          {/* <Grid.Col mt={{ base: 5, md: 0 }} span={{ base: 12, md: "content" }}>
-            <RequirementTable />
-          </Grid.Col> */}
-          {/* </Grid> */}
-          <Flex
-            gap="md"
-            justify="center"
-            align="center"
-            direction="row"
-            wrap="wrap"
+        )}
+      </AppShell.Main>
+      <AppShell.Footer
+        withBorder={false}
+        hiddenFrom="sm"
+        style={{ background: "rgba(0,0,0,0)" }}
+      >
+        <Flex gap="md" mih={50} justify="center" align="center" direction="row">
+          {/* <Button
+            variant="filled"
+            size="lg"
+            leftSection={<IconSearch />}
+            onClick={spotlight.open}
           >
-            <Text fw="bold">
-              🚧 This App is still under development. Do not store any important
-              data here!
-            </Text>
-          </Flex>
-        </AppShell.Main>
-      </AppShell>
-    </>
+            Search
+          </Button> */}
+          <Button
+            hiddenFrom="sm"
+            size="lg"
+            color="gray"
+            mr={3}
+            onClick={() => {
+              toggleDisplayMode();
+            }}
+          >
+            {displayMode === "list" ? <IconList /> : <IconCalendar />}
+          </Button>
+        </Flex>
+      </AppShell.Footer>
+      {/* <SpotlightSearch /> */}
+    </AppShell>
   );
 }

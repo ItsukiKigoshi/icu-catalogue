@@ -1,17 +1,20 @@
 "use client";
 import { Course } from "@/src/type/Types";
-import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
-import classes from "./Timetable.module.css";
+import { Card, Flex, Grid, Stack, Text, UnstyledButton } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
+import ModalDetail from "../ModalDetail";
 
-export function Timetable(props: { courses: Course[] }) {
-  const weekDays: string[] = ["M", "TU", "W", "TH", "F", "SA"];
-  const weekDayItems = weekDays.map((day) => (
-    <Card key={day} className={classes.item} style={{ height: "30px" }}>
-      <Text size="lg" mt={3} fw={700}>
-        {day}
-      </Text>
-    </Card>
-  ));
+export function Timetable(props: {
+  timetable: { [key: string]: Course[] };
+  enrolledCourses: Course[];
+  weekdays: string[];
+  toggleIsEnrolled: (regno: number) => void;
+}) {
+  const [modalDetailOpened, { open, close }] = useDisclosure(false);
+  const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
+    Course[]
+  >([]);
 
   type ScheduleItem = [string, number, string];
   const scheduleItems: ScheduleItem[] = [
@@ -24,78 +27,104 @@ export function Timetable(props: { courses: Course[] }) {
     ["17:50", 7, "19:00"],
   ];
 
-  const schedule: JSX.Element[] = scheduleItems.map((item) => (
-    <>
-      <Card key={item[2]} className={classes.item} p={1}>
-        <Text size="xs" c="dimmed">
-          {item[0]}
-        </Text>
-        <Text size="md" my="10">
-          {item[1]}
-        </Text>
-        <Text size="xs" c="dimmed">
-          {item[2]}
-        </Text>
-      </Card>
-    </>
-  ));
-
-  const timetable: { [key: string]: Course[] } = {};
-
-  const enrolledCourses = props.courses.filter((course) => course.isEnrolled);
-  enrolledCourses.forEach((course) => {
-    course.schedule?.forEach((entry) => {
-      const [time, day] = entry.split("/");
-      if (!timetable[`${time}/${day}`]) {
-        timetable[`${time}/${day}`] = [];
-      }
-      timetable[`${time}/${day}`].push(course);
-    });
-  });
-
   return (
-    <Card withBorder radius="md" className={classes.card}>
-      <SimpleGrid cols={7} spacing="xs" verticalSpacing="xs">
-        <Card
-          className={classes.item}
-          style={{ backgroundColor: "transparent", height: "30px" }}
-        >
-          <Text size="md" fw="bold">
-            {enrolledCourses.reduce((sum, course) => sum + course.unit, 0)}{" "}
-            Units
-          </Text>
-        </Card>
-
-        {/* Card for weekdays */}
-        {weekDayItems}
-
-        {/*  Show time (1st Period ~ 7th Period) */}
-        <Stack gap="xs">{schedule}</Stack>
-
-        {/* Show timetable for all weekdays */}
-        {weekDays.map((day) => {
-          return (
-            // Set timetable column for each day (M,TU,W,TH,F)
-            <Stack key={day} gap="xs">
-              {Array(7)
-                .fill(0)
-                .map((_, i) => {
-                  return (
-                    <Card key={i} className={classes.item} p={1}>
-                      {timetable[`${i + 1}/${day}`]?.map((course) => {
-                        return (
-                          <Text key={course.regno} size="xs" fw="bold">
-                            {course.e}
-                          </Text>
-                        );
-                      })}
-                    </Card>
-                  );
-                })}
+    <Stack h="100%" gap="0">
+      <Grid gutter="0" align="stretch">
+        <Grid.Col span={1}>
+          <Card radius="0" withBorder p="4">
+            <Stack align="center" justify="center" gap="0" h="100%">
+              <Flex justify="center" align="center" gap="4px">
+                <Text size="md" fw="bold">
+                  {props.enrolledCourses.reduce(
+                    (sum, course) => sum + course.unit,
+                    0
+                  )}
+                </Text>
+                <Text size="xs" c="dimmed">
+                  units
+                </Text>
+              </Flex>
             </Stack>
+          </Card>
+        </Grid.Col>
+        {props.weekdays.map((day) => {
+          return (
+            <Grid.Col span={11 / props.weekdays.length}>
+              <Card radius="0" withBorder p="4">
+                <Stack align="center" justify="center" gap="0" h="100%">
+                  <Text size="md" fw="bold">
+                    {day}
+                  </Text>
+                </Stack>
+              </Card>
+            </Grid.Col>
           );
         })}
-      </SimpleGrid>
-    </Card>
+      </Grid>
+
+      {Array(7)
+        .fill(0)
+        .map((_, i) => {
+          return (
+            <Grid key={scheduleItems[i][1]} gutter="0" align="stretch">
+              <Grid.Col span={1}>
+                <Card radius="0" withBorder h="100%" mih="12vh" p="4">
+                  <Stack align="center" justify="center" gap="0" h="100%">
+                    <Text size="xs" c="dimmed">
+                      {scheduleItems[i][0]}
+                    </Text>
+                    <Text size="md">{scheduleItems[i][1]}</Text>
+                    <Text size="xs" c="dimmed">
+                      {scheduleItems[i][2]}
+                    </Text>
+                  </Stack>
+                </Card>
+              </Grid.Col>
+              {props.weekdays.map((day) => {
+                return (
+                  <Grid.Col span={11 / props.weekdays.length}>
+                    <Card radius="0" withBorder h="100%" mih="12vh" p="4">
+                      <UnstyledButton
+                        onClick={() => {
+                          setModalDetailFocusedCourse(
+                            props.timetable[`${scheduleItems[i][1]}/${day}`]
+                          );
+                          open();
+                        }}
+                        h="100%"
+                        disabled={
+                          !props.timetable[`${scheduleItems[i][1]}/${day}`]
+                        }
+                      >
+                        <Stack align="center" justify="center" h="100%">
+                          {props.timetable[
+                            `${scheduleItems[i][1]}/${day}`
+                          ]?.map((course) => (
+                            <Text
+                              key={course.regno}
+                              size="xs"
+                              fw={700}
+                              lineClamp={2}
+                            >
+                              {course.e}
+                            </Text>
+                          ))}
+                        </Stack>
+                      </UnstyledButton>
+                    </Card>
+                  </Grid.Col>
+                );
+              })}
+            </Grid>
+          );
+        })}
+      <ModalDetail
+        courses={modalDetailFocusedCourse}
+        modalDetailOpened={modalDetailOpened}
+        close={() => {
+          close();
+        }}
+      />
+    </Stack>
   );
 }
