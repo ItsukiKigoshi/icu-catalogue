@@ -45,21 +45,23 @@ export function Navbar(props: {
     ));
 
   return (
-    <Stack justify="flex-start" p="sm">
-      <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
-        My List
-      </Badge>
-      <AddCourse courses={props.courses} addCourse={props.addCourse} />
+    <>
+      <Stack justify="flex-start" p="sm">
+        <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
+          My List
+        </Badge>
+        <AddCourse courses={props.courses} addCourse={props.addCourse} />
+      </Stack>
       <ScrollArea>
-        <Stack>{results}</Stack>
+        {results}
+        <ModalDetail
+          courses={modalDetailFocusedCourse}
+          modalDetailOpened={modalDetailOpened}
+          close={() => {
+            close();
+          }}
+        />
       </ScrollArea>
-      <ModalDetail
-        courses={modalDetailFocusedCourse}
-        modalDetailOpened={modalDetailOpened}
-        close={() => {
-          close();
-        }}
-      />
-    </Stack>
+    </>
   );
 }
