@@ -40,7 +40,7 @@ export default function Page() {
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
       isEnrolled: true,
-      color: "red",
+      color: "orange 2",
     },
   ]);
 
@@ -73,7 +73,6 @@ export default function Page() {
   return (
     <AppShell
       header={{ height: 60 }}
-      footer={{ height: 60 }}
       navbar={{
         width: "400px",
         breakpoint: "sm",
@@ -102,7 +101,11 @@ export default function Page() {
       </AppShell.Navbar>
       <AppShell.Main h="100vh">
         {displayMode === "timetable" ? (
-          <Timetable courses={courses} weekdays={weekdays} />
+          <Timetable
+            courses={courses}
+            toggleIsEnrolled={toggleIsEnrolled}
+            weekdays={weekdays}
+          />
         ) : (
           <Navbar
             courses={courses}
@@ -114,6 +117,7 @@ export default function Page() {
       </AppShell.Main>
       <AppShell.Footer
         withBorder={false}
+        hiddenFrom="sm"
         style={{ background: "rgba(0,0,0,0)" }}
       >
         <Flex gap="md" mih={50} justify="center" align="center" direction="row">
