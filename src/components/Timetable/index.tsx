@@ -130,7 +130,6 @@ export function Timetable(props: {
         })}
       <ModalDetail
         courses={modalDetailFocusedCourse}
-        toggleIsEnrolled={props.toggleIsEnrolled}
         modalDetailOpened={modalDetailOpened}
         close={() => {
           close();
