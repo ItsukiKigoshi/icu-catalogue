@@ -6,6 +6,7 @@ import { Course } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { IconList } from "@tabler/icons-react";
 import { useState } from "react";
+import AddCourse from "../AddCourse";
 import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
@@ -22,14 +23,14 @@ export function Navbar(props: {
   // Show the courses in the selected tab, and if there are no courses, show "No Results"
   const results = props.courses
     // Sort the courses by their no property
-    .sort(function (a, b) {
+    ?.sort(function (a, b) {
       if (a.no > b.no) {
         return 1;
       } else {
         return -1;
       }
     })
-    .map((course) => (
+    ?.map((course) => (
       <div key={course.regno}>
         <CourseCard
           course={course}
@@ -48,6 +49,7 @@ export function Navbar(props: {
       <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
         My List
       </Badge>
+      <AddCourse courses={props.courses} addCourse={props.addCourse} />
       <ScrollArea>
         <Stack>{results}</Stack>
       </ScrollArea>
