@@ -48,7 +48,7 @@ export default function ModalDetail(props: {
             <Accordion defaultValue={props.courses?.[0]?.e}>
               {props.courses?.map((course) => (
                 <Accordion.Item key={course.regno} value={course.e}>
-                  <Accordion.Control disabled={props.courses.length === 1}>
+                  <Accordion.Control>
                     <Text size="lg" fw="bold">
                       {course.e} ({course.lang})
                     </Text>
