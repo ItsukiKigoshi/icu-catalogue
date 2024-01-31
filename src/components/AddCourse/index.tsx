@@ -81,7 +81,7 @@ export default function AddCourse(props: {
         e: match[10],
         j: match[11],
         schedule: schedule,
-        instructor: match[21],
+        instructor: match[20],
         unit: unit,
         modified: new Date(),
         isEnrolled: true, // Default value, update as needed
@@ -112,9 +112,7 @@ export default function AddCourse(props: {
 
     if (course !== undefined) {
       if (isAlreadyInList(course)) {
-        setErrorMessage(
-          `The course: "${course.regno}" is already in the list.`
-        );
+        setErrorMessage(`Already in the List! regno:${course.regno}`);
       } else {
         props.addCourse(course);
         setQuery("");

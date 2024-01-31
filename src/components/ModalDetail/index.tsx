@@ -26,13 +26,11 @@ export default function ModalDetail(props: {
     return (
       <Stack>
         <Text>
-          {props.course?.no} ･ {props.course?.unit}
-        </Text>
-        <Text>
           {props.course?.schedule?.map((s, i) =>
             i === props.course?.schedule!.length - 1 ? s : s + ", "
           )}
         </Text>
+        <Text>{props.course?.unit} units</Text>
         <Group justify="center" grow p="xs">
           <Button
             leftSection={<IconExternalLink />}
@@ -59,11 +57,12 @@ export default function ModalDetail(props: {
           <Modal.Title>
             {props.courses?.length === 1 ? (
               <Text fw="bold">
-                {props.courses[0].e} ({props.courses[0].lang})
+                {props.courses[0].no} ･ {props.courses[0].e} (
+                {props.courses[0].lang})
               </Text>
             ) : (
               <Text c="red" fw="bold">
-                {props.courses.length} Courses Conflicted
+                {props.courses.length} Courses Conflicted!
               </Text>
             )}
           </Modal.Title>
@@ -77,7 +76,7 @@ export default function ModalDetail(props: {
                 <Accordion.Item key={course.regno} value={course.e}>
                   <Accordion.Control>
                     <Text size="lg" fw="bold">
-                      {course.e} ({course.lang})
+                      {course.no} ･ {course.e} ({course.lang})
                     </Text>
                   </Accordion.Control>
                   <Accordion.Panel>
