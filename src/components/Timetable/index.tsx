@@ -110,15 +110,9 @@ export function Timetable(props: { courses: Course[]; weekdays: string[] }) {
                         >
                           {timetable[`${scheduleItems[i][1]}/${day}`]?.map(
                             (course) => (
-                              <Card c={course.color}>
-                                <Text
-                                  key={course.regno}
-                                  size="xs"
-                                  lineClamp={2}
-                                >
-                                  {course.e}
-                                </Text>
-                              </Card>
+                              <Text key={course.regno} size="xs" lineClamp={2}>
+                                {course.e}
+                              </Text>
                             )
                           )}
                         </Stack>
