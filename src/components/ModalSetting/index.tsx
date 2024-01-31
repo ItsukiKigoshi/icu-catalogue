@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   Group,
-  Input,
   Modal,
   Text,
   useComputedColorScheme,
@@ -44,7 +43,7 @@ export default function ModalSetting(props: {
           }}
         />
       </Group>
-      <Group
+      {/* <Group
         justify="space-between"
         className={classes.item}
         wrap="nowrap"
@@ -61,7 +60,7 @@ export default function ModalSetting(props: {
       >
         <Text>ELA / JLP AS</Text>
         <Input placeholder='Enter Section (e.g."5AS1")' />
-      </Group>
+      </Group> */}
       <Group
         justify="space-between"
         className={classes.item}
