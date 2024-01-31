@@ -6,6 +6,7 @@ import { Course } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { IconList } from "@tabler/icons-react";
 import { useState } from "react";
+import AddCourse from "../AddCourse";
 import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
@@ -48,6 +49,12 @@ export function Navbar(props: {
       <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
         My List
       </Badge>
+      <AddCourse
+        courses={props.courses}
+        addCourse={() => {
+          props.addCourse();
+        }}
+      />
       <ScrollArea>
         <Stack>{results}</Stack>
       </ScrollArea>
