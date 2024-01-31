@@ -93,7 +93,7 @@ export default function Page() {
   const enrolledCourses = coursesInSelectedTerm.filter(
     (course) => course.isEnrolled
   );
-  coursesInSelectedTerm.forEach((course) => {
+  enrolledCourses.forEach((course) => {
     course.schedule?.forEach((entry) => {
       const [time, day] = entry.split("/");
       if (!timetable[`${time}/${day}`]) {
