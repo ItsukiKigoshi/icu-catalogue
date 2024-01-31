@@ -21,7 +21,7 @@ export default function CourseCard(props: {
   const [modalConfirmOpened, { open, close }] = useDisclosure(false);
 
   return (
-    <Card p={0}>
+    <Card p={0} withBorder>
       <Grid>
         <Grid.Col span="auto">
           <UnstyledButton
