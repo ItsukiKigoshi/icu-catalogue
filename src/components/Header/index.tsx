@@ -47,7 +47,7 @@ export function Header(props: {
         <Group gap={5}>
           <ActionIcon
             component="a"
-            href="https://github.com/ItsukiKigoshi/icu-catalogue"
+            href="https://github.com/ItsukiKigoshi/catalogue.icu"
             target="_blank"
             color="gray"
             variant="default"

@@ -149,7 +149,7 @@ export default function AddCourse(props: {
                 color="gray"
                 size="lg"
                 component="a"
-                href="https://github.com/ItsukiKigoshi/icu-catalogue/releases/tag/v0.0.0"
+                href="https://github.com/ItsukiKigoshi/catalogue.icu/releases/tag/v0.0.0"
                 target="_blank"
               >
                 <IconQuestionMark />

@@ -1,16 +1,16 @@
 # Catalogue.icu
 
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/next)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/%40mantine%2Fcore)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/react)
 
 ## We are looking for collaborators.
 
-Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
+Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/catalogue.icu/issues).
 
 ## UI (tentative)
 
-[<img width="1680" alt="Screenshot 2023-11-22 at 12 16 57" src="https://github.com/ItsukiKigoshi/icu-catalogue/assets/67095865/5486626f-b0c4-43e2-9f6a-5d6d0affd53b">](https://itsukikigoshi.github.io/icu-catalogue/)
+[<img width="1680" alt="Screenshot 2023-11-22 at 12 16 57" src="https://github.com/ItsukiKigoshi/catalogue.icu/assets/67095865/5486626f-b0c4-43e2-9f6a-5d6d0affd53b">](https://itsukikigoshi.github.io/catalogue.icu/)
 
 ## Features (tentative)
 
@@ -22,7 +22,7 @@ Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [
 
 ## Related Repositories
 
-- [icu-catalogue-api](https://github.com/itsukikigoshi/icu-catalogue-api)
+- [catalogue.icu-api](https://github.com/itsukikigoshi/catalogue.icu-api)
 - [Timetable4ICU](https://github.com/kohshi54/Timetable4ICU)
 - [Syllabus.icu](https://github.com/pentaCoxian/nuxt3-syllabus)
 
