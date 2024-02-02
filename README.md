@@ -22,7 +22,7 @@ Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [
 
 ## Related Repositories
 
-- [catalogue.icu-api](https://github.com/itsukikigoshi/catalogue.icu-api)
+- [icu-catalogue-api](https://github.com/itsukikigoshi/icu-catalogue-api)
 - [Timetable4ICU](https://github.com/kohshi54/Timetable4ICU)
 - [Syllabus.icu](https://github.com/pentaCoxian/nuxt3-syllabus)
 
