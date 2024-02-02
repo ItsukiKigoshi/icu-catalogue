@@ -1,4 +1,4 @@
-# icu-catalogue
+# icu-catalogue (Catalogue.icu)
 
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
