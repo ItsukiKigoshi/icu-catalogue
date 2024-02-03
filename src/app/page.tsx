@@ -212,7 +212,7 @@ export default function Page() {
               toggleDisplayMode();
             }}
           >
-            {displayMode === "list" ? <IconList /> : <IconCalendar />}
+            {displayMode === "list" ? <IconCalendar /> : <IconList />}
           </Button>
         </Flex>
       </AppShell.Footer>
