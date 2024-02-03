@@ -159,9 +159,11 @@ export default function Page() {
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
-          toggleIsEnrolled={toggleIsEnrolled}
-          addCourse={addCourse}
-          deleteCourse={deleteCourse}
+          courseController={{
+            toggleIsEnrolled,
+            addCourse,
+            deleteCourse,
+          }}
         />
       </AppShell.Navbar>
       <AppShell.Main h="100vh">
@@ -169,15 +171,20 @@ export default function Page() {
           <Timetable
             timetable={timetable}
             enrolledCourses={enrolledCourses}
-            toggleIsEnrolled={toggleIsEnrolled}
+            courseController={{
+              toggleIsEnrolled,
+              deleteCourse,
+            }}
             weekdays={weekdays}
           />
         ) : (
           <Navbar
             courses={coursesInSelectedTerm}
-            toggleIsEnrolled={toggleIsEnrolled}
-            addCourse={addCourse}
-            deleteCourse={deleteCourse}
+            courseController={{
+              toggleIsEnrolled,
+              addCourse,
+              deleteCourse,
+            }}
           />
         )}
       </AppShell.Main>

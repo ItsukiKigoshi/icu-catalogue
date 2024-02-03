@@ -11,9 +11,11 @@ import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
-  toggleIsEnrolled: (regno: number) => void;
-  addCourse: (course: Course) => void;
-  deleteCourse: (regno: number) => void;
+  courseController: {
+    toggleIsEnrolled: (regno: number) => void;
+    addCourse: (course: Course) => void;
+    deleteCourse: (regno: number) => void;
+  };
 }) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
@@ -34,8 +36,8 @@ export function Navbar(props: {
       <div key={course.regno}>
         <CourseCard
           course={course}
-          toggleIsEnrolled={props.toggleIsEnrolled}
-          deleteCourse={props.deleteCourse}
+          toggleIsEnrolled={props.courseController.toggleIsEnrolled}
+          deleteCourse={props.courseController.deleteCourse}
           open={() => {
             setModalDetailFocusedCourse([course]);
             open();
@@ -50,7 +52,10 @@ export function Navbar(props: {
         <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
           My List
         </Badge>
-        <AddCourse courses={props.courses} addCourse={props.addCourse} />
+        <AddCourse
+          courses={props.courses}
+          addCourse={props.courseController.addCourse}
+        />
       </Stack>
       <ScrollArea>
         {results}
@@ -60,6 +65,7 @@ export function Navbar(props: {
           close={() => {
             close();
           }}
+          courseController={props.courseController}
         />
       </ScrollArea>
     </>

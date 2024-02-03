@@ -17,7 +17,10 @@ export function Timetable(props: {
   timetable: { [key: string]: Course[] };
   enrolledCourses: Course[];
   weekdays: string[];
-  toggleIsEnrolled: (regno: number) => void;
+  courseController: {
+    toggleIsEnrolled: (regno: number) => void;
+    deleteCourse: (regno: number) => void;
+  };
 }) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
@@ -139,6 +142,7 @@ export function Timetable(props: {
         close={() => {
           close();
         }}
+        courseController={props.courseController}
       />
     </Stack>
   );
