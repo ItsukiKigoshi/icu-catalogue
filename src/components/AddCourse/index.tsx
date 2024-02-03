@@ -84,8 +84,21 @@ export default function AddCourse(props: {
         instructor: match[20],
         unit: unit,
         modified: new Date(),
-        isEnrolled: true, // Default value, update as needed
-        color: "#000000", // Default value, update as needed
+        isEnrolled: true,
+        color: [
+          "red",
+          "pink",
+          "grape",
+          "violet",
+          "indigo",
+          "blue",
+          "cyan",
+          "teal",
+          "green",
+          "lime",
+          "yellow",
+          "orange",
+        ][Math.floor(Math.random() * 12)], // Randomly assign a color
       };
 
       return course;

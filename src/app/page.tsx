@@ -121,7 +121,6 @@ export default function Page() {
   };
 
   // Add a course to the list "courses"
-  // Usage: addCourse(course: Course)
   const addCourse = (course: Course) => {
     setCourses([...courses, course]);
   };
