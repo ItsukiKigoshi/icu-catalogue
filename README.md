@@ -8,9 +8,10 @@
 
 Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/catalogue.icu/issues).
 
-## UI (tentative)
+## UI
 
-[<img width="1680" alt="Screenshot 2023-11-22 at 12 16 57" src="https://github.com/ItsukiKigoshi/catalogue.icu/assets/67095865/5486626f-b0c4-43e2-9f6a-5d6d0affd53b">](https://itsukikigoshi.github.io/catalogue.icu/)
+![image](https://github.com/ItsukiKigoshi/catalogue.icu/assets/67095865/af26fa3a-1bba-4174-8ac9-beba4be78e79)
+
 
 ## Features (tentative)
 
