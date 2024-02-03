@@ -144,7 +144,7 @@ export default function ModalDetail(props: {
               modalDetailClose={props.close}
             />
           ) : (
-            <Accordion defaultValue={props.courses?.[0]?.e}>
+            <Accordion>
               {props.courses?.map((course) => (
                 <Accordion.Item key={course.regno} value={course.e}>
                   <Accordion.Control>
