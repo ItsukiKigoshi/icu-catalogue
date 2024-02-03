@@ -6,6 +6,7 @@ export default function ModalConfirm(props: {
   deleteCourse: (regno: number) => void;
   modalConfirmOpened: boolean;
   close: () => void;
+  modalDetailClose?: () => void;
 }) {
   return (
     <Modal
@@ -18,6 +19,9 @@ export default function ModalConfirm(props: {
         <Button
           onClick={() => {
             props.deleteCourse(props.course.regno);
+            if (props.modalDetailClose) {
+              props.modalDetailClose();
+            }
             props.close();
           }}
           color="red"
