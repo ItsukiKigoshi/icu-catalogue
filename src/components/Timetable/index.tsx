@@ -1,6 +1,14 @@
 "use client";
 import { Course } from "@/src/type/Types";
-import { Card, Flex, Grid, Stack, Text, UnstyledButton } from "@mantine/core";
+import {
+  Card,
+  Divider,
+  Flex,
+  Grid,
+  Stack,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import ModalDetail from "../ModalDetail";
@@ -9,7 +17,10 @@ export function Timetable(props: {
   timetable: { [key: string]: Course[] };
   enrolledCourses: Course[];
   weekdays: string[];
-  toggleIsEnrolled: (regno: number) => void;
+  courseController: {
+    toggleIsEnrolled: (regno: number) => void;
+    deleteCourse: (regno: number) => void;
+  };
 }) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
@@ -40,7 +51,7 @@ export function Timetable(props: {
                     0
                   )}
                 </Text>
-                <Text size="xs" c="dimmed">
+                <Text size="xs" c="dimmed" visibleFrom="sm">
                   units
                 </Text>
               </Flex>
@@ -83,7 +94,7 @@ export function Timetable(props: {
               {props.weekdays.map((day) => {
                 return (
                   <Grid.Col span={11 / props.weekdays.length}>
-                    <Card radius="0" withBorder h="100%" mih="12vh" p="4">
+                    <Card radius="0" withBorder h="100%" mih="12vh" p="4px">
                       <UnstyledButton
                         onClick={() => {
                           setModalDetailFocusedCourse(
@@ -96,18 +107,25 @@ export function Timetable(props: {
                           !props.timetable[`${scheduleItems[i][1]}/${day}`]
                         }
                       >
-                        <Stack align="center" justify="center" h="100%">
+                        <Stack justify="center">
                           {props.timetable[
                             `${scheduleItems[i][1]}/${day}`
                           ]?.map((course) => (
-                            <Text
-                              key={course.regno}
-                              size="xs"
-                              fw={700}
-                              lineClamp={2}
-                            >
-                              {course.e}
-                            </Text>
+                            <Flex gap="4px" key={course.regno}>
+                              <Divider
+                                color={course.color}
+                                size="md"
+                                orientation="vertical"
+                              />
+                              <Stack h="100%" w="100%" gap="0">
+                                <Text size="xs" fw={700} lineClamp={2}>
+                                  {course.e}
+                                </Text>
+                                <Text size="xs" c="dimmed" lineClamp={1}>
+                                  {course.room}
+                                </Text>
+                              </Stack>
+                            </Flex>
                           ))}
                         </Stack>
                       </UnstyledButton>
@@ -124,6 +142,7 @@ export function Timetable(props: {
         close={() => {
           close();
         }}
+        courseController={props.courseController}
       />
     </Stack>
   );

@@ -9,9 +9,10 @@ export interface Course {
   schedule: string[] | [];
   instructor: string;
   unit: number;
-  modified: Date;
-  isEnrolled: boolean;
+  room?: string;
   color: string;
+  isEnrolled: boolean;
+  modified: Date;
 }
 
 export interface DevServerCourse {

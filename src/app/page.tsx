@@ -46,10 +46,11 @@ export default function Page() {
       j: "科目例",
       schedule: ["3/M", "3/W", "3/F"],
       instructor: "John Doe",
-      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
+      room: "H-000",
+      color: "orange",
       isEnrolled: true,
-      color: "orange 2",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
     {
       regno: 99998,
@@ -61,10 +62,11 @@ export default function Page() {
       j: "科目例",
       schedule: ["3/M", "3/W", "3/F"],
       instructor: "John Doe",
-      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
+      room: "H-000",
+      color: "pink",
       isEnrolled: true,
-      color: "pink 2",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
     {
       regno: 99999,
@@ -76,10 +78,11 @@ export default function Page() {
       j: "科目例",
       schedule: ["3/M", "3/W", "3/F"],
       instructor: "John Doe",
-      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
       unit: 3,
+      room: "H-000",
+      color: "green",
       isEnrolled: true,
-      color: "green 2",
+      modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
   ]);
 
@@ -118,7 +121,6 @@ export default function Page() {
   };
 
   // Add a course to the list "courses"
-  // Usage: addCourse(course: Course)
   const addCourse = (course: Course) => {
     setCourses([...courses, course]);
   };
@@ -156,9 +158,11 @@ export default function Page() {
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
-          toggleIsEnrolled={toggleIsEnrolled}
-          addCourse={addCourse}
-          deleteCourse={deleteCourse}
+          courseController={{
+            toggleIsEnrolled,
+            addCourse,
+            deleteCourse,
+          }}
         />
       </AppShell.Navbar>
       <AppShell.Main h="100vh">
@@ -166,21 +170,27 @@ export default function Page() {
           <Timetable
             timetable={timetable}
             enrolledCourses={enrolledCourses}
-            toggleIsEnrolled={toggleIsEnrolled}
+            courseController={{
+              toggleIsEnrolled,
+              deleteCourse,
+            }}
             weekdays={weekdays}
           />
         ) : (
           <Navbar
             courses={coursesInSelectedTerm}
-            toggleIsEnrolled={toggleIsEnrolled}
-            addCourse={addCourse}
-            deleteCourse={deleteCourse}
+            courseController={{
+              toggleIsEnrolled,
+              addCourse,
+              deleteCourse,
+            }}
           />
         )}
       </AppShell.Main>
       <AppShell.Footer
         withBorder={false}
         hiddenFrom="sm"
+        h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
         <Flex gap="md" mih={50} justify="center" align="center" direction="row">
@@ -201,7 +211,7 @@ export default function Page() {
               toggleDisplayMode();
             }}
           >
-            {displayMode === "list" ? <IconList /> : <IconCalendar />}
+            {displayMode === "list" ? <IconCalendar /> : <IconList />}
           </Button>
         </Flex>
       </AppShell.Footer>

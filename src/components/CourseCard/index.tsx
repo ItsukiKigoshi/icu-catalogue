@@ -4,6 +4,7 @@ import {
   ActionIcon,
   Card,
   Divider,
+  Flex,
   Grid,
   Stack,
   Text,
@@ -32,19 +33,27 @@ export default function CourseCard(props: {
             w="100%"
             p="md"
           >
-            <Stack h="100%" gap="sm">
-              <Text size="xs" c="dimmed">
-                {props.course.no} ･ {props.course.unit}
-              </Text>
-              <Text size="sm" lh={1}>
-                {props.course.e} ({props.course.lang})
-              </Text>
-              <Text size="xs" c="dimmed">
-                {props.course.schedule?.map((s, i) =>
-                  i === props.course.schedule!.length - 1 ? s : s + ", "
-                )}
-              </Text>
-            </Stack>
+            <Flex gap="xs">
+              <Divider
+                color={props.course.color}
+                size="xl"
+                w="2px"
+                orientation="vertical"
+              />
+              <Stack h="100%" gap="sm">
+                <Text size="xs" c="dimmed">
+                  {props.course.no} ･ {props.course.unit}
+                </Text>
+                <Text size="sm" lh={1}>
+                  {props.course.e} ({props.course.lang})
+                </Text>
+                <Text size="xs" c="dimmed">
+                  {props.course.schedule?.map((s, i) =>
+                    i === props.course.schedule!.length - 1 ? s : s + ", "
+                  )}
+                </Text>
+              </Stack>
+            </Flex>
           </UnstyledButton>
         </Grid.Col>
         <Divider orientation="vertical" my="md" mx={0} />

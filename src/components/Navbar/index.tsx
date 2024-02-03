@@ -1,19 +1,20 @@
 "use client";
-import { Badge, ScrollArea, Stack } from "@mantine/core";
+import { ScrollArea, Stack } from "@mantine/core";
 
 import CourseCard from "@/src/components/CourseCard";
 import { Course } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
-import { IconList } from "@tabler/icons-react";
 import { useState } from "react";
 import AddCourse from "../AddCourse";
 import ModalDetail from "../ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
-  toggleIsEnrolled: (regno: number) => void;
-  addCourse: (course: Course) => void;
-  deleteCourse: (regno: number) => void;
+  courseController: {
+    toggleIsEnrolled: (regno: number) => void;
+    addCourse: (course: Course) => void;
+    deleteCourse: (regno: number) => void;
+  };
 }) {
   const [modalDetailOpened, { open, close }] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
@@ -34,8 +35,8 @@ export function Navbar(props: {
       <div key={course.regno}>
         <CourseCard
           course={course}
-          toggleIsEnrolled={props.toggleIsEnrolled}
-          deleteCourse={props.deleteCourse}
+          toggleIsEnrolled={props.courseController.toggleIsEnrolled}
+          deleteCourse={props.courseController.deleteCourse}
           open={() => {
             setModalDetailFocusedCourse([course]);
             open();
@@ -46,22 +47,23 @@ export function Navbar(props: {
 
   return (
     <>
-      <Stack justify="flex-start" p="sm">
-        <Badge size="lg" leftSection={<IconList />} fullWidth color="gray">
-          My List
-        </Badge>
-        <AddCourse courses={props.courses} addCourse={props.addCourse} />
-      </Stack>
-      <ScrollArea>
-        {results}
-        <ModalDetail
-          courses={modalDetailFocusedCourse}
-          modalDetailOpened={modalDetailOpened}
-          close={() => {
-            close();
-          }}
+      <Stack justify="flex-start" p="sm" h="100%">
+        <AddCourse
+          courses={props.courses}
+          addCourse={props.courseController.addCourse}
         />
-      </ScrollArea>
+        <ScrollArea>
+          {results}
+          <ModalDetail
+            courses={modalDetailFocusedCourse}
+            modalDetailOpened={modalDetailOpened}
+            close={() => {
+              close();
+            }}
+            courseController={props.courseController}
+          />
+        </ScrollArea>
+      </Stack>
     </>
   );
 }
