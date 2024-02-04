@@ -58,7 +58,6 @@ export default function ModalCourseEditor(props: {
       title={props.title}
       centered
       closeOnClickOutside={false}
-      closeOnEscape={false}
     >
       <form onSubmit={handleSubmit}>
         <Stack gap="xs" pb="xs">
