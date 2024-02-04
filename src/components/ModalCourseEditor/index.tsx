@@ -53,6 +53,7 @@ export default function ModalCourseEditor(props: {
             <TextInput
               label="Registration Number"
               withAsterisk
+              required
               disabled
               placeholder={props.course.regno.toString()}
               name="regno"
@@ -62,16 +63,17 @@ export default function ModalCourseEditor(props: {
             <TextInput
               label="Course Number"
               withAsterisk
+              required
               placeholder={props.course.no}
               name="no"
               value={editedCourse.no}
               onChange={handleInputChange}
             />
           </Group>
-
           <TextInput
             label="English Title"
             withAsterisk
+            required
             placeholder={props.course.e}
             name="e"
             value={editedCourse.e}
@@ -80,6 +82,7 @@ export default function ModalCourseEditor(props: {
           <TextInput
             label="Japanese Title"
             withAsterisk
+            required
             placeholder={props.course.j}
             name="j"
             value={editedCourse.j}
@@ -89,6 +92,7 @@ export default function ModalCourseEditor(props: {
           <TagsInput
             label="Schedule (e.g. 3/M)"
             withAsterisk
+            required
             defaultValue={props.course.schedule}
             name="schedule"
             value={editedCourse.schedule}
@@ -121,17 +125,23 @@ export default function ModalCourseEditor(props: {
           </Group>
 
           <Group grow>
-            <TextInput
-              label="Language (E/J/O)"
+            <NativeSelect
+              label="Language"
               withAsterisk
-              placeholder={props.course.lang}
+              required
+              defaultValue={props.course.lang}
               name="lang"
               value={editedCourse.lang}
-              onChange={handleInputChange}
+              data={[
+                { value: "E", label: "English" },
+                { value: "J", label: "Japanese" },
+                { value: "O", label: "Other" },
+              ]}
             />
             <NumberInput
               label="Unit"
               withAsterisk
+              required
               placeholder={props.course.unit.toString()}
               name="unit"
               value={editedCourse.unit}
@@ -148,6 +158,7 @@ export default function ModalCourseEditor(props: {
             <NativeSelect
               label="Season"
               withAsterisk
+              required
               defaultValue={props.course.season}
               name="season"
               value={editedCourse.season}
@@ -166,6 +177,7 @@ export default function ModalCourseEditor(props: {
             <NumberInput
               label="Academic Year"
               withAsterisk
+              required
               placeholder={props.course.ay.toString()}
               name="ay"
               value={editedCourse.ay.toString()}
@@ -181,6 +193,7 @@ export default function ModalCourseEditor(props: {
             label="Color"
             closeOnColorSwatchClick
             withAsterisk
+            required
             placeholder={props.course.color}
             name="color"
             value={editedCourse.color}
