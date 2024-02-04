@@ -54,7 +54,7 @@ export function Navbar(props: {
       <Stack justify="flex-start" p="sm" h="100%">
         <AddCourse
           courses={props.courses}
-          addCourse={props.courseController.addCourse}
+          courseController={props.courseController}
         />
         <ScrollArea>
           {results}

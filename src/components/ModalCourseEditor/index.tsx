@@ -10,7 +10,7 @@ import {
   TagsInput,
   TextInput,
 } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ModalCourseEditor(props: {
   title: string;
@@ -18,9 +18,13 @@ export default function ModalCourseEditor(props: {
   updateCourse: (course: Course) => void;
   modalCourseEditorOpened: boolean;
   editorClose: () => void;
-  modalDetailClose: () => void;
+  modalDetailClose?: () => void;
 }) {
   const [editedCourse, setEditedCourse] = useState<Course>(props.course);
+  // Reset the edited course when the props.course is changed
+  useEffect(() => {
+    setEditedCourse(props.course);
+  }, [props.course]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -34,37 +38,53 @@ export default function ModalCourseEditor(props: {
     event.preventDefault();
     props.updateCourse(editedCourse);
     props.editorClose();
-    props.modalDetailClose();
+    props?.modalDetailClose?.();
   };
+
+  const scheduleSelectData = ["M", "TU", "W", "TH", "F", "SA"].map((day) => ({
+    group: day,
+    items: ["1", "2", "3", "4", "5", "6", "7"].map(
+      (period) => `${period}/${day}`
+    ),
+  }));
 
   return (
     <Modal
       opened={props.modalCourseEditorOpened}
       onClose={() => {
         props.editorClose();
-        props.modalDetailClose();
+        props?.modalDetailClose?.();
       }}
       title={props.title}
       centered
+      closeOnClickOutside={false}
+      closeOnEscape={false}
     >
       <form onSubmit={handleSubmit}>
         <Stack gap="xs" pb="xs">
           <Group grow>
-            <TextInput
+            <NumberInput
               label="Registration Number"
               withAsterisk
               required
-              disabled
-              placeholder={props.course.regno.toString()}
+              placeholder={"18807"}
               name="regno"
-              value={editedCourse.regno.toString()}
-              onChange={handleInputChange}
+              value={editedCourse.regno}
+              min={10000}
+              max={99999}
+              onChange={(value) =>
+                setEditedCourse((prevCourse) => ({
+                  ...prevCourse,
+                  regno: Number(value),
+                }))
+              }
             />
             <TextInput
               label="Course Number"
+              data-autofocus
               withAsterisk
               required
-              placeholder={props.course.no}
+              placeholder={"WTS101"}
               name="no"
               value={editedCourse.no}
               onChange={handleInputChange}
@@ -74,7 +94,7 @@ export default function ModalCourseEditor(props: {
             label="English Title"
             withAsterisk
             required
-            placeholder={props.course.e}
+            placeholder={"Introductory Unsolved Cases"}
             name="e"
             value={editedCourse.e}
             onChange={handleInputChange}
@@ -83,23 +103,25 @@ export default function ModalCourseEditor(props: {
             label="Japanese Title"
             withAsterisk
             required
-            placeholder={props.course.j}
+            placeholder={"未解決事件入門"}
             name="j"
             value={editedCourse.j}
             onChange={handleInputChange}
           />
 
           <TagsInput
-            label="Schedule (e.g. 3/M)"
+            label="Schedule (e.g. 3/TH)"
+            placeholder="4/W, 3/TH, 5/F, ..."
             withAsterisk
             required
             defaultValue={props.course.schedule}
             name="schedule"
             value={editedCourse.schedule}
+            data={scheduleSelectData}
             onChange={(value: string[]) => {
               const scheduleArray = value.map((item) => item.trim());
               const validScheduleArray = scheduleArray.filter((item) =>
-                /^[1-7]+\/[M|TU|W|TH|F|SA]+$/.test(item)
+                /^[1-7]+\/(M|TU|W|TH|F|SA)$/.test(item)
               );
               setEditedCourse((prevCourse) => ({
                 ...prevCourse,
@@ -110,14 +132,14 @@ export default function ModalCourseEditor(props: {
           <Group grow>
             <TextInput
               label="Room"
-              placeholder={props.course.room}
+              placeholder={"B-221B"}
               name="room"
               value={editedCourse.room}
               onChange={handleInputChange}
             />
             <TextInput
               label="Instructor"
-              placeholder={props.course.instructor}
+              placeholder={"Sherlock Holmes"}
               name="instructor"
               value={editedCourse.instructor}
               onChange={handleInputChange}
@@ -129,9 +151,14 @@ export default function ModalCourseEditor(props: {
               label="Language"
               withAsterisk
               required
-              defaultValue={props.course.lang}
               name="lang"
               value={editedCourse.lang}
+              onChange={(event) =>
+                setEditedCourse((prevCourse) => ({
+                  ...prevCourse,
+                  lang: event?.currentTarget?.value || editedCourse.lang,
+                }))
+              }
               data={[
                 { value: "E", label: "English" },
                 { value: "J", label: "Japanese" },
@@ -181,6 +208,7 @@ export default function ModalCourseEditor(props: {
               placeholder={props.course.ay.toString()}
               name="ay"
               value={editedCourse.ay.toString()}
+              min={2000}
               onChange={(value) =>
                 setEditedCourse((prevCourse) => ({
                   ...prevCourse,
@@ -197,18 +225,11 @@ export default function ModalCourseEditor(props: {
             placeholder={props.course.color}
             name="color"
             value={editedCourse.color}
-            onChange={
-              editedCourse.color
-                ? (value) =>
-                    setEditedCourse((prevCourse) => ({
-                      ...prevCourse,
-                      color: value,
-                    }))
-                : () =>
-                    setEditedCourse((prevCourse) => ({
-                      ...prevCourse,
-                      color: "#2e2e2e",
-                    }))
+            onChange={(value) =>
+              setEditedCourse((prevCourse) => ({
+                ...prevCourse,
+                color: value,
+              }))
             }
             format="hex"
             withPicker={false}
@@ -230,7 +251,7 @@ export default function ModalCourseEditor(props: {
             ]}
           />
         </Stack>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </form>
     </Modal>
   );
