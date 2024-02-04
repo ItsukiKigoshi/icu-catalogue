@@ -107,7 +107,6 @@ export default function Page() {
   });
 
   // Toggle the isEnrolled property of a certain course
-  // Usage: toggleIsEnrolled(regno)
   const toggleIsEnrolled = (regno: number) => {
     setCourses(
       courses.map((course: Course) => {
@@ -126,7 +125,6 @@ export default function Page() {
   };
 
   // Delete a certain course from the list "courses"
-  // Usage: deleteCourse(regno: number)
   const deleteCourse = (regno: number) => {
     setCourses(courses.filter((course: Course) => course.regno !== regno));
   };
