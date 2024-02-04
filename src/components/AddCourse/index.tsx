@@ -1,19 +1,16 @@
 import { Course } from "@/src/type/Types";
-import {
-  ActionIcon,
-  Grid,
-  Group,
-  HoverCard,
-  Text,
-  TextInput,
-  rem,
-} from "@mantine/core";
-import { IconPlus, IconQuestionMark } from "@tabler/icons-react";
+import { Button, Flex } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import ModalCourseEditor from "../ModalCourseEditor";
 
 export default function AddCourse(props: {
-  addCourse: (course: Course) => void;
   courses: Course[];
+  courseController: {
+    addCourse: (course: Course) => void;
+    updateCourse: (course: Course) => void;
+  };
 }) {
   const [query, setQuery] = useState("");
 
@@ -24,6 +21,9 @@ export default function AddCourse(props: {
       setErrorMessage("");
     }
   }, [query]);
+
+  const [modalCourseEditorOpened, { open: editorOpen, close: editorClose }] =
+    useDisclosure(false);
 
   function parseCourseInfo(str: string): Course | undefined {
     // replace "(" or "<" with "," in front of the schedule, and remove ")" and ">" after schedule
@@ -129,53 +129,60 @@ export default function AddCourse(props: {
       if (isAlreadyInList(course)) {
         setErrorMessage(`Already in the List! regno:${course.regno}`);
       } else {
-        props.addCourse(course);
+        props.courseController.addCourse(course);
         setQuery("");
       }
     }
   };
 
   return (
-    <Grid p="xs">
-      <Grid.Col span="auto">
-        <form onSubmit={handleSubmit}>
-          <TextInput
-            m="0"
-            placeholder="Add Course"
-            w="100%"
-            leftSection={
-              <IconPlus
-                style={{ width: rem(12), height: rem(12) }}
-                stroke={1.5}
-              />
-            }
-            styles={{ section: { pointerEvents: "none" } }}
-            value={query}
-            error={errorMessage}
-            onChange={(e) => setQuery(e.currentTarget.value)}
-          />
-        </form>
-      </Grid.Col>
-      <Grid.Col span="content">
-        <Group justify="center">
-          <HoverCard>
-            <HoverCard.Target>
-              <ActionIcon
-                color="gray"
-                size="lg"
-                component="a"
-                href="https://github.com/ItsukiKigoshi/catalogue.icu/releases/tag/v0.0.0"
-                target="_blank"
-              >
-                <IconQuestionMark />
-              </ActionIcon>
-            </HoverCard.Target>
-            <HoverCard.Dropdown>
-              <Text>Copy & Paste from Course Offerings!</Text>
-            </HoverCard.Dropdown>
-          </HoverCard>
-        </Group>
-      </Grid.Col>
-    </Grid>
+    <>
+      <ModalCourseEditor
+        title={"Add Course Manually"}
+        course={{
+          regno: 10000,
+          season: "Spring",
+          ay: 2024,
+          no: "",
+          lang: "E",
+          e: "",
+          j: "",
+          schedule: [],
+          unit: 0,
+          color: "",
+          isEnrolled: true,
+          modified: new Date(),
+        }}
+        updateCourse={props.courseController.updateCourse}
+        modalCourseEditorOpened={modalCourseEditorOpened}
+        editorClose={editorClose}
+      />
+      <Flex justify="center" gap="xs">
+        <Button
+          leftSection={<IconPlus />}
+          color="gray"
+          onClick={editorOpen}
+          w="100%"
+        >
+          Add Manually
+        </Button>
+
+        {/* <TextInput
+          m="0"
+          placeholder="Paste it!"
+          leftSection={
+            <IconClipboard
+              style={{ width: rem(12), height: rem(12) }}
+              stroke={1.5}
+            />
+          }
+          styles={{ section: { pointerEvents: "none" } }}
+          value={query}
+          error={errorMessage}
+          onChange={(e) => setQuery(e.currentTarget.value)}
+          onSubmit={handleSubmit}
+        />*/}
+      </Flex>
+    </>
   );
 }
