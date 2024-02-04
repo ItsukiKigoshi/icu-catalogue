@@ -19,10 +19,14 @@ export function Timetable(props: {
   weekdays: string[];
   courseController: {
     toggleIsEnrolled: (regno: number) => void;
+    updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
 }) {
-  const [modalDetailOpened, { open, close }] = useDisclosure(false);
+  const [
+    modalDetailOpened,
+    { open: modalDetailOpen, close: modalDetailClose },
+  ] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
     Course[]
   >([]);
@@ -100,7 +104,7 @@ export function Timetable(props: {
                           setModalDetailFocusedCourse(
                             props.timetable[`${scheduleItems[i][1]}/${day}`]
                           );
-                          open();
+                          modalDetailOpen();
                         }}
                         h="100%"
                         disabled={
@@ -139,8 +143,8 @@ export function Timetable(props: {
       <ModalDetail
         courses={modalDetailFocusedCourse}
         modalDetailOpened={modalDetailOpened}
-        close={() => {
-          close();
+        modalDetailClose={() => {
+          modalDetailClose();
         }}
         courseController={props.courseController}
       />

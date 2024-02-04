@@ -2,6 +2,7 @@ import { Course } from "@/src/type/Types";
 import { Accordion, Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
+  IconEdit,
   IconExternalLink,
   IconEye,
   IconEyeOff,
@@ -9,13 +10,15 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import ModalConfirm from "../ModalConfirm";
+import ModalCourseEditor from "../ModalCourseEditor";
 
 export default function ModalDetail(props: {
   courses: Course[];
   modalDetailOpened: boolean;
-  close: () => void;
+  modalDetailClose: () => void;
   courseController: {
     toggleIsEnrolled: (regno: number) => void;
+    updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
 }) {
@@ -54,8 +57,11 @@ export default function ModalDetail(props: {
 
   const CourseInfo: React.FC<{
     course: Course;
+
+    // TODO - Should these types in React function component actually be stated twice?
     courseController: {
       toggleIsEnrolled: (regno: number) => void;
+      updateCourse: (course: Course) => void;
       deleteCourse: (regno: number) => void;
     };
     modalDetailClose: () => void;
@@ -63,11 +69,15 @@ export default function ModalDetail(props: {
     course: Course;
     courseController: {
       toggleIsEnrolled: (regno: number) => void;
+      updateCourse: (course: Course) => void;
       deleteCourse: (regno: number) => void;
     };
     modalDetailClose: () => void;
   }) => {
-    const [modalConfirmOpened, { open, close }] = useDisclosure(false);
+    const [modalConfirmOpened, { open: confirmOpen, close: confirmClose }] =
+      useDisclosure(false);
+    const [modalCourseEditorOpened, { open: editorOpen, close: editorClose }] =
+      useDisclosure(false);
     return (
       <Stack gap="xs" p="xs" key={props.course.regno}>
         <Group>
@@ -97,6 +107,15 @@ export default function ModalDetail(props: {
         </Group>
         <Group justify="center" grow>
           <Button
+            leftSection={<IconEdit />}
+            color="gray"
+            onClick={() => {
+              editorOpen();
+            }}
+          >
+            Edit
+          </Button>
+          <Button
             leftSection={props.course.isEnrolled ? <IconEyeOff /> : <IconEye />}
             color="gray"
             onClick={() => {
@@ -106,7 +125,7 @@ export default function ModalDetail(props: {
           >
             {props.course.isEnrolled ? "Hide" : "Show"}
           </Button>
-          <Button leftSection={<IconTrash />} color="red" onClick={open}>
+          <Button leftSection={<IconTrash />} color="red" onClick={confirmOpen}>
             Delete
           </Button>
         </Group>
@@ -114,7 +133,15 @@ export default function ModalDetail(props: {
           course={props.course}
           deleteCourse={props.courseController.deleteCourse}
           modalConfirmOpened={modalConfirmOpened}
-          close={close}
+          close={confirmClose}
+          modalDetailClose={props.modalDetailClose}
+        />
+        <ModalCourseEditor
+          title="Edit Course"
+          course={props.course}
+          updateCourse={props.courseController.updateCourse}
+          modalCourseEditorOpened={modalCourseEditorOpened}
+          editorClose={editorClose}
           modalDetailClose={props.modalDetailClose}
         />
       </Stack>
@@ -122,7 +149,11 @@ export default function ModalDetail(props: {
   };
 
   return (
-    <Modal.Root opened={props.modalDetailOpened} onClose={props.close} centered>
+    <Modal.Root
+      opened={props.modalDetailOpened}
+      onClose={props.modalDetailClose}
+      centered
+    >
       <Modal.Overlay />
       <Modal.Content>
         <Modal.Header>
@@ -141,7 +172,7 @@ export default function ModalDetail(props: {
             <CourseInfo
               course={props.courses?.[0]}
               courseController={props.courseController}
-              modalDetailClose={props.close}
+              modalDetailClose={props.modalDetailClose}
             />
           ) : (
             <Accordion>
@@ -154,7 +185,7 @@ export default function ModalDetail(props: {
                     <CourseInfo
                       course={course}
                       courseController={props.courseController}
-                      modalDetailClose={props.close}
+                      modalDetailClose={props.modalDetailClose}
                     />
                   </Accordion.Panel>
                 </Accordion.Item>
@@ -162,7 +193,11 @@ export default function ModalDetail(props: {
             </Accordion>
           )}
           <Group justify="center" grow py="xs">
-            <Button leftSection={<IconX />} onClick={props.close} color="gray">
+            <Button
+              leftSection={<IconX />}
+              onClick={props.modalDetailClose}
+              color="gray"
+            >
               Close
             </Button>
           </Group>

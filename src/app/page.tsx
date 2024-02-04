@@ -48,7 +48,7 @@ export default function Page() {
       instructor: "John Doe",
       unit: 3,
       room: "H-000",
-      color: "orange",
+      color: "#e64980",
       isEnrolled: true,
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
@@ -64,7 +64,7 @@ export default function Page() {
       instructor: "John Doe",
       unit: 3,
       room: "H-000",
-      color: "pink",
+      color: "#fd7e14",
       isEnrolled: true,
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
@@ -80,7 +80,7 @@ export default function Page() {
       instructor: "John Doe",
       unit: 3,
       room: "H-000",
-      color: "green",
+      color: "#40c057",
       isEnrolled: true,
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
@@ -124,6 +124,23 @@ export default function Page() {
     setCourses([...courses, course]);
   };
 
+  // Update a certain course in the list "courses"
+  // If the course is not in the list, add it
+  const updateCourse = (course: Course) => {
+    const courseIndex = courses.findIndex(
+      (c: Course) => c.regno === course.regno
+    );
+    if (courseIndex !== -1) {
+      setCourses(
+        courses.map((c: Course, index: number) =>
+          index === courseIndex ? course : c
+        )
+      );
+    } else {
+      addCourse(course);
+    }
+  };
+
   // Delete a certain course from the list "courses"
   const deleteCourse = (regno: number) => {
     setCourses(courses.filter((course: Course) => course.regno !== regno));
@@ -159,6 +176,7 @@ export default function Page() {
           courseController={{
             toggleIsEnrolled,
             addCourse,
+            updateCourse,
             deleteCourse,
           }}
         />
@@ -170,6 +188,7 @@ export default function Page() {
             enrolledCourses={enrolledCourses}
             courseController={{
               toggleIsEnrolled,
+              updateCourse,
               deleteCourse,
             }}
             weekdays={weekdays}
@@ -180,6 +199,7 @@ export default function Page() {
             courseController={{
               toggleIsEnrolled,
               addCourse,
+              updateCourse,
               deleteCourse,
             }}
           />

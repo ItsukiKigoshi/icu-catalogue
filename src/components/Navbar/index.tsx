@@ -13,10 +13,14 @@ export function Navbar(props: {
   courseController: {
     toggleIsEnrolled: (regno: number) => void;
     addCourse: (course: Course) => void;
+    updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
 }) {
-  const [modalDetailOpened, { open, close }] = useDisclosure(false);
+  const [
+    modalDetailOpened,
+    { open: ModalDetailOpen, close: modalDetailClose },
+  ] = useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<
     Course[]
   >([]);
@@ -39,7 +43,7 @@ export function Navbar(props: {
           deleteCourse={props.courseController.deleteCourse}
           open={() => {
             setModalDetailFocusedCourse([course]);
-            open();
+            ModalDetailOpen();
           }}
         />
       </div>
@@ -57,8 +61,8 @@ export function Navbar(props: {
           <ModalDetail
             courses={modalDetailFocusedCourse}
             modalDetailOpened={modalDetailOpened}
-            close={() => {
-              close();
+            modalDetailClose={() => {
+              modalDetailClose();
             }}
             courseController={props.courseController}
           />
