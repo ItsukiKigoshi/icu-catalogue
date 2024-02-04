@@ -1,7 +1,7 @@
 import { Course } from "@/src/type/Types";
-import { Button, Flex } from "@mantine/core";
+import { Button, Group, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+import { IconClipboard, IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import ModalCourseEditor from "../ModalCourseEditor";
 
@@ -157,32 +157,22 @@ export default function AddCourse(props: {
         modalCourseEditorOpened={modalCourseEditorOpened}
         editorClose={editorClose}
       />
-      <Flex justify="center" gap="xs">
-        <Button
-          leftSection={<IconPlus />}
-          color="gray"
-          onClick={editorOpen}
-          w="100%"
-        >
+      <Group grow>
+        <Button leftSection={<IconPlus />} color="gray" onClick={editorOpen}>
           Add Manually
         </Button>
 
-        {/* <TextInput
+        <TextInput
           m="0"
           placeholder="Paste it!"
-          leftSection={
-            <IconClipboard
-              style={{ width: rem(12), height: rem(12) }}
-              stroke={1.5}
-            />
-          }
+          leftSection={<IconClipboard />}
           styles={{ section: { pointerEvents: "none" } }}
           value={query}
           error={errorMessage}
           onChange={(e) => setQuery(e.currentTarget.value)}
           onSubmit={handleSubmit}
-        />*/}
-      </Flex>
+        />
+      </Group>
     </>
   );
 }
