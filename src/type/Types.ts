@@ -7,7 +7,7 @@ export interface Course {
   e: string;
   j: string;
   schedule: string[] | [];
-  instructor: string;
+  instructor?: string;
   unit: number;
   room?: string;
   color: string;
