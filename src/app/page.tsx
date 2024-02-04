@@ -1,8 +1,9 @@
 "use client";
-import { AppShell, Button, Flex, em } from "@mantine/core";
+import { AppShell, Button, Flex, Group, Text, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
-import { IconCalendar, IconList } from "@tabler/icons-react";
+import { IconCalendar, IconDownload, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 import { Header } from "../components/Header";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
@@ -207,7 +208,6 @@ export default function Page() {
       </AppShell.Main>
       <AppShell.Footer
         withBorder={false}
-        hiddenFrom="sm"
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
@@ -220,6 +220,17 @@ export default function Page() {
           >
             Search
           </Button> */}
+          <CSVLink
+            data={courses}
+            filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
+          >
+            <Button color="gray" size="lg">
+              <Group>
+                <IconDownload />
+                <Text visibleFrom="sm">Download CSV</Text>
+              </Group>
+            </Button>
+          </CSVLink>
           <Button
             hiddenFrom="sm"
             size="lg"
