@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  ComboboxData,
   Container,
   Group,
   NativeSelect,
@@ -10,7 +11,7 @@ import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
 export function Header(props: {
   weekdays: string[];
   toggleSaturday: () => void;
-  terms: { value: string; ay: string; season: string; label: string }[];
+  terms: ComboboxData;
   selectedTermValue: string;
   setselectedTermValue: (value: string) => void;
   modalSettingOpen: () => void;
