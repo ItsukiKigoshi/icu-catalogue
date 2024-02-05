@@ -157,21 +157,21 @@ export default function AddCourse(props: {
         modalCourseEditorOpened={modalCourseEditorOpened}
         editorClose={editorClose}
       />
-      <Group grow>
+      <Group grow align="flex-start">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <TextInput
+            m="0"
+            placeholder="Paste it!"
+            leftSection={<IconClipboard />}
+            styles={{ section: { pointerEvents: "none" } }}
+            value={query}
+            error={errorMessage}
+            onChange={(e) => setQuery(e.currentTarget.value)}
+          />
+        </form>
         <Button leftSection={<IconPlus />} color="gray" onClick={editorOpen}>
           Add Manually
         </Button>
-
-        <TextInput
-          m="0"
-          placeholder="Paste it!"
-          leftSection={<IconClipboard />}
-          styles={{ section: { pointerEvents: "none" } }}
-          value={query}
-          error={errorMessage}
-          onChange={(e) => setQuery(e.currentTarget.value)}
-          onSubmit={handleSubmit}
-        />
       </Group>
     </>
   );
