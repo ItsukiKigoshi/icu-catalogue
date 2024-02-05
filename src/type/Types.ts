@@ -1,3 +1,5 @@
+import { ComboboxItem } from "@mantine/core";
+
 export interface Course {
   regno: number;
   season: string;
@@ -14,6 +16,8 @@ export interface Course {
   isEnrolled: boolean;
   modified: Date;
 }
+
+export type Term = ComboboxItem & { season: string; ay: string };
 
 export interface DevServerCourse {
   cno: string;

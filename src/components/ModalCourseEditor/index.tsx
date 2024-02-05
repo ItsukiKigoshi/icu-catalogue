@@ -80,9 +80,6 @@ export default function ModalCourseEditor(props: {
             />
             <TextInput
               label="Course Number"
-              data-autofocus
-              withAsterisk
-              required
               placeholder={"WTS101"}
               name="no"
               value={editedCourse.no}
@@ -91,6 +88,7 @@ export default function ModalCourseEditor(props: {
           </Group>
           <TextInput
             label="English Title"
+            data-autofocus
             withAsterisk
             required
             placeholder={"Introductory Unsolved Cases"}
@@ -100,8 +98,6 @@ export default function ModalCourseEditor(props: {
           />
           <TextInput
             label="Japanese Title"
-            withAsterisk
-            required
             placeholder={"未解決事件入門"}
             name="j"
             value={editedCourse.j}
@@ -111,8 +107,6 @@ export default function ModalCourseEditor(props: {
           <TagsInput
             label="Schedule (e.g. 3/TH)"
             placeholder="4/W, 3/TH, 5/F, ..."
-            withAsterisk
-            required
             defaultValue={props.course.schedule}
             name="schedule"
             value={editedCourse.schedule}
@@ -148,8 +142,6 @@ export default function ModalCourseEditor(props: {
           <Group grow>
             <NativeSelect
               label="Language"
-              withAsterisk
-              required
               name="lang"
               value={editedCourse.lang}
               onChange={(event) =>
@@ -166,9 +158,7 @@ export default function ModalCourseEditor(props: {
             />
             <NumberInput
               label="Unit"
-              withAsterisk
-              required
-              placeholder={props.course.unit.toString()}
+              placeholder={props.course.unit?.toString()}
               name="unit"
               value={editedCourse.unit}
               min={0}
