@@ -2,13 +2,13 @@ export interface Course {
   regno: number;
   season: string;
   ay: number;
-  no: string;
-  lang: string;
+  no?: string;
+  lang?: string;
   e: string;
-  j: string;
+  j?: string;
   schedule: string[] | [];
   instructor?: string;
-  unit: number;
+  unit?: number;
   room?: string;
   color: string;
   isEnrolled: boolean;
