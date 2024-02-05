@@ -4675,7 +4675,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.5.9":
+"@types/jest@npm:^29.5.12":
   version: 29.5.12
   resolution: "@types/jest@npm:29.5.12"
   dependencies:
@@ -6451,7 +6451,7 @@ __metadata:
     "@tiptap/extension-link": "npm:^2.1.12"
     "@tiptap/react": "npm:^2.1.12"
     "@tiptap/starter-kit": "npm:^2.1.12"
-    "@types/jest": "npm:^29.5.9"
+    "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-csv": "npm:^1.1.10"
