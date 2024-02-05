@@ -1,17 +1,17 @@
 "use client";
-import { AppShell, Button, Flex, Group, Text, em } from "@mantine/core";
+import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
-import { IconCalendar, IconDownload, IconList } from "@tabler/icons-react";
+import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { CSVLink } from "react-csv";
 import { Header } from "../components/Header";
+import ModalSetting from "../components/ModalSetting";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course } from "../type/Types";
 
 export default function Page() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened] = useDisclosure(false);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const [weekdays, toggleSaturday] = useToggle([
@@ -34,6 +34,11 @@ export default function Page() {
       toggleDisplayMode("timetable");
     }
   }, [isMobile]);
+
+  const [
+    modalSettingOpened,
+    { open: modalSettingOpen, close: modalSettingClose },
+  ] = useDisclosure(false);
 
   // Get the list of courses from the local storage
   const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
@@ -168,6 +173,16 @@ export default function Page() {
           terms={terms}
           selectedTermValue={selectedTermValue}
           setselectedTermValue={setselectedTermValue}
+          modalSettingOpen={modalSettingOpen}
+        />
+        <ModalSetting
+          modalSettingOpened={modalSettingOpened}
+          close={modalSettingClose}
+          weekdays={weekdays}
+          toggleSaturday={() => {
+            toggleSaturday();
+          }}
+          courses={courses}
         />
       </AppShell.Header>
 
@@ -208,6 +223,7 @@ export default function Page() {
       </AppShell.Main>
       <AppShell.Footer
         withBorder={false}
+        hiddenFrom="sm"
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
@@ -220,17 +236,7 @@ export default function Page() {
           >
             Search
           </Button> */}
-          <CSVLink
-            data={courses}
-            filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
-          >
-            <Button color="gray" size="lg">
-              <Group>
-                <IconDownload />
-                <Text visibleFrom="sm">Download CSV</Text>
-              </Group>
-            </Button>
-          </CSVLink>
+
           <Button
             hiddenFrom="sm"
             size="lg"

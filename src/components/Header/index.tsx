@@ -5,10 +5,7 @@ import {
   NativeSelect,
   Text,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
-
-import ModalSetting from "../ModalSetting";
 
 export function Header(props: {
   weekdays: string[];
@@ -16,9 +13,8 @@ export function Header(props: {
   terms: { value: string; ay: string; season: string; label: string }[];
   selectedTermValue: string;
   setselectedTermValue: (value: string) => void;
+  modalSettingOpen: () => void;
 }) {
-  const [modalSettingOpened, { open, close }] = useDisclosure(false);
-
   return (
     <header>
       <Container
@@ -61,18 +57,10 @@ export function Header(props: {
             variant="default"
             size="xl"
             aria-label="Settings"
-            onClick={open}
+            onClick={props.modalSettingOpen}
           >
             <IconSettings />
           </ActionIcon>
-          <ModalSetting
-            modalSettingOpened={modalSettingOpened}
-            close={close}
-            weekdays={props.weekdays}
-            toggleSaturday={() => {
-              props.toggleSaturday();
-            }}
-          />
         </Group>
       </Container>
     </header>
