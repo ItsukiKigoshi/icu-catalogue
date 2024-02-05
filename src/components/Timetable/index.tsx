@@ -51,7 +51,7 @@ export function Timetable(props: {
               <Flex justify="center" align="center" gap="4px">
                 <Text size="md" fw="bold">
                   {props.enrolledCourses.reduce(
-                    (sum, course) => sum + course.unit,
+                    (sum, course) => sum + (course.unit ?? 0),
                     0
                   )}
                 </Text>

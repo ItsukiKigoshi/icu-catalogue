@@ -2,7 +2,7 @@
 import { ScrollArea, Stack } from "@mantine/core";
 
 import CourseCard from "@/src/components/CourseCard";
-import { Course } from "@/src/type/Types";
+import { Course, Term } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import AddCourse from "../AddCourse";
@@ -16,6 +16,7 @@ export function Navbar(props: {
     updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
+  selectedTerm?: Term;
 }) {
   const [
     modalDetailOpened,
@@ -29,7 +30,7 @@ export function Navbar(props: {
   const results = props.courses
     // Sort the courses by their no property
     ?.sort(function (a, b) {
-      if (a.no > b.no) {
+      if (a.modified > b.modified) {
         return 1;
       } else {
         return -1;
@@ -55,6 +56,7 @@ export function Navbar(props: {
         <AddCourse
           courses={props.courses}
           courseController={props.courseController}
+          selectedTerm={props.selectedTerm}
         />
         <ScrollArea>
           {results}

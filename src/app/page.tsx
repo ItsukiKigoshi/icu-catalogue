@@ -8,7 +8,7 @@ import ModalSetting from "../components/ModalSetting";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Course } from "../type/Types";
+import { Course, Term } from "../type/Types";
 
 export default function Page() {
   const [opened] = useDisclosure(false);
@@ -19,7 +19,7 @@ export default function Page() {
     ["M", "TU", "W", "TH", "F", "SA"],
   ]);
 
-  const terms = [
+  const terms: { group: string; items: Term[] }[] = [
     {
       group: "All",
       items: [{ label: "All", ay: "All", season: "All", value: "All" }],
@@ -44,7 +44,7 @@ export default function Page() {
     },
   ];
   const [selectedTermValue, setselectedTermValue] = useState("2024S");
-  const selectedTerm = terms
+  const selectedTerm: Term | undefined = terms
     .map((term) => term.items)
     .flat()
     .find((term) => term.value === selectedTermValue);
@@ -218,6 +218,7 @@ export default function Page() {
             updateCourse,
             deleteCourse,
           }}
+          selectedTerm={selectedTerm}
         />
       </AppShell.Navbar>
       <AppShell.Main h="100vh">
@@ -241,6 +242,7 @@ export default function Page() {
               updateCourse,
               deleteCourse,
             }}
+            selectedTerm={selectedTerm}
           />
         )}
       </AppShell.Main>

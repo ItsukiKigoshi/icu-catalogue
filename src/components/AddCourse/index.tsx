@@ -1,4 +1,4 @@
-import { Course } from "@/src/type/Types";
+import { Course, Term } from "@/src/type/Types";
 import { Button, Group, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconClipboard, IconPlus } from "@tabler/icons-react";
@@ -11,6 +11,7 @@ export default function AddCourse(props: {
     addCourse: (course: Course) => void;
     updateCourse: (course: Course) => void;
   };
+  selectedTerm?: Term;
 }) {
   const [query, setQuery] = useState("");
 
@@ -85,22 +86,7 @@ export default function AddCourse(props: {
         unit: unit,
         modified: new Date(),
         isEnrolled: true,
-        color: [
-          "#2e2e2e",
-          "#868e96",
-          "#fa5252",
-          "#e64980",
-          "#be4bdb",
-          "#7950f2",
-          "#4c6ef5",
-          "#228be6",
-          "#15aabf",
-          "#12b886",
-          "#40c057",
-          "#82c91e",
-          "#fab005",
-          "#fd7e14",
-        ][Math.floor(Math.random() * 12)], // Randomly assign a color
+        color: randomColor(),
       };
 
       return course;
@@ -135,21 +121,38 @@ export default function AddCourse(props: {
     }
   };
 
+  const randomColor = () => {
+    return [
+      "#868e96",
+      "#fa5252",
+      "#e64980",
+      "#be4bdb",
+      "#7950f2",
+      "#4c6ef5",
+      "#228be6",
+      "#15aabf",
+      "#12b886",
+      "#40c057",
+      "#82c91e",
+      "#fab005",
+      "#fd7e14",
+    ][Math.floor(Math.random() * 12)];
+  };
   return (
     <>
       <ModalCourseEditor
         title={"Add Course Manually"}
         course={{
           regno: 10000,
-          season: "Spring",
-          ay: 2024,
+          season: props.selectedTerm?.season || "Spring",
+          ay: Number(props.selectedTerm?.ay) || new Date().getFullYear(),
           no: "",
           lang: "E",
           e: "",
           j: "",
           schedule: [],
           unit: 0,
-          color: "",
+          color: randomColor(),
           isEnrolled: true,
           modified: new Date(),
         }}
