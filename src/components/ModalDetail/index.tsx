@@ -120,6 +120,7 @@ export default function ModalDetail(props: {
         <Group justify="center" grow>
           <Button
             leftSection={<IconExternalLink />}
+            data-autofocus
             component="a"
             href={`https://campus.icu.ac.jp/public/ehandbook/PreviewSyllabus.aspx?regno=${
               props.course.regno
@@ -165,11 +166,14 @@ export default function ModalDetail(props: {
           </Group>
         </Group>
         <ModalConfirm
-          course={props.course}
-          deleteCourse={props.courseController.deleteCourse}
+          title={`Are you sure to delete "${props.course.e}"?`}
+          confirmLabel="Yes, Delete"
+          onConfirm={() => {
+            props.modalDetailClose();
+            props.courseController.deleteCourse(props.course.regno);
+          }}
           modalConfirmOpened={modalConfirmOpened}
           close={confirmClose}
-          modalDetailClose={props.modalDetailClose}
         />
         <ModalCourseEditor
           title="Edit Course"
