@@ -1,5 +1,14 @@
 import { Course } from "@/src/type/Types";
-import { Accordion, Button, Group, Modal, Stack, Text } from "@mantine/core";
+import {
+  Accordion,
+  ActionIcon,
+  Button,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  Textarea,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconEdit,
@@ -9,6 +18,7 @@ import {
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
+import { useState } from "react";
 import ModalConfirm from "../ModalConfirm";
 import ModalCourseEditor from "../ModalCourseEditor";
 
@@ -78,6 +88,15 @@ export default function ModalDetail(props: {
       useDisclosure(false);
     const [modalCourseEditorOpened, { open: editorOpen, close: editorClose }] =
       useDisclosure(false);
+
+    const [note, setNote] = useState(props.course.note);
+
+    const handleBlur = () => {
+      props.course.note = note;
+      props.course.modified = new Date();
+      props.courseController.updateCourse(props.course);
+    };
+
     return (
       <Stack gap="xs" p="xs" key={props.course.regno}>
         <Group>
@@ -91,6 +110,13 @@ export default function ModalDetail(props: {
         <Text size="sm">
           {props.course.season} {props.course.ay}
         </Text>
+        <Textarea
+          description="Note"
+          placeholder="Add a note"
+          value={note}
+          onChange={(event) => setNote(event.currentTarget.value)}
+          onBlur={handleBlur}
+        />
         <Group justify="center" grow>
           <Button
             leftSection={<IconExternalLink />}
@@ -115,19 +141,28 @@ export default function ModalDetail(props: {
           >
             Edit
           </Button>
-          <Button
-            leftSection={props.course.isEnrolled ? <IconEyeOff /> : <IconEye />}
-            color="gray"
-            onClick={() => {
-              props.courseController.toggleIsEnrolled(props.course.regno);
-              props.modalDetailClose();
-            }}
-          >
-            {props.course.isEnrolled ? "Hide" : "Show"}
-          </Button>
-          <Button leftSection={<IconTrash />} color="red" onClick={confirmOpen}>
-            Delete
-          </Button>
+          <Group grow>
+            <ActionIcon
+              color="gray"
+              size="lg"
+              onClick={() => {
+                props.courseController.toggleIsEnrolled(props.course.regno);
+                props.modalDetailClose();
+              }}
+            >
+              {props.course.isEnrolled ? <IconEyeOff /> : <IconEye />}
+            </ActionIcon>
+
+            <ActionIcon
+              color="red"
+              size="lg"
+              onClick={() => {
+                confirmOpen();
+              }}
+            >
+              <IconTrash />
+            </ActionIcon>
+          </Group>
         </Group>
         <ModalConfirm
           course={props.course}
