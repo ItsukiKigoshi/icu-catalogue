@@ -83,9 +83,11 @@ export default function AddCourse(props: {
         j: match[11],
         schedule: schedule,
         instructor: match[20],
+        room: "",
         unit: unit,
         modified: new Date(),
         isEnrolled: true,
+        note: "",
         color: randomColor(),
       };
 
@@ -152,8 +154,10 @@ export default function AddCourse(props: {
           j: "",
           schedule: [],
           unit: 0,
+          room: "",
           color: randomColor(),
           isEnrolled: true,
+          note: "",
           modified: new Date(),
         }}
         updateCourse={props.courseController.updateCourse}
