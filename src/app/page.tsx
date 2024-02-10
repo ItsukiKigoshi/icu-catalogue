@@ -77,6 +77,7 @@ export default function Page() {
       room: "H-000",
       color: "#e64980",
       isEnrolled: true,
+      note: "",
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
     {
@@ -93,6 +94,7 @@ export default function Page() {
       room: "H-000",
       color: "#fd7e14",
       isEnrolled: true,
+      note: "",
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
     {
@@ -109,6 +111,7 @@ export default function Page() {
       room: "H-000",
       color: "#40c057",
       isEnrolled: true,
+      note: "",
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
   ]);

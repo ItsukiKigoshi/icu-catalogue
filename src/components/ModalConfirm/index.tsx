@@ -1,32 +1,28 @@
-import { Course } from "@/src/type/Types";
 import { Button, Group, Modal } from "@mantine/core";
 
 export default function ModalConfirm(props: {
-  course: Course;
-  deleteCourse: (regno: number) => void;
+  title: string;
+  confirmLabel: string;
   modalConfirmOpened: boolean;
+  onConfirm: () => void;
   close: () => void;
-  modalDetailClose?: () => void;
 }) {
   return (
     <Modal
       opened={props.modalConfirmOpened}
       onClose={props.close}
-      title={`Are you sure to delete "${props.course.e}"?`}
+      title={props.title}
       centered
     >
       <Group justify="center">
         <Button
           onClick={() => {
-            props.deleteCourse(props.course.regno);
-            if (props.modalDetailClose) {
-              props.modalDetailClose();
-            }
+            props.onConfirm();
             props.close();
           }}
           color="red"
         >
-          Yes, Delete
+          {props.confirmLabel}
         </Button>
         <Button onClick={props.close} color="gray">
           No, Cancel

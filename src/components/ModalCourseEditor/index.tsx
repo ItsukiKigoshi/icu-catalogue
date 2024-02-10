@@ -10,7 +10,9 @@ import {
   TagsInput,
   TextInput,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import ModalConfirm from "../ModalConfirm";
 
 export default function ModalCourseEditor(props: {
   title: string;
@@ -41,6 +43,11 @@ export default function ModalCourseEditor(props: {
     props?.modalDetailClose?.();
   };
 
+  const [
+    modalConfirmOpened,
+    { open: modalConfirmOpen, close: modalConfirmClose },
+  ] = useDisclosure(false);
+
   const scheduleSelectData = ["M", "TU", "W", "TH", "F", "SA"].map((day) => ({
     group: day,
     items: ["1", "2", "3", "4", "5", "6", "7"].map(
@@ -52,12 +59,16 @@ export default function ModalCourseEditor(props: {
     <Modal
       opened={props.modalCourseEditorOpened}
       onClose={() => {
-        props.editorClose();
-        props?.modalDetailClose?.();
+        if (JSON.stringify(editedCourse) !== JSON.stringify(props.course)) {
+          modalConfirmOpen();
+        } else {
+          props.editorClose();
+          props?.modalDetailClose?.();
+        }
       }}
       title={props.title}
+      closeOnEscape={false}
       centered
-      closeOnClickOutside={false}
     >
       <form onSubmit={handleSubmit}>
         <Stack gap="xs" pb="xs">
@@ -242,6 +253,16 @@ export default function ModalCourseEditor(props: {
         </Stack>
         <Button type="submit">Save</Button>
       </form>
+      <ModalConfirm
+        title={"Discard changes?"}
+        confirmLabel={"Yes, Discard"}
+        modalConfirmOpened={modalConfirmOpened}
+        close={modalConfirmClose}
+        onConfirm={() => {
+          props.editorClose();
+          props?.modalDetailClose?.();
+        }}
+      />
     </Modal>
   );
 }

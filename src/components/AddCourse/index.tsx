@@ -44,16 +44,16 @@ export default function AddCourse(props: {
     // console.log(`modifiedStr: ${modifiedStr}`);
 
     const regex =
-      /(\d+)\s(\w+)\s(\d+)\s(\[change\]\s(\d{4}\/\d{2}\/\d{2})\s)?(\s)?(\w+)\s?([JEO])?(\s\w{1})?\s(.+?)?\s\s(.+?)\s(\d\/[A-Z]+(,\d\/[A-Z]+)*)\s((.+?))?\s?(\((\d+)\))?\s(Online|(Face to Face))?(.+?)\s?(.+?)\s(\d+(\/\d+)*)/;
+      /(\d+)\s(\w+)\s(\d+)\s(\[change\]\s(\d{4}\/\d{2}\/\d{2})\s)?(\s)?(\w+)\s?([JEO])?(\s\w{1})?\s(.+)?\s?\s(.+?)\s(\d\/[A-Z]+(,\d\/[A-Z]+)*)\s((.+?))?\s?(\((\d+)\))?\s(Online|(Face to Face))?(.+)\s(.+)\s(\d+(\/\d+)*)/;
 
     const match = modifiedStr.match(regex);
 
-    //Debug Console
-    // if (match) {
-    //   for (let i = 0; i < match?.length; i++) {
-    //     console.log(`${i}: ${match[i]}`);
-    //   }
-    // }
+    // Debug Console
+    if (match) {
+      for (let i = 0; i < match?.length; i++) {
+        console.log(`${i}: ${match[i]}`);
+      }
+    }
 
     if (match) {
       setErrorMessage("");
@@ -82,10 +82,12 @@ export default function AddCourse(props: {
         e: match[10],
         j: match[11],
         schedule: schedule,
-        instructor: match[20],
+        instructor: match[20] + match[21],
+        room: "",
         unit: unit,
         modified: new Date(),
         isEnrolled: true,
+        note: "",
         color: randomColor(),
       };
 
@@ -152,8 +154,10 @@ export default function AddCourse(props: {
           j: "",
           schedule: [],
           unit: 0,
+          room: "",
           color: randomColor(),
           isEnrolled: true,
+          note: "",
           modified: new Date(),
         }}
         updateCourse={props.courseController.updateCourse}

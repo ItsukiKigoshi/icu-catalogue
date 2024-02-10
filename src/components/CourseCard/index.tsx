@@ -75,8 +75,11 @@ export default function CourseCard(props: {
         </Grid.Col>
       </Grid>
       <ModalConfirm
-        course={props.course}
-        deleteCourse={props.deleteCourse}
+        title={`Are you sure to delete "${props.course.e}"?`}
+        confirmLabel="Yes, Delete"
+        onConfirm={() => {
+          props.deleteCourse(props.course.regno);
+        }}
         modalConfirmOpened={modalConfirmOpened}
         close={close}
       />
