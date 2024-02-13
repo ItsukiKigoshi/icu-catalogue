@@ -29,7 +29,7 @@ export function Header(props: {
       >
         <Group gap={5}>
           <Text size="lg" fw={700}>
-            Catalogue.icu
+            ICU Catalogue
           </Text>
         </Group>
         <Group gap={5}>
@@ -44,7 +44,7 @@ export function Header(props: {
         <Group gap={5}>
           <ActionIcon
             component="a"
-            href="https://github.com/ItsukiKigoshi/catalogue.icu"
+            href="https://github.com/ItsukiKigoshi/icu-catalogue"
             target="_blank"
             color="gray"
             variant="default"

@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "https://www.catalogue.icu/",
-  "name": "Catalogue.icu",
-  "short_name": "catalogue.icu",
+  "name": "ICU Catalogue",
+  "short_name": "ICU Catalogue",
   "icons": [
     {
       "src": "/icon-192x192.png",
