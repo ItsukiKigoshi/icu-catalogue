@@ -30,7 +30,7 @@ export function Navbar(props: {
   const results = props.courses
     // Sort the courses by their no property
     ?.sort(function (a, b) {
-      if (a.modified > b.modified) {
+      if (a.regno > b.regno) {
         return 1;
       } else {
         return -1;
