@@ -6,7 +6,7 @@ import {
   NativeSelect,
   Text,
 } from "@mantine/core";
-import { IconBrandGithub, IconSettings } from "@tabler/icons-react";
+import { IconSend, IconSettings } from "@tabler/icons-react";
 
 export function Header(props: {
   weekdays: string[];
@@ -29,7 +29,7 @@ export function Header(props: {
       >
         <Group gap={5}>
           <Text size="lg" fw={700}>
-            Catalogue.icu
+            ICU Catalogue
           </Text>
         </Group>
         <Group gap={5}>
@@ -44,14 +44,14 @@ export function Header(props: {
         <Group gap={5}>
           <ActionIcon
             component="a"
-            href="https://github.com/ItsukiKigoshi/catalogue.icu"
+            href="https://forms.gle/FH3pNW84weKYuQ1H8"
             target="_blank"
             color="gray"
             variant="default"
             size="xl"
-            aria-label="Open in a new tab"
+            aria-label="Give us feedback!"
           >
-            <IconBrandGithub />
+            <IconSend />
           </ActionIcon>
           <ActionIcon
             color="gray"

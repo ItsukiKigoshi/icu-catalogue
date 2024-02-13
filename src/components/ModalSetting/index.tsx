@@ -1,5 +1,6 @@
 import { Course } from "@/src/type/Types";
 import {
+  ActionIcon,
   Button,
   Checkbox,
   Group,
@@ -10,7 +11,12 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
-import { IconDownload, IconMoon, IconSun } from "@tabler/icons-react";
+import {
+  IconBrandGithub,
+  IconDownload,
+  IconMoon,
+  IconSun,
+} from "@tabler/icons-react";
 import { CSVLink } from "react-csv";
 
 export default function ModalSetting(props: {
@@ -59,17 +65,6 @@ export default function ModalSetting(props: {
         <Input placeholder='Enter Section (e.g."5AS1")' />
       </Group> */}
         <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">Backup</Text>
-          <CSVLink
-            data={props.courses}
-            filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
-          >
-            <Button leftSection={<IconDownload />} color="gray">
-              Download CSV
-            </Button>
-          </CSVLink>
-        </Group>
-        <Group justify="space-between" wrap="nowrap" gap="xl">
           <Text fw="bold">Color</Text>
           <Group>
             <Button
@@ -96,6 +91,31 @@ export default function ModalSetting(props: {
               System
             </Button>
           </Group>
+        </Group>
+        <Group justify="space-between" wrap="nowrap" gap="xl">
+          <Text fw="bold">Backup</Text>
+          <CSVLink
+            data={props.courses}
+            filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
+          >
+            <Button leftSection={<IconDownload />} color="gray">
+              Download CSV
+            </Button>
+          </CSVLink>
+        </Group>
+        <Group justify="space-between" wrap="nowrap" gap="xl">
+          <Text fw="bold">GitHub</Text>
+          <ActionIcon
+            component="a"
+            href="https://github.com/ItsukiKigoshi/icu-catalogue"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="xl"
+            aria-label="Open in a new tab"
+          >
+            <IconBrandGithub />
+          </ActionIcon>
         </Group>
       </Stack>
     </Modal>

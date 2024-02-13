@@ -5,8 +5,8 @@ import { Metadata } from "next";
 import { theme } from "../app/theme";
 
 export const metadata: Metadata = {
-  title: "Catalogue.icu",
-  description: `'Catalogue.icu' enables ICU students to create their own timetables easily. Please feel free to create issues/pull requests.`,
+  title: "ICU Catalogue",
+  description: `'ICU Catalogue' enables ICU students to create their own timetables easily. Please feel free to create issues/pull requests.`,
 };
 
 export default function RootLayout({ children }: { children: any }) {

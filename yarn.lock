@@ -5292,6 +5292,63 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ICU Catalogue@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "ICU Catalogue@workspace:."
+  dependencies:
+    "@mantine/carousel": "npm:^7.2.2"
+    "@mantine/code-highlight": "npm:^7.2.2"
+    "@mantine/core": "npm:^7.2.2"
+    "@mantine/dates": "npm:^7.2.2"
+    "@mantine/dropzone": "npm:^7.2.2"
+    "@mantine/ds": "npm:^7.2.2"
+    "@mantine/form": "npm:^7.5.0"
+    "@mantine/hooks": "npm:^7.2.2"
+    "@mantine/modals": "npm:^7.2.2"
+    "@mantine/notifications": "npm:^7.2.2"
+    "@mantine/nprogress": "npm:^7.2.2"
+    "@mantine/spotlight": "npm:^7.5.0"
+    "@mantine/tiptap": "npm:^7.2.2"
+    "@storybook/addon-essentials": "npm:^7.5.3"
+    "@storybook/addon-interactions": "npm:^7.5.3"
+    "@storybook/addon-links": "npm:^7.5.3"
+    "@storybook/addon-onboarding": "npm:^1.0.8"
+    "@storybook/addon-styling-webpack": "npm:^0.0.5"
+    "@storybook/blocks": "npm:^7.5.3"
+    "@storybook/nextjs": "npm:^7.5.3"
+    "@storybook/preset-typescript": "npm:^3.0.0"
+    "@storybook/react": "npm:^7.5.3"
+    "@storybook/testing-library": "npm:^0.2.2"
+    "@tabler/icons-react": "npm:^2.41.0"
+    "@tiptap/extension-link": "npm:^2.1.12"
+    "@tiptap/react": "npm:^2.1.12"
+    "@tiptap/starter-kit": "npm:^2.1.12"
+    "@types/jest": "npm:^29.5.12"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^18"
+    "@types/react-csv": "npm:^1.1.10"
+    "@types/react-dom": "npm:^18"
+    "@vercel/analytics": "npm:^1.1.2"
+    dayjs: "npm:^1.11.10"
+    embla-carousel-react: "npm:^7.1.0"
+    eslint: "npm:^8"
+    eslint-config-next: "npm:14.0.3"
+    eslint-plugin-storybook: "npm:^0.6.15"
+    next: "npm:14.0.3"
+    next-pwa: "npm:^5.6.0"
+    postcss: "npm:^8.4.31"
+    postcss-preset-mantine: "npm:^1.11.0"
+    postcss-simple-vars: "npm:^7.0.1"
+    react: "npm:^18"
+    react-csv: "npm:^2.2.2"
+    react-dom: "npm:^18"
+    storybook: "npm:^7.5.3"
+    storybook-addon-mantine: "npm:^3.0.1"
+    storybook-dark-mode: "npm:^3.0.3"
+    typescript: "npm:^5"
+  languageName: unknown
+  linkType: soft
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -6419,63 +6476,6 @@ __metadata:
   checksum: 10c0/310dab619b661a7fa44ed773870be6d6d7373faff6953ad92720f9553e2579e46dda5b9a79eae6d25ff3733cc15aa466b96e5811af16213f23c115aa220b4ab4
   languageName: node
   linkType: hard
-
-"catalogue.icu@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "catalogue.icu@workspace:."
-  dependencies:
-    "@mantine/carousel": "npm:^7.2.2"
-    "@mantine/code-highlight": "npm:^7.2.2"
-    "@mantine/core": "npm:^7.2.2"
-    "@mantine/dates": "npm:^7.2.2"
-    "@mantine/dropzone": "npm:^7.2.2"
-    "@mantine/ds": "npm:^7.2.2"
-    "@mantine/form": "npm:^7.5.0"
-    "@mantine/hooks": "npm:^7.2.2"
-    "@mantine/modals": "npm:^7.2.2"
-    "@mantine/notifications": "npm:^7.2.2"
-    "@mantine/nprogress": "npm:^7.2.2"
-    "@mantine/spotlight": "npm:^7.5.0"
-    "@mantine/tiptap": "npm:^7.2.2"
-    "@storybook/addon-essentials": "npm:^7.5.3"
-    "@storybook/addon-interactions": "npm:^7.5.3"
-    "@storybook/addon-links": "npm:^7.5.3"
-    "@storybook/addon-onboarding": "npm:^1.0.8"
-    "@storybook/addon-styling-webpack": "npm:^0.0.5"
-    "@storybook/blocks": "npm:^7.5.3"
-    "@storybook/nextjs": "npm:^7.5.3"
-    "@storybook/preset-typescript": "npm:^3.0.0"
-    "@storybook/react": "npm:^7.5.3"
-    "@storybook/testing-library": "npm:^0.2.2"
-    "@tabler/icons-react": "npm:^2.41.0"
-    "@tiptap/extension-link": "npm:^2.1.12"
-    "@tiptap/react": "npm:^2.1.12"
-    "@tiptap/starter-kit": "npm:^2.1.12"
-    "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^18"
-    "@types/react-csv": "npm:^1.1.10"
-    "@types/react-dom": "npm:^18"
-    "@vercel/analytics": "npm:^1.1.2"
-    dayjs: "npm:^1.11.10"
-    embla-carousel-react: "npm:^7.1.0"
-    eslint: "npm:^8"
-    eslint-config-next: "npm:14.0.3"
-    eslint-plugin-storybook: "npm:^0.6.15"
-    next: "npm:14.0.3"
-    next-pwa: "npm:^5.6.0"
-    postcss: "npm:^8.4.31"
-    postcss-preset-mantine: "npm:^1.11.0"
-    postcss-simple-vars: "npm:^7.0.1"
-    react: "npm:^18"
-    react-csv: "npm:^2.2.2"
-    react-dom: "npm:^18"
-    storybook: "npm:^7.5.3"
-    storybook-addon-mantine: "npm:^3.0.1"
-    storybook-dark-mode: "npm:^3.0.3"
-    typescript: "npm:^5"
-  languageName: unknown
-  linkType: soft
 
 "chalk@npm:^2.4.1, chalk@npm:^2.4.2":
   version: 2.4.2

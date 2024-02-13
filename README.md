@@ -1,17 +1,16 @@
-# Catalogue.icu
+# ICU Catalogue
 
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/next)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/%40mantine%2Fcore)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/catalogue.icu/react)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
 
 ## We are looking for collaborators.
 
-Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/catalogue.icu/issues).
+Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
 
 ## UI
 
-![image](https://github.com/ItsukiKigoshi/catalogue.icu/assets/67095865/af26fa3a-1bba-4174-8ac9-beba4be78e79)
-
+![image](https://github.com/ItsukiKigoshi/icu-catalogue/assets/67095865/af26fa3a-1bba-4174-8ac9-beba4be78e79)
 
 ## Features (tentative)
 
