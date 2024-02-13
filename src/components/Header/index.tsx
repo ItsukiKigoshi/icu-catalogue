@@ -6,7 +6,7 @@ import {
   NativeSelect,
   Text,
 } from "@mantine/core";
-import { IconSend, IconSettings } from "@tabler/icons-react";
+import { IconSettings } from "@tabler/icons-react";
 
 export function Header(props: {
   weekdays: string[];
@@ -42,17 +42,6 @@ export function Header(props: {
           />
         </Group>
         <Group gap={5}>
-          <ActionIcon
-            component="a"
-            href="https://forms.gle/FH3pNW84weKYuQ1H8"
-            target="_blank"
-            color="gray"
-            variant="default"
-            size="xl"
-            aria-label="Give us feedback!"
-          >
-            <IconSend />
-          </ActionIcon>
           <ActionIcon
             color="gray"
             variant="default"

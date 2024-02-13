@@ -1,6 +1,5 @@
 import { Course } from "@/src/type/Types";
 import {
-  ActionIcon,
   Button,
   Checkbox,
   Group,
@@ -15,6 +14,7 @@ import {
   IconBrandGithub,
   IconDownload,
   IconMoon,
+  IconSend,
   IconSun,
 } from "@tabler/icons-react";
 import { CSVLink } from "react-csv";
@@ -38,7 +38,7 @@ export default function ModalSetting(props: {
       title="Settings"
       centered
     >
-      <Stack gap="lg">
+      <Stack gap="xl">
         <Group justify="space-between" wrap="nowrap" gap="xl">
           <Text fw="bold">Saturday</Text>
           <Checkbox
@@ -98,24 +98,38 @@ export default function ModalSetting(props: {
             data={props.courses}
             filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
           >
-            <Button leftSection={<IconDownload />} color="gray">
+            <Button
+              leftSection={<IconDownload />}
+              color="gray"
+              variant="default"
+            >
               Download CSV
             </Button>
           </CSVLink>
         </Group>
-        <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">GitHub</Text>
-          <ActionIcon
+        <Group justify="center" grow>
+          <Button
+            leftSection={<IconBrandGithub />}
             component="a"
             href="https://github.com/ItsukiKigoshi/icu-catalogue"
             target="_blank"
             color="gray"
             variant="default"
-            size="xl"
             aria-label="Open in a new tab"
           >
-            <IconBrandGithub />
-          </ActionIcon>
+            GitHub
+          </Button>
+          <Button
+            leftSection={<IconSend />}
+            component="a"
+            href="https://forms.gle/FH3pNW84weKYuQ1H8"
+            target="_blank"
+            color="gray"
+            variant="default"
+            aria-label="Give us feedback!"
+          >
+            Feedback
+          </Button>
         </Group>
       </Stack>
     </Modal>
