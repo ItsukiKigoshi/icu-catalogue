@@ -14,10 +14,21 @@ export default function Page() {
   const [opened] = useDisclosure(false);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
-  const [weekdays, toggleSaturday] = useToggle([
-    ["M", "TU", "W", "TH", "F"],
-    ["M", "TU", "W", "TH", "F", "SA"],
+  // This "weekdays" handler can be refactored by using useToggle hook
+  const [weekdays, setWeekdays] = useLocalStorage<string[]>("weekdays", [
+    "M",
+    "TU",
+    "W",
+    "TH",
+    "F",
   ]);
+  const toggleSaturday = () => {
+    const updatedWeekdays =
+      weekdays.length === 5
+        ? ["M", "TU", "W", "TH", "F", "SA"]
+        : ["M", "TU", "W", "TH", "F"];
+    setWeekdays(updatedWeekdays);
+  };
 
   const terms: { group: string; items: Term[] }[] = [
     {
