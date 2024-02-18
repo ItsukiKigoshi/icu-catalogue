@@ -171,8 +171,8 @@ export default function Page() {
   const addCourseAndMoveToTheTerm = (course: Course) => {
     addCourse(course);
     notifications.show({
-      title: `${course.no}: ${course.e} (${course.ay} ${course.season})`,
-      message: `has been added!`,
+      title: `Success!`,
+      message: `${course.no} (${course.ay} ${course.season}) has been added!`,
       autoClose: 5000,
     });
     setSelectedTermValue(`${course.ay}${course.season}`);
