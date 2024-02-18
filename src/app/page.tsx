@@ -1,6 +1,7 @@
 "use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
@@ -38,23 +39,23 @@ export default function Page() {
     {
       group: "2024",
       items: [
-        { label: "2024S", ay: "2024", season: "Spring", value: "2024S" },
-        { label: "2024A", ay: "2024", season: "Autumn", value: "2024A" },
-        { label: "2024W", ay: "2024", season: "Winter", value: "2024W" },
+        { label: "2024S", ay: "2024", season: "Spring", value: "2024Spring" },
+        { label: "2024A", ay: "2024", season: "Autumn", value: "2024Autumn" },
+        { label: "2024W", ay: "2024", season: "Winter", value: "2024Winter" },
         { label: "2024 All", ay: "2024", season: "All", value: "2024All" },
       ],
     },
     {
       group: "2023",
       items: [
-        { label: "2023S", ay: "2023", season: "Spring", value: "2023S" },
-        { label: "2023A", ay: "2023", season: "Autumn", value: "2023A" },
-        { label: "2023W", ay: "2023", season: "Winter", value: "2023W" },
+        { label: "2023S", ay: "2023", season: "Spring", value: "2023Spring" },
+        { label: "2023A", ay: "2023", season: "Autumn", value: "2023Autumn" },
+        { label: "2023W", ay: "2023", season: "Winter", value: "2023Winter" },
         { label: "2023 All", ay: "2023", season: "All", value: "2023All" },
       ],
     },
   ];
-  const [selectedTermValue, setselectedTermValue] = useState("2024S");
+  const [selectedTermValue, setSelectedTermValue] = useState("2024Spring");
   const selectedTerm: Term | undefined = terms
     .map((term) => term.items)
     .flat()
@@ -167,6 +168,16 @@ export default function Page() {
     setCourses([...courses, course]);
   };
 
+  const addCourseAndMoveToTheTerm = (course: Course) => {
+    addCourse(course);
+    notifications.show({
+      title: `Success!`,
+      message: `${course.no} (${course.ay} ${course.season}) has been added!`,
+      autoClose: 5000,
+    });
+    setSelectedTermValue(`${course.ay}${course.season}`);
+  };
+
   // Update a certain course in the list "courses"
   // If the course is not in the list, add it
   const updateCourse = (course: Course) => {
@@ -197,9 +208,6 @@ export default function Page() {
         breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
-      padding="0"
-      h="100vh"
-      w="100vw"
     >
       <AppShell.Header>
         <Header
@@ -209,7 +217,7 @@ export default function Page() {
           }}
           terms={terms}
           selectedTermValue={selectedTermValue}
-          setselectedTermValue={setselectedTermValue}
+          setSelectedTermValue={setSelectedTermValue}
           modalSettingOpen={modalSettingOpen}
         />
         <ModalSetting
@@ -222,20 +230,19 @@ export default function Page() {
           courses={courses}
         />
       </AppShell.Header>
-
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
           courseController={{
             toggleIsEnrolled,
-            addCourse,
+            addCourse: addCourseAndMoveToTheTerm,
             updateCourse,
             deleteCourse,
           }}
           selectedTerm={selectedTerm}
         />
       </AppShell.Navbar>
-      <AppShell.Main h="100vh">
+      <AppShell.Main>
         {displayMode === "timetable" ? (
           <Timetable
             timetable={timetable}
@@ -252,7 +259,7 @@ export default function Page() {
             courses={coursesInSelectedTerm}
             courseController={{
               toggleIsEnrolled,
-              addCourse,
+              addCourse: addCourseAndMoveToTheTerm,
               updateCourse,
               deleteCourse,
             }}
