@@ -1,5 +1,7 @@
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import { theme } from "../app/theme";
@@ -25,6 +27,7 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
+          <Notifications />
           {children}
         </MantineProvider>
         <Analytics />

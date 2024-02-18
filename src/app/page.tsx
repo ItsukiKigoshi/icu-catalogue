@@ -1,6 +1,7 @@
 "use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
@@ -169,6 +170,11 @@ export default function Page() {
 
   const addCourseAndMoveToTheTerm = (course: Course) => {
     addCourse(course);
+    notifications.show({
+      title: `${course.no}: ${course.e} (${course.ay} ${course.season})`,
+      message: `has been added!`,
+      autoClose: 5000,
+    });
     setSelectedTermValue(`${course.ay}${course.season}`);
   };
 
@@ -202,9 +208,6 @@ export default function Page() {
         breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
-      padding="0"
-      h="100vh"
-      w="100vw"
     >
       <AppShell.Header>
         <Header
@@ -227,7 +230,6 @@ export default function Page() {
           courses={courses}
         />
       </AppShell.Header>
-
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
@@ -240,7 +242,7 @@ export default function Page() {
           selectedTerm={selectedTerm}
         />
       </AppShell.Navbar>
-      <AppShell.Main h="100vh">
+      <AppShell.Main>
         {displayMode === "timetable" ? (
           <Timetable
             timetable={timetable}
