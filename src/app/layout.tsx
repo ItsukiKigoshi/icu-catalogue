@@ -8,7 +8,7 @@ import { theme } from "../app/theme";
 
 export const metadata: Metadata = {
   title: "ICU Catalogue",
-  description: `'ICU Catalogue' enables ICU students to create their own timetables easily. Please feel free to create issues/pull requests.`,
+  description: `Brilliant Timetable App Designed for ICU students`,
 };
 
 export default function RootLayout({ children }: { children: any }) {
