@@ -233,7 +233,7 @@ export default function Page() {
           courses={coursesInSelectedTerm}
           courseController={{
             toggleIsEnrolled,
-            addCourse,
+            addCourse: addCourseAndMoveToTheTerm,
             updateCourse,
             deleteCourse,
           }}
@@ -257,7 +257,7 @@ export default function Page() {
             courses={coursesInSelectedTerm}
             courseController={{
               toggleIsEnrolled,
-              addCourse,
+              addCourse: addCourseAndMoveToTheTerm,
               updateCourse,
               deleteCourse,
             }}
