@@ -37,6 +37,24 @@ export default function Page() {
       items: [{ label: "All", ay: "All", season: "All", value: "All" }],
     },
     {
+      group: "2026",
+      items: [
+        { label: "2026S", ay: "2026", season: "Spring", value: "2026S" },
+        { label: "2026A", ay: "2026", season: "Autumn", value: "2026A" },
+        { label: "2026W", ay: "2026", season: "Winter", value: "2026W" },
+        { label: "2026 All", ay: "2026", season: "All", value: "2026All" },
+      ],
+    },
+    {
+      group: "2025",
+      items: [
+        { label: "2025S", ay: "2025", season: "Spring", value: "2025S" },
+        { label: "2025A", ay: "2025", season: "Autumn", value: "2025A" },
+        { label: "2025W", ay: "2025", season: "Winter", value: "2025W" },
+        { label: "2025 All", ay: "2025", season: "All", value: "2025All" },
+      ],
+    },
+    {
       group: "2024",
       items: [
         { label: "2024S", ay: "2024", season: "Spring", value: "2024Spring" },
