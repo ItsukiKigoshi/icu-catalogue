@@ -13,7 +13,7 @@ export function Header(props: {
   toggleSaturday: () => void;
   terms: ComboboxData;
   selectedTermValue: string;
-  setselectedTermValue: (value: string) => void;
+  setSelectedTermValue: (value: string) => void;
   modalSettingOpen: () => void;
 }) {
   return (
@@ -36,7 +36,7 @@ export function Header(props: {
           <NativeSelect
             value={props.selectedTermValue}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-              props.setselectedTermValue(event.currentTarget.value)
+              props.setSelectedTermValue(event.currentTarget.value)
             }
             data={props.terms}
           />

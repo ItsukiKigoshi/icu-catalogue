@@ -1,12 +1,14 @@
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import { theme } from "../app/theme";
 
 export const metadata: Metadata = {
   title: "ICU Catalogue",
-  description: `'ICU Catalogue' enables ICU students to create their own timetables easily. Please feel free to create issues/pull requests.`,
+  description: `Brilliant Timetable App Designed for ICU students`,
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -25,6 +27,7 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
+          <Notifications />
           {children}
         </MantineProvider>
         <Analytics />
