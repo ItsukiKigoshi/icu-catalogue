@@ -22,6 +22,7 @@ export function Timetable(props: {
     updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
+  language: string;
 }) {
   const [
     modalDetailOpened,
@@ -123,7 +124,7 @@ export function Timetable(props: {
                               />
                               <Stack h="100%" w="100%" gap="0">
                                 <Text size="xs" fw={700} lineClamp={2}>
-                                  {course.e}
+                                  {props.language === "E" ? course.e : course.j}
                                 </Text>
                                 <Text size="xs" c="dimmed" lineClamp={1}>
                                   {course.room}

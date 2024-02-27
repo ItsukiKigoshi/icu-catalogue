@@ -16,6 +16,7 @@ export function Navbar(props: {
     updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
+  language: string;
   selectedTerm?: Term;
 }) {
   const [
@@ -46,6 +47,7 @@ export function Navbar(props: {
             setModalDetailFocusedCourse([course]);
             ModalDetailOpen();
           }}
+          language={props.language}
         />
       </div>
     ));
