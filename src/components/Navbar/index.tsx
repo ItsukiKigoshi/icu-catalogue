@@ -69,6 +69,7 @@ export function Navbar(props: {
               modalDetailClose();
             }}
             courseController={props.courseController}
+            language={props.language}
           />
         </ScrollArea>
       </Stack>
