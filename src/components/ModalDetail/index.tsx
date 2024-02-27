@@ -31,6 +31,7 @@ export default function ModalDetail(props: {
     updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
+  language: string;
 }) {
   const seasonToNumber = (season: string) => {
     switch (season) {
@@ -45,13 +46,16 @@ export default function ModalDetail(props: {
     }
   };
 
-  const CourseTitle: React.FC<{ course: Course }> = (props: {
+  const CourseTitle: React.FC<{ course: Course; language: string }> = (props: {
     course: Course;
+    language: string;
   }) => {
     return (
       <Stack gap="0">
         <Text fw="bold">
-          {props.course.no} ･ {props.course.e} ({props.course.lang})
+          {props.course.no} ･{" "}
+          {props.language === "E" ? props.course.e : props.course.j} (
+          {props.course.lang})
         </Text>
         <Group>
           <Text size="sm" c="dimmed">
@@ -198,7 +202,10 @@ export default function ModalDetail(props: {
         <Modal.Header>
           <Modal.Title>
             {props.courses?.length === 1 ? (
-              <CourseTitle course={props.courses?.[0]} />
+              <CourseTitle
+                course={props.courses?.[0]}
+                language={props.language}
+              />
             ) : (
               <Text c="red" fw="bold">
                 {props.courses.length} Courses Conflicted!
@@ -218,7 +225,7 @@ export default function ModalDetail(props: {
               {props.courses?.map((course) => (
                 <Accordion.Item key={course.regno} value={course.e}>
                   <Accordion.Control>
-                    <CourseTitle course={course} />
+                    <CourseTitle course={course} language={props.language} />
                   </Accordion.Control>
                   <Accordion.Panel>
                     <CourseInfo

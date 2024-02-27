@@ -148,6 +148,7 @@ export function Timetable(props: {
           modalDetailClose();
         }}
         courseController={props.courseController}
+        language={props.language}
       />
     </Stack>
   );
