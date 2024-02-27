@@ -1,3 +1,4 @@
+"use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { IconCalendar, IconList } from "@tabler/icons-react";
