@@ -1,6 +1,7 @@
 "use client";
 import { AppShell, Button, Flex, em } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
@@ -187,6 +188,16 @@ export default function Page() {
     setCourses([...courses, course]);
   };
 
+  const addCourseAndMoveToTheTerm = (course: Course) => {
+    addCourse(course);
+    notifications.show({
+      title: `Success!`,
+      message: `${course.no} (${course.ay} ${course.season}) has been added!`,
+      autoClose: 5000,
+    });
+    setSelectedTermValue(`${course.ay}${course.season}`);
+  };
+
   // Update a certain course in the list "courses"
   // If the course is not in the list, add it
   const updateCourse = (course: Course) => {
@@ -217,9 +228,6 @@ export default function Page() {
         breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
-      padding="0"
-      h="100vh"
-      w="100vw"
     >
       <AppShell.Header>
         <Header
@@ -252,7 +260,7 @@ export default function Page() {
           courses={coursesInSelectedTerm}
           courseController={{
             toggleIsEnrolled,
-            addCourse,
+            addCourse: addCourseAndMoveToTheTerm,
             updateCourse,
             deleteCourse,
           }}
@@ -260,7 +268,7 @@ export default function Page() {
           selectedTerm={selectedTerm}
         />
       </AppShell.Navbar>
-      <AppShell.Main h="100vh">
+      <AppShell.Main>
         {displayMode === "timetable" ? (
           <Timetable
             timetable={timetable}
@@ -278,7 +286,7 @@ export default function Page() {
             courses={coursesInSelectedTerm}
             courseController={{
               toggleIsEnrolled,
-              addCourse,
+              addCourse: addCourseAndMoveToTheTerm,
               updateCourse,
               deleteCourse,
             }}
