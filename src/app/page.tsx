@@ -57,27 +57,29 @@ export default function Page() {
     {
       group: "2024",
       items: [
-        { label: "2024S", ay: "2024", season: "Spring", value: "2024Spring" },
-        { label: "2024A", ay: "2024", season: "Autumn", value: "2024Autumn" },
-        { label: "2024W", ay: "2024", season: "Winter", value: "2024Winter" },
+        { label: "2024S", ay: "2024", season: "Spring", value: "2024S" },
+        { label: "2024A", ay: "2024", season: "Autumn", value: "2024A" },
+        { label: "2024W", ay: "2024", season: "Winter", value: "2024W" },
         { label: "2024 All", ay: "2024", season: "All", value: "2024All" },
       ],
     },
     {
       group: "2023",
       items: [
-        { label: "2023S", ay: "2023", season: "Spring", value: "2023Spring" },
-        { label: "2023A", ay: "2023", season: "Autumn", value: "2023Autumn" },
-        { label: "2023W", ay: "2023", season: "Winter", value: "2023Winter" },
+        { label: "2023S", ay: "2023", season: "Spring", value: "2023S" },
+        { label: "2023A", ay: "2023", season: "Autumn", value: "2023A" },
+        { label: "2023W", ay: "2023", season: "Winter", value: "2023W" },
         { label: "2023 All", ay: "2023", season: "All", value: "2023All" },
       ],
     },
   ];
-  const [selectedTermValue, setSelectedTermValue] = useState("2024Spring");
+  const [selectedTermValue, setSelectedTermValue] = useState("2024S");
   const selectedTerm: Term | undefined = terms
     .map((term) => term.items)
     .flat()
     .find((term) => term.value === selectedTermValue);
+
+  const [language, setLanguage] = useLocalStorage<string>("language", "E");
 
   const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
   useEffect(() => {
@@ -245,9 +247,14 @@ export default function Page() {
           toggleSaturday={() => {
             toggleSaturday();
           }}
+          languageController={{
+            language,
+            setLanguage,
+          }}
           courses={courses}
         />
       </AppShell.Header>
+
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
@@ -257,6 +264,7 @@ export default function Page() {
             updateCourse,
             deleteCourse,
           }}
+          language={language}
           selectedTerm={selectedTerm}
         />
       </AppShell.Navbar>
@@ -270,6 +278,7 @@ export default function Page() {
               updateCourse,
               deleteCourse,
             }}
+            language={language}
             weekdays={weekdays}
           />
         ) : (
@@ -281,6 +290,7 @@ export default function Page() {
               updateCourse,
               deleteCourse,
             }}
+            language={language}
             selectedTerm={selectedTerm}
           />
         )}

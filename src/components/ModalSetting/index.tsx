@@ -4,6 +4,7 @@ import {
   Checkbox,
   Group,
   Modal,
+  SegmentedControl,
   Stack,
   Text,
   useComputedColorScheme,
@@ -24,6 +25,11 @@ export default function ModalSetting(props: {
   close: () => void;
   weekdays: string[];
   toggleSaturday: () => void;
+  languageController: {
+    language: string;
+    setLanguage: (language: string) => void;
+  };
+
   courses: Course[];
 }) {
   const { setColorScheme } = useMantineColorScheme();
@@ -46,6 +52,15 @@ export default function ModalSetting(props: {
             onChange={() => {
               props.toggleSaturday();
             }}
+          />
+        </Group>
+        <Group justify="space-between" wrap="nowrap" gap="xl">
+          <Text fw="bold">Language</Text>
+          <SegmentedControl
+            data={["E", "J"]}
+            fullWidth
+            value={props.languageController.language}
+            onChange={(value) => props.languageController.setLanguage(value)}
           />
         </Group>
         {/* <Group

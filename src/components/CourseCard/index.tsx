@@ -18,6 +18,7 @@ export default function CourseCard(props: {
   open: () => void;
   toggleIsEnrolled: (regno: number) => void;
   deleteCourse: (regno: number) => void;
+  language: string;
 }) {
   const [modalConfirmOpened, { open, close }] = useDisclosure(false);
 
@@ -45,7 +46,8 @@ export default function CourseCard(props: {
                   {props.course.no} ･ {props.course.unit}
                 </Text>
                 <Text size="sm" lh={1}>
-                  {props.course.e} ({props.course.lang})
+                  {props.language === "E" ? props.course.e : props.course.j} (
+                  {props.course.lang})
                 </Text>
                 <Text size="xs" c="dimmed">
                   {props.course.schedule?.map((s, i) =>
@@ -75,7 +77,9 @@ export default function CourseCard(props: {
         </Grid.Col>
       </Grid>
       <ModalConfirm
-        title={`Are you sure to delete "${props.course.e}"?`}
+        title={`Are you sure to delete "${
+          props.language === "E" ? props.course.e : props.course.j
+        }"?`}
         confirmLabel="Yes, Delete"
         onConfirm={() => {
           props.deleteCourse(props.course.regno);
