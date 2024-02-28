@@ -73,7 +73,7 @@ export default function Page() {
       ],
     },
   ];
-  const [selectedTermValue, setSelectedTermValue] = useState("2024S");
+  const [selectedTermValue, setSelectedTermValue] = useState("2024Spring");
   const selectedTerm: Term | undefined = terms
     .map((term) => term.items)
     .flat()
