@@ -37,39 +37,39 @@ export default function Page() {
       items: [{ label: "All", ay: "All", season: "All", value: "All" }],
     },
     {
-      group: "2026",
+      group: "2023",
       items: [
-        { label: "2026S", ay: "2026", season: "Spring", value: "2026S" },
-        { label: "2026A", ay: "2026", season: "Autumn", value: "2026A" },
-        { label: "2026W", ay: "2026", season: "Winter", value: "2026W" },
-        { label: "2026 All", ay: "2026", season: "All", value: "2026All" },
-      ],
-    },
-    {
-      group: "2025",
-      items: [
-        { label: "2025S", ay: "2025", season: "Spring", value: "2025S" },
-        { label: "2025A", ay: "2025", season: "Autumn", value: "2025A" },
-        { label: "2025W", ay: "2025", season: "Winter", value: "2025W" },
-        { label: "2025 All", ay: "2025", season: "All", value: "2025All" },
+        { label: "2023All", ay: "2023", season: "All", value: "2023All" },
+        { label: "2023S", ay: "2023", season: "Spring", value: "2023Spring" },
+        { label: "2023A", ay: "2023", season: "Autumn", value: "2023Autumn" },
+        { label: "2023W", ay: "2023", season: "Winter", value: "2023Winter" },
       ],
     },
     {
       group: "2024",
       items: [
-        { label: "2024S", ay: "2024", season: "Spring", value: "2024S" },
-        { label: "2024A", ay: "2024", season: "Autumn", value: "2024A" },
-        { label: "2024W", ay: "2024", season: "Winter", value: "2024W" },
-        { label: "2024 All", ay: "2024", season: "All", value: "2024All" },
+        { label: "2024All", ay: "2024", season: "All", value: "2024All" },
+        { label: "2024S", ay: "2024", season: "Spring", value: "2024Spring" },
+        { label: "2024A", ay: "2024", season: "Autumn", value: "2024Autumn" },
+        { label: "2024W", ay: "2024", season: "Winter", value: "2024Winter" },
       ],
     },
     {
-      group: "2023",
+      group: "2025",
       items: [
-        { label: "2023S", ay: "2023", season: "Spring", value: "2023S" },
-        { label: "2023A", ay: "2023", season: "Autumn", value: "2023A" },
-        { label: "2023W", ay: "2023", season: "Winter", value: "2023W" },
-        { label: "2023 All", ay: "2023", season: "All", value: "2023All" },
+        { label: "2025All", ay: "2025", season: "All", value: "2025All" },
+        { label: "2025S", ay: "2025", season: "Spring", value: "2025Spring" },
+        { label: "2025A", ay: "2025", season: "Autumn", value: "2025Autumn" },
+        { label: "2025W", ay: "2025", season: "Winter", value: "2025Winter" },
+      ],
+    },
+    {
+      group: "2026",
+      items: [
+        { label: "2026All", ay: "2026", season: "All", value: "2026All" },
+        { label: "2026S", ay: "2026", season: "Spring", value: "2026Spring" },
+        { label: "2026A", ay: "2026", season: "Autumn", value: "2026Autumn" },
+        { label: "2026W", ay: "2026", season: "Winter", value: "2026Winter" },
       ],
     },
   ];
