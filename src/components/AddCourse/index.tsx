@@ -162,7 +162,7 @@ export default function AddCourse(props: {
         size="xl"
         title="How to Add a Course"
       >
-        <Carousel withIndicators slideSize="80%" slideGap="xl" loop>
+        <Carousel slideSize="80%" slideGap="xl">
           <Carousel.Slide>
             <Stack>
               <Title order={5}>
