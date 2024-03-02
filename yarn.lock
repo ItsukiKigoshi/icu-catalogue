@@ -2001,16 +2001,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/carousel@npm:^7.2.2":
-  version: 7.5.1
-  resolution: "@mantine/carousel@npm:7.5.1"
+"@mantine/carousel@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@mantine/carousel@npm:7.6.1"
   peerDependencies:
-    "@mantine/core": 7.5.1
-    "@mantine/hooks": 7.5.1
+    "@mantine/core": 7.6.1
+    "@mantine/hooks": 7.6.1
     embla-carousel-react: ">=7.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/ba078afb311f097acdc432caa52667a2a55b3464dc3a67d9e18e046188b7a151607eb075056e687bc1e2411ec2da1227ed3fec8cb1ba08ba8d5762a46c9ea29e
+  checksum: 10c0/342817d60f1b28057416b763d0e026c008be0834ec785338ada3a5098ae2e372bbf4c2c489f96a98ceb8f8a4d6fd035377cdd237cdbc8d93f3e3549ba3adc278
   languageName: node
   linkType: hard
 
@@ -5305,7 +5305,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ICU Catalogue@workspace:."
   dependencies:
-    "@mantine/carousel": "npm:^7.2.2"
+    "@mantine/carousel": "npm:^7.6.1"
     "@mantine/code-highlight": "npm:^7.2.2"
     "@mantine/core": "npm:^7.2.2"
     "@mantine/dates": "npm:^7.2.2"
