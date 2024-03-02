@@ -6,7 +6,7 @@
 
 ## We are looking for collaborators.
 
-Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
+Join [Discord Community (ICU Catalogue)](https://discord.gg/2gmKTs4ezk) and Create ICU Catalogue together!
 
 ## UI
 
