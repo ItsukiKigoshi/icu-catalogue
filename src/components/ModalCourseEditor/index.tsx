@@ -153,6 +153,8 @@ export default function ModalCourseEditor(props: {
           <Group grow>
             <NativeSelect
               label="Language"
+              withAsterisk
+              required
               name="lang"
               value={editedCourse.lang}
               onChange={(event) =>

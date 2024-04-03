@@ -124,7 +124,8 @@ export function Timetable(props: {
                               />
                               <Stack h="100%" w="100%" gap="0">
                                 <Text size="xs" fw={700} lineClamp={2}>
-                                  {props.language === "E" ? course.e : course.j}
+                                  {props.language === "E" ? course.e : course.j}{" "}
+                                  ({course.lang})
                                 </Text>
                                 <Text size="xs" c="dimmed" lineClamp={1}>
                                   {course.room}
