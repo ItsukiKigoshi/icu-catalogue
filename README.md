@@ -1,12 +1,13 @@
 # ICU Catalogue
 
+![Discord](https://img.shields.io/discord/1183967846385070150)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
 ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
 
 ## We are looking for collaborators.
 
-Please contact us via [Discord (@itsukikigoshi)](https://discord.gg/GRSYWDZX), [Instagram (@itsukikigoshi)](http://instagram.com/itsukikigoshi) or [GitHub Issues](https://github.com/ItsukiKigoshi/icu-catalogue/issues).
+Join [Discord Community](https://discord.gg/2gmKTs4ezk) ("ICU Catalogue") and Create ICU Catalogue together!
 
 ## UI
 

@@ -1,7 +1,16 @@
 import { Course, Term } from "@/src/type/Types";
-import { Button, Group, TextInput } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
+import {
+  ActionIcon,
+  Grid,
+  Image,
+  Modal,
+  Stack,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconClipboard, IconPlus } from "@tabler/icons-react";
+import { IconClipboard, IconPlus, IconQuestionMark } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import ModalCourseEditor from "../ModalCourseEditor";
 
@@ -140,6 +149,50 @@ export default function AddCourse(props: {
       "#fd7e14",
     ][Math.floor(Math.random() * 12)];
   };
+
+  const [
+    modalHowToAddCourseOpened,
+    { open: howToAddCourseOpen, close: howToAddCourseClose },
+  ] = useDisclosure(false);
+  const ModalHowToAddCourse: React.FC = () => {
+    return (
+      <Modal
+        opened={modalHowToAddCourseOpened}
+        onClose={howToAddCourseClose}
+        size="xl"
+        title="How to Add a Course"
+      >
+        <Carousel slideSize="80%" slideGap="xl">
+          <Carousel.Slide>
+            <Stack>
+              <Title order={5}>
+                1. Copy Course Info from{" "}
+                <a
+                  href="https://campus.icu.ac.jp/icumap/ehb/SearchCO.aspx"
+                  target="_blank"
+                >
+                  Course Offerings
+                </a>
+              </Title>
+              <Image
+                src="/HowTo-CourseOfferings.gif"
+                alt="Copy from Course Offerings"
+              />
+            </Stack>
+          </Carousel.Slide>
+          <Carousel.Slide>
+            <Stack>
+              <Title order={5}>2. Paste Info and Press Enter!</Title>
+              <Image
+                src="/HowTo-ICUCatalogue.gif"
+                alt="Paste it to ICU Catalogue"
+              />
+            </Stack>
+          </Carousel.Slide>
+        </Carousel>
+      </Modal>
+    );
+  };
   return (
     <>
       <ModalCourseEditor
@@ -164,22 +217,34 @@ export default function AddCourse(props: {
         modalCourseEditorOpened={modalCourseEditorOpened}
         editorClose={editorClose}
       />
-      <Group grow align="flex-start">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <TextInput
-            m="0"
-            placeholder="Paste it!"
-            leftSection={<IconClipboard />}
-            styles={{ section: { pointerEvents: "none" } }}
-            value={query}
-            error={errorMessage}
-            onChange={(e) => setQuery(e.currentTarget.value)}
-          />
-        </form>
-        <Button leftSection={<IconPlus />} color="gray" onClick={editorOpen}>
-          Add Manually
-        </Button>
-      </Group>
+      <ModalHowToAddCourse />
+      <Stack gap="1px">
+        <Grid align="flex-start">
+          <Grid.Col span="content">
+            <ActionIcon color="gray" size="lg" onClick={editorOpen}>
+              <IconPlus />
+            </ActionIcon>
+          </Grid.Col>
+          <Grid.Col span="auto">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <TextInput
+                m="0"
+                placeholder="Paste it!"
+                leftSection={<IconClipboard />}
+                styles={{ section: { pointerEvents: "none" } }}
+                value={query}
+                error={errorMessage}
+                onChange={(e) => setQuery(e.currentTarget.value)}
+              />
+            </form>
+          </Grid.Col>
+          <Grid.Col span="content">
+            <ActionIcon color="gray" size="lg" onClick={howToAddCourseOpen}>
+              <IconQuestionMark />
+            </ActionIcon>
+          </Grid.Col>
+        </Grid>
+      </Stack>
     </>
   );
 }
