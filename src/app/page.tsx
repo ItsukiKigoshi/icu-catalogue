@@ -252,6 +252,7 @@ export default function Page() {
             setLanguage,
           }}
           courses={courses}
+          setCourses={setCourses}
         />
       </AppShell.Header>
 
