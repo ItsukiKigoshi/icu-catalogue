@@ -28,14 +28,13 @@
     "@tiptap/extension-link": "^2.1.12",
     "@tiptap/react": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",
-    "@types/react-csv": "^1.1.10",
     "@vercel/analytics": "^1.1.2",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
+    "file-saver": "^2.0.5",
     "next": "14.0.3",
     "next-pwa": "^5.6.0",
     "react": "^18",
-    "react-csv": "^2.2.2",
     "react-dom": "^18"
   },
   "devDependencies": {
@@ -49,6 +48,7 @@
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/react": "^7.5.3",
     "@storybook/testing-library": "^0.2.2",
+    "@types/file-saver": "^2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
