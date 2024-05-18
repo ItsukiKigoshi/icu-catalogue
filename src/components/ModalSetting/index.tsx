@@ -133,22 +133,13 @@ export default function ModalSetting(props: {
                   reader.readAsText(file);
                 }
               };
+              input.click();
             }}
             color="gray"
             leftSection={<IconFileImport />}
             variant="default"
           >
             Import JSON
-            <ModalConfirm
-              title="Import JSON"
-              confirmLabel="Are you sure to replace courses?"
-              onConfirm={() => {
-                props.setCourses(updatedCourses);
-                modalConfirmClose();
-              }}
-              close={modalConfirmClose}
-              modalConfirmOpened={modalConfirmOpened}
-            />
           </Button>
           <Button
             onClick={() => {
@@ -166,6 +157,16 @@ export default function ModalSetting(props: {
             Download JSON
           </Button>
         </Group>
+        <ModalConfirm
+          title="Import JSON"
+          confirmLabel="Are you sure to replace courses?"
+          onConfirm={() => {
+            props.setCourses(updatedCourses);
+            modalConfirmClose();
+          }}
+          close={modalConfirmClose}
+          modalConfirmOpened={modalConfirmOpened}
+        />
         <Group justify="center" grow>
           <Button
             leftSection={<IconBrandGithub />}
