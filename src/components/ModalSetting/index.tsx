@@ -10,15 +10,19 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import { useColorScheme } from "@mantine/hooks";
+import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import {
   IconBrandGithub,
   IconDownload,
+  IconFileImport,
   IconMoon,
   IconSend,
   IconSun,
 } from "@tabler/icons-react";
-import { CSVLink } from "react-csv";
+import { saveAs } from "file-saver";
+import { useState } from "react";
+import ModalConfirm from "../ModalConfirm";
+import { close } from "fs";
 
 export default function ModalSetting(props: {
   modalSettingOpened: boolean;
@@ -29,14 +33,19 @@ export default function ModalSetting(props: {
     language: string;
     setLanguage: (language: string) => void;
   };
-
   courses: Course[];
+  setCourses: (courses: Course[]) => void;
 }) {
   const { setColorScheme } = useMantineColorScheme();
-
   const computedColorScheme = useComputedColorScheme(useColorScheme(), {
     getInitialValueInEffect: true,
   });
+  const [
+    modalConfirmOpened,
+    { open: modalConfirmOpen, close: modalConfirmClose },
+  ] = useDisclosure(false);
+  const [updatedCourses, setUpdatedCourses] = useState<Course[]>(props.courses);
+
   return (
     <Modal
       opened={props.modalSettingOpened}
@@ -107,20 +116,56 @@ export default function ModalSetting(props: {
             </Button>
           </Group>
         </Group>
-        <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">Backup</Text>
-          <CSVLink
-            data={props.courses}
-            filename={`courses-${new Date().toISOString().slice(0, 10)}.csv`}
+        <Group justify="center" grow>
+          <Button
+            onClick={() => {
+              const input = document.createElement("input");
+              input.type = "file";
+              input.accept = ".json";
+              input.onchange = (e) => {
+                const file = (e.target as HTMLInputElement).files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    const courses = JSON.parse(e.target?.result as string);
+                    setUpdatedCourses(courses);
+                    modalConfirmOpen();
+                  };
+                  reader.readAsText(file);
+                }
+              };
+            }}
+            color="gray"
+            leftSection={<IconFileImport />}
+            variant="default"
           >
-            <Button
-              leftSection={<IconDownload />}
-              color="gray"
-              variant="default"
-            >
-              Download CSV
-            </Button>
-          </CSVLink>
+            Import JSON
+            <ModalConfirm
+              title="Import JSON"
+              confirmLabel="Are you sure to replace courses?"
+              onConfirm={() => {
+                props.setCourses(updatedCourses);
+                modalConfirmClose();
+              }}
+              close={modalConfirmClose}
+              modalConfirmOpened={modalConfirmOpened}
+            />
+          </Button>
+          <Button
+            onClick={() => {
+              const json = JSON.stringify(props.courses);
+              const blob = new Blob([json], { type: "application/json" });
+              saveAs(
+                blob,
+                `courses-${new Date().toISOString().slice(0, 10)}.json`
+              );
+            }}
+            color="gray"
+            leftSection={<IconDownload />}
+            variant="default"
+          >
+            Download JSON
+          </Button>
         </Group>
         <Group justify="center" grow>
           <Button
