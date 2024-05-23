@@ -158,8 +158,8 @@ export default function ModalSetting(props: {
           </Button>
         </Group>
         <ModalConfirm
-          title="Import JSON"
-          confirmLabel="Are you sure to replace courses?"
+          title="Are you sure to replace courses?"
+          confirmLabel="Yes, Replace"
           onConfirm={() => {
             props.setCourses(updatedCourses);
             modalConfirmClose();
