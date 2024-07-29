@@ -1,7 +1,10 @@
 import { Course } from "@/src/type/Types";
 import {
+  ActionIcon,
+  Alert,
   Button,
   Checkbox,
+  Flex,
   Group,
   Modal,
   SegmentedControl,
@@ -12,9 +15,14 @@ import {
 } from "@mantine/core";
 import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import {
+  IconBrandDiscord,
+  IconBrandGithub,
+  IconCoinYen,
   IconDownload,
   IconFileImport,
+  IconInfoCircle,
   IconMoon,
+  IconSend,
   IconSun,
 } from "@tabler/icons-react";
 import { saveAs } from "file-saver";
@@ -51,6 +59,17 @@ export default function ModalSetting(props: {
       centered
     >
       <Stack gap="xl">
+        <Group justify="center">
+          <Alert
+            variant="light"
+            color="red"
+            title="Backup Your Data"
+            icon={<IconInfoCircle />}
+          >
+            We are planning a major update in ICU Catalogue. Please backup your
+            data via "Download JSON."
+          </Alert>
+        </Group>
         <Group justify="space-between" wrap="nowrap" gap="xl">
           <Text fw="bold">Saturday</Text>
           <Checkbox
@@ -154,6 +173,54 @@ export default function ModalSetting(props: {
           >
             Download JSON
           </Button>
+        </Group>
+        <Group justify="center" grow>
+          <Button
+            leftSection={<IconSend />}
+            component="a"
+            href="https://forms.gle/FH3pNW84weKYuQ1H8"
+            target="_blank"
+            color="gray"
+            variant="default"
+            aria-label="Give us feedback!"
+          >
+            Feedback
+          </Button>
+          <Group justify="center">
+            <ActionIcon
+              component="a"
+              href="https://github.com/ItsukiKigoshi/icu-catalogue"
+              target="_blank"
+              color="gray"
+              variant="default"
+              size="lg"
+              aria-label="GitHub"
+            >
+              <IconBrandGithub />
+            </ActionIcon>
+            <ActionIcon
+              component="a"
+              href="https://discord.gg/2gmKTs4ezk"
+              target="_blank"
+              color="gray"
+              variant="default"
+              size="lg"
+              aria-label="Discord"
+            >
+              <IconBrandDiscord />
+            </ActionIcon>
+            <ActionIcon
+              component="a"
+              href="https://opencollective.com/icu-catalogue"
+              target="_blank"
+              color="gray"
+              variant="default"
+              size="lg"
+              aria-label="Open Collective"
+            >
+              <IconCoinYen />
+            </ActionIcon>
+          </Group>
         </Group>
         <ModalConfirm
           title="Are you sure to replace courses?"
