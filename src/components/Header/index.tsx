@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Burger,
   ComboboxData,
   Container,
   Group,
@@ -9,6 +10,8 @@ import {
 import { IconSettings } from "@tabler/icons-react";
 
 export function Header(props: {
+  navbarOpened: boolean;
+  toggleNavbar: () => void;
   weekdays: string[];
   toggleSaturday: () => void;
   terms: ComboboxData;
@@ -28,6 +31,14 @@ export function Header(props: {
         }}
       >
         <Group gap={5}>
+          <Burger
+            opened={props.navbarOpened}
+            onClick={() => {
+              props.toggleNavbar();
+            }}
+            hiddenFrom="sm"
+            size="sm"
+          />
           <Text size="lg" fw={700}>
             ICU Catalogue
           </Text>

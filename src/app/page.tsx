@@ -1,8 +1,15 @@
 "use client";
-import { AppShell, Button, Flex, em } from "@mantine/core";
+import {
+  AppShell,
+  Flex,
+  em,
+  Text,
+  Button,
+  Group,
+  ActionIcon,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconCalendar, IconList } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import ModalSetting from "../components/ModalSetting";
@@ -10,9 +17,16 @@ import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course, Term } from "../type/Types";
+import {
+  IconBrandDiscord,
+  IconBrandGithub,
+  IconCoinYen,
+  IconSend,
+} from "@tabler/icons-react";
 
 export default function Page() {
-  const [opened] = useDisclosure(false);
+  const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(false);
+
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   // This "weekdays" handler can be refactored by using useToggle hook
@@ -73,20 +87,13 @@ export default function Page() {
       ],
     },
   ];
-  const [selectedTermValue, setSelectedTermValue] = useState("2024Spring");
+  const [selectedTermValue, setSelectedTermValue] = useState("2024Autumn");
   const selectedTerm: Term | undefined = terms
     .map((term) => term.items)
     .flat()
     .find((term) => term.value === selectedTermValue);
 
   const [language, setLanguage] = useLocalStorage<string>("language", "E");
-
-  const [displayMode, toggleDisplayMode] = useToggle(["list", "timetable"]);
-  useEffect(() => {
-    if (!isMobile) {
-      toggleDisplayMode("timetable");
-    }
-  }, [isMobile]);
 
   const [
     modalSettingOpened,
@@ -226,11 +233,15 @@ export default function Page() {
       navbar={{
         width: "400px",
         breakpoint: "sm",
-        collapsed: { mobile: !opened },
+        collapsed: { mobile: !navbarOpened },
       }}
     >
       <AppShell.Header>
         <Header
+          navbarOpened={navbarOpened}
+          toggleNavbar={() => {
+            toggleNavbar();
+          }}
           weekdays={weekdays}
           toggleSaturday={() => {
             toggleSaturday();
@@ -255,7 +266,6 @@ export default function Page() {
           setCourses={setCourses}
         />
       </AppShell.Header>
-
       <AppShell.Navbar>
         <Navbar
           courses={coursesInSelectedTerm}
@@ -270,62 +280,70 @@ export default function Page() {
         />
       </AppShell.Navbar>
       <AppShell.Main>
-        {displayMode === "timetable" ? (
-          <Timetable
-            timetable={timetable}
-            enrolledCourses={enrolledCoursesInSelectedTerm}
-            courseController={{
-              toggleIsEnrolled,
-              updateCourse,
-              deleteCourse,
-            }}
-            language={language}
-            weekdays={weekdays}
-          />
-        ) : (
-          <Navbar
-            courses={coursesInSelectedTerm}
-            courseController={{
-              toggleIsEnrolled,
-              addCourse: addCourseAndMoveToTheTerm,
-              updateCourse,
-              deleteCourse,
-            }}
-            language={language}
-            selectedTerm={selectedTerm}
-          />
-        )}
+        <Timetable
+          timetable={timetable}
+          enrolledCourses={enrolledCoursesInSelectedTerm}
+          courseController={{
+            toggleIsEnrolled,
+            updateCourse,
+            deleteCourse,
+          }}
+          language={language}
+          weekdays={weekdays}
+        />
       </AppShell.Main>
       <AppShell.Footer
         withBorder={false}
-        hiddenFrom="sm"
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
-        <Flex gap="md" mih={50} justify="center" align="center" direction="row">
-          {/* <Button
-            variant="filled"
-            size="lg"
-            leftSection={<IconSearch />}
-            onClick={spotlight.open}
-          >
-            Search
-          </Button> */}
-
+        <Group justify="center">
           <Button
-            hiddenFrom="sm"
-            size="lg"
+            leftSection={<IconSend />}
+            component="a"
+            href="https://forms.gle/FH3pNW84weKYuQ1H8"
+            target="_blank"
             color="gray"
-            mr={3}
-            onClick={() => {
-              toggleDisplayMode();
-            }}
+            variant="default"
+            aria-label="Give us feedback!"
           >
-            {displayMode === "list" ? <IconCalendar /> : <IconList />}
+            Feedback
           </Button>
-        </Flex>
+          <ActionIcon
+            component="a"
+            href="https://github.com/ItsukiKigoshi/icu-catalogue"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="GitHub"
+          >
+            <IconBrandGithub />
+          </ActionIcon>
+          <ActionIcon
+            component="a"
+            href="https://discord.gg/2gmKTs4ezk"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="Discord"
+          >
+            <IconBrandDiscord />
+          </ActionIcon>
+          <ActionIcon
+            component="a"
+            href="https://opencollective.com/icu-catalogue"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="Open Collective"
+          >
+            <IconCoinYen />
+          </ActionIcon>
+        </Group>
       </AppShell.Footer>
-      {/* <SpotlightSearch /> */}
     </AppShell>
   );
 }
