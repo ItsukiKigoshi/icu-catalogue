@@ -12,11 +12,9 @@ import {
 } from "@mantine/core";
 import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import {
-  IconBrandGithub,
   IconDownload,
   IconFileImport,
   IconMoon,
-  IconSend,
   IconSun,
 } from "@tabler/icons-react";
 import { saveAs } from "file-saver";
@@ -167,30 +165,6 @@ export default function ModalSetting(props: {
           close={modalConfirmClose}
           modalConfirmOpened={modalConfirmOpened}
         />
-        <Group justify="center" grow>
-          <Button
-            leftSection={<IconBrandGithub />}
-            component="a"
-            href="https://github.com/ItsukiKigoshi/icu-catalogue"
-            target="_blank"
-            color="gray"
-            variant="default"
-            aria-label="Open in a new tab"
-          >
-            GitHub
-          </Button>
-          <Button
-            leftSection={<IconSend />}
-            component="a"
-            href="https://forms.gle/FH3pNW84weKYuQ1H8"
-            target="_blank"
-            color="gray"
-            variant="default"
-            aria-label="Give us feedback!"
-          >
-            Feedback
-          </Button>
-        </Group>
       </Stack>
     </Modal>
   );

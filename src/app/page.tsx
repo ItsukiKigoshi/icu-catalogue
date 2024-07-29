@@ -1,5 +1,13 @@
 "use client";
-import { AppShell, Flex, em, Text } from "@mantine/core";
+import {
+  AppShell,
+  Flex,
+  em,
+  Text,
+  Button,
+  Group,
+  ActionIcon,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
@@ -9,6 +17,12 @@ import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course, Term } from "../type/Types";
+import {
+  IconBrandDiscord,
+  IconBrandGithub,
+  IconCoinYen,
+  IconSend,
+} from "@tabler/icons-react";
 
 export default function Page() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(false);
@@ -278,14 +292,58 @@ export default function Page() {
           weekdays={weekdays}
         />
       </AppShell.Main>
-      {/* <AppShell.Footer
+      <AppShell.Footer
         withBorder={false}
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
-        <Flex gap="md" mih={50} justify="center" align="center" direction="row">
-        </Flex>
-      </AppShell.Footer> */}
+        <Group justify="center">
+          <Button
+            leftSection={<IconSend />}
+            component="a"
+            href="https://forms.gle/FH3pNW84weKYuQ1H8"
+            target="_blank"
+            color="gray"
+            variant="default"
+            aria-label="Give us feedback!"
+          >
+            Feedback
+          </Button>
+          <ActionIcon
+            component="a"
+            href="https://github.com/ItsukiKigoshi/icu-catalogue"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="GitHub"
+          >
+            <IconBrandGithub />
+          </ActionIcon>
+          <ActionIcon
+            component="a"
+            href="https://discord.gg/2gmKTs4ezk"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="Discord"
+          >
+            <IconBrandDiscord />
+          </ActionIcon>
+          <ActionIcon
+            component="a"
+            href="https://opencollective.com/icu-catalogue"
+            target="_blank"
+            color="gray"
+            variant="default"
+            size="lg"
+            aria-label="Open Collective"
+          >
+            <IconCoinYen />
+          </ActionIcon>
+        </Group>
+      </AppShell.Footer>
     </AppShell>
   );
 }
