@@ -292,58 +292,13 @@ export default function Page() {
           weekdays={weekdays}
         />
       </AppShell.Main>
-      <AppShell.Footer
+      {/* <AppShell.Footer
         withBorder={false}
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
-        <Group justify="center">
-          <Button
-            leftSection={<IconSend />}
-            component="a"
-            href="https://forms.gle/FH3pNW84weKYuQ1H8"
-            target="_blank"
-            color="gray"
-            variant="default"
-            aria-label="Give us feedback!"
-          >
-            Feedback
-          </Button>
-          <ActionIcon
-            component="a"
-            href="https://github.com/ItsukiKigoshi/icu-catalogue"
-            target="_blank"
-            color="gray"
-            variant="default"
-            size="lg"
-            aria-label="GitHub"
-          >
-            <IconBrandGithub />
-          </ActionIcon>
-          <ActionIcon
-            component="a"
-            href="https://discord.gg/2gmKTs4ezk"
-            target="_blank"
-            color="gray"
-            variant="default"
-            size="lg"
-            aria-label="Discord"
-          >
-            <IconBrandDiscord />
-          </ActionIcon>
-          <ActionIcon
-            component="a"
-            href="https://opencollective.com/icu-catalogue"
-            target="_blank"
-            color="gray"
-            variant="default"
-            size="lg"
-            aria-label="Open Collective"
-          >
-            <IconCoinYen />
-          </ActionIcon>
-        </Group>
-      </AppShell.Footer>
+     
+      </AppShell.Footer> */}
     </AppShell>
   );
 }
