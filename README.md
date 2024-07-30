@@ -1,14 +1,21 @@
 # ICU Catalogue
-![Discord](https://img.shields.io/discord/1183967846385070150)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/next)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/%40mantine%2Fcore)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/itsukikigoshi/icu-catalogue/react)
-
 ## We are looking for collaborators.
 Join [Discord Community](https://discord.gg/2gmKTs4ezk) ("ICU Catalogue") and Create ICU Catalogue together!
 
 ## Screenshot
 ![image](https://github.com/ItsukiKigoshi/icu-catalogue/assets/67095865/af26fa3a-1bba-4174-8ac9-beba4be78e79)
+
+## Project Overview
+### App
+- https://www.catalogue.icu (redirected from https://www.catalogue.icu)
+- repo: https://github.com/ItsukiKigoshi/icu-catalogue
+### API
+- https://api.catalogue.icu (not yet deployed)
+- repo: https://github.com/ItsukiKigoshi/icu-catalogue-api
+- API Docs: https://api.catalogue.icu/docs (not yet deployed)
+### Docs
+- https://docs.catalogue.icu
+- repo: https://github.com/ItsukiKigoshi/icu-catalogue-docs
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
