@@ -4,7 +4,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { , useState } from "react";
+import { useState } from "react";
 import { Header } from "../components/molecules/Header";
 import ModalSetting from "../components/molecules/ModalSetting";
 import { Navbar } from "../components/organisms/Navbar";
