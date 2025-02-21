@@ -1,12 +1,12 @@
 "use client";
 import { ScrollArea, Stack } from "@mantine/core";
 
-import CourseCard from "@/src/components/CourseCard";
+import CourseCard from "@/src/components/atoms/CourseCard";
 import { Course, Term } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import AddCourse from "../AddCourse";
-import ModalDetail from "../ModalDetail";
+import AddCourse from "../atoms/AddCourse";
+import ModalDetail from "../molecules/ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];

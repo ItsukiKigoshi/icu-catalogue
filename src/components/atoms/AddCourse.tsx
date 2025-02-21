@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconClipboard, IconPlus, IconQuestionMark } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import ModalCourseEditor from "../ModalCourseEditor";
+import ModalCourseEditor from "../molecules";
 
 export default function AddCourse(props: {
   courses: Course[];

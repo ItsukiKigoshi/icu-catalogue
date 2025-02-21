@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-import ModalConfirm from "../ModalConfirm";
+import ModalConfirm from "./ModalConfirm";
 
 export default function ModalCourseEditor(props: {
   title: string;

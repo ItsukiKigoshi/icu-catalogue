@@ -5,10 +5,10 @@ import {
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { , useState } from "react";
-import { Header } from "../components/Header";
-import ModalSetting from "../components/ModalSetting";
-import { Navbar } from "../components/Navbar";
-import { Timetable } from "../components/Timetable";
+import { Header } from "../components/molecules/Header";
+import ModalSetting from "../components/molecules/ModalSetting";
+import { Navbar } from "../components/organisms/Navbar";
+import { Timetable } from "../components/organisms/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course, Term } from "../type/Types";
 
