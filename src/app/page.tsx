@@ -1,33 +1,19 @@
 "use client";
 import {
   AppShell,
-  Flex,
-  em,
-  Text,
-  Button,
-  Group,
-  ActionIcon,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { , useState } from "react";
 import { Header } from "../components/Header";
 import ModalSetting from "../components/ModalSetting";
 import { Navbar } from "../components/Navbar";
 import { Timetable } from "../components/Timetable";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Course, Term } from "../type/Types";
-import {
-  IconBrandDiscord,
-  IconBrandGithub,
-  IconCoinYen,
-  IconSend,
-} from "@tabler/icons-react";
 
 export default function Page() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(false);
-
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   // This "weekdays" handler can be refactored by using useToggle hook
   const [weekdays, setWeekdays] = useLocalStorage<string[]>("weekdays", [
@@ -283,13 +269,6 @@ export default function Page() {
           weekdays={weekdays}
         />
       </AppShell.Main>
-      {/* <AppShell.Footer
-        withBorder={false}
-        h="60px"
-        style={{ background: "rgba(0,0,0,0)" }}
-      >
-     
-      </AppShell.Footer> */}
     </AppShell>
   );
 }
