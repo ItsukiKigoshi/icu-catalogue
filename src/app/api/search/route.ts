@@ -1,9 +1,6 @@
-import express from 'express';
+import { NextResponse } from 'next/server';
 import supabase from '../../../lib/supabase';
 import {Course} from '../../../type/Types'
-
-const app = express();
-const port = process.env.PORT || 3000;
 
 // filters witohout period
 const allowedFilters = [
@@ -22,41 +19,39 @@ const allowedFilters = [
   'unit'
 ];
 
-app.get('/api/search', async (req, res) => {
-    try {
-      let query = supabase.from('static_data').select('*');
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    let query = supabase.from('static_data').select('*');
   
       // 許可されたフィールドに基づいてクエリ条件を構築
       allowedFilters.forEach(field => {
-        if (req.query[field]) {
-          query = query.eq(field, req.query[field]);
+        const value = searchParams.get(field);
+        if (value) {
+          query = query.eq(field, value);
         }
       });
-
       // リクエストに `period` パラメータが含まれている場合
       // JSONB フィールド `schedule` の `period` プロパティを `contains` でフィルタリング   
-      if (req.query.period) {
-        query = query.contains('schedule', { period: req.query.period });
+      const period = searchParams.get('period');
+      if (period) {
+        query = query.contains('schedule', { period });
+      }
+  
+
+      // execute search
+      const { data, error } = await query;
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
       }
 
-    // execute search
-    const { data, error } = await query;
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-
-    const courses = data as Course[];
-    res.json({ data: courses });
-  } catch (error) {
-    if (error instanceof Error) {
-        res.status(500).json({ error: error.message });
+      const courses = data as Course[];
+      return NextResponse.json({ result: courses });
+    } catch (error) {
+      if (error instanceof Error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
       } else {
-        // error が Error オブジェクトでない場合のフォールバック
-        res.status(500).json({ error: 'An unknown error occurred' });
+        return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
+      }
     }
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+}
