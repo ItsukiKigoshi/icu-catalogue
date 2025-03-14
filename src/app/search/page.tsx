@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { Course } from '../../type/Types';
+import Link from "next/link";
 
 const filterLabels: Record<string, string> = {
   regno: '登録番号',
@@ -91,6 +92,13 @@ const SearchPage = () => {
       {/* 左側の検索フォーム */}
       <div className={`w-80 p-6 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r shadow-sm`}>
         <h1 className="text-2xl font-bold mb-6">科目検索</h1>
+        <div className="mb-4 flex flex-wrap gap-2">
+          <Link href="/">
+            <button className="mb-4 rounded bg-teal-500 px-4 py-2 text-white">
+              戻る
+            </button>
+          </Link>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {allowedFilters.map(filter => (
             <div key={filter} className="space-y-2">

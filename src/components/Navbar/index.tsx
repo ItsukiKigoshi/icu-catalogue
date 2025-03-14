@@ -1,5 +1,5 @@
 "use client";
-import { ScrollArea, Stack } from "@mantine/core";
+import { ScrollArea, Stack, Button } from "@mantine/core";
 
 import CourseCard from "@/src/components/CourseCard";
 import { Course, Term } from "@/src/type/Types";
@@ -7,6 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import AddCourse from "../AddCourse";
 import ModalDetail from "../ModalDetail";
+import Link from "next/link";
 
 export function Navbar(props: {
   courses: Course[];
@@ -60,6 +61,12 @@ export function Navbar(props: {
           courseController={props.courseController}
           selectedTerm={props.selectedTerm}
         />
+        {/* navigate to search page*/}
+        <Link href="/search" passHref>
+          <Button variant="outline" fullWidth>
+            Go to Search
+          </Button>
+        </Link>
         <ScrollArea>
           {results}
           <ModalDetail
