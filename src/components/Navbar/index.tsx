@@ -1,3 +1,5 @@
+// src/app/components/Navbar/index.tsx
+
 "use client";
 import { ScrollArea, Stack, Button } from "@mantine/core";
 
