@@ -26,6 +26,7 @@
     "@mantine/tiptap": "^7.2.2",
     "@supabase/supabase-js": "^2.49.1",
     "@tabler/icons-react": "^2.41.0",
+    "@tailwindcss/postcss": "^4.0.13",
     "@tiptap/extension-link": "^2.1.12",
     "@tiptap/react": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",

@@ -1,3 +1,4 @@
+/** @type {import('postcss-load-config').Config} */
 module.exports = {
   plugins: {
     "postcss-preset-mantine": {},
@@ -10,5 +11,7 @@ module.exports = {
         "mantine-breakpoint-xl": "88em",
       },
     },
+    "@tailwindcss/postcss": {},
   },
 };
+

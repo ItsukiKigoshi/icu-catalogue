@@ -6,6 +6,7 @@ import "@mantine/notifications/styles.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import { theme } from "../app/theme";
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "ICU Catalogue",
