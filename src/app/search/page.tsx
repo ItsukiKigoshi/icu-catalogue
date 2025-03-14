@@ -57,7 +57,9 @@ const SearchPage = () => {
     fetchResults();
   };
 
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (field: string) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFilters(prev => ({
       ...prev,
       [field]: e.target.value
@@ -85,13 +87,42 @@ const SearchPage = () => {
           {allowedFilters.map(filter => (
             <div key={filter} className="space-y-2">
               <label className="block text-sm font-medium">{filterLabels[filter]}</label>
-              <input
-                type="text"
-                className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'}`}
-                onChange={handleInputChange(filter)}
-                value={filters[filter] || ''}
-                placeholder={`入力: ${filterLabels[filter]}`}
-              />
+              {filter === 'level' ? (
+                <select
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'
+                  }`}
+                  onChange={handleInputChange(filter)}
+                  value={filters[filter] || ''}
+                >
+                  <option value="">選択してください</option>
+                  <option value="1">100</option>
+                  <option value="2">200</option>
+                  <option value="3">300</option>
+                </select>
+              ) : filter === 'lang' ? (
+                <select
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'
+                  }`}
+                  onChange={handleInputChange(filter)}
+                  value={filters[filter] || ''}
+                >
+                  <option value="">選択してください</option>
+                  <option value="E">E</option>
+                  <option value="J">J</option>
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'
+                  }`}
+                  onChange={handleInputChange(filter)}
+                  value={filters[filter] || ''}
+                  placeholder={`入力: ${filterLabels[filter]}`}
+                />
+              )}
             </div>
           ))}
 
@@ -100,7 +131,9 @@ const SearchPage = () => {
             <label className="block text-sm font-medium">授業時間（時限/曜日）</label>
             <input
               type="text"
-              className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'}`}
+              className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-black border-gray-300'
+              }`}
               placeholder="例: 3/M"
               onChange={handleInputChange('schedule')}
               value={filters.schedule || ''}
@@ -119,58 +152,66 @@ const SearchPage = () => {
         </form>
       </div>
       {/* 右側の結果エリア */}
-      <div className="grid gap-4">
-        {results.slice(0, visibleCount).map(course => (
-          <div 
-            key={course.regno}
-            className={`p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
-          >
-            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
-              {course.j || course.e}
-            </h3>
-            <div className="mt-2 space-y-1">
-              <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                <span className="font-medium">担当教員：</span>
-                {course.instructor || '未定'}
-              </p>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                <span className="font-medium">教室：</span>
-                {course.room || '未定'}
-              </p>
-              <div className="flex gap-4 mt-2">
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'}`}>
-                  登録番号：{course.regno}
-                </span>
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-800'}`}>
-                  単位：{course.unit}
-                </span>
-              </div>
-              {course.schedule && course.schedule.length > 0 && (
-                <div className="mt-2">
-                  <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    <span className="font-medium">授業時間：</span>
-                    {course.schedule.join(', ')}
-                  </p>
+      <div className="flex-1 p-6">
+        <div className="grid gap-4 max-w-4xl mx-auto">
+          {results.slice(0, visibleCount).map(course => (
+            <div
+              key={course.regno}
+              className={`p-4 h-48 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ${
+                isDarkMode ? 'bg-gray-800' : 'bg-white'
+              }`}
+            >
+              <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
+                {course.j || course.e}
+              </h3>
+              <div className="mt-2 space-y-1">
+                <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">担当教員：</span>
+                  {course.instructor || '未定'}
+                </p>
+                <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">教室：</span>
+                  {course.room || '未定'}
+                </p>
+                <div className="flex gap-4 mt-2">
+                  <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'}`}>
+                    登録番号：{course.regno}
+                  </span>
+                  <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-800'}`}>
+                    単位：{course.unit}
+                  </span>
                 </div>
-              )}
+                {course.schedule && Array.isArray(course.schedule) && course.schedule.length > 0 && (
+                  <div className="mt-2">
+                    <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <span className="font-medium">授業時間：</span>
+                      {course.schedule
+                        .map((item: any) =>
+                          item.isSuper ? `*${item.period}/${item.day}` : `${item.period}/${item.day}`
+                        )
+                        .join(', ')}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-        {visibleCount < results.length && (
-          <div className={`text-center p-4 animate-pulse ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            さらに結果を読み込み中...
-          </div>
-        )}
+          {visibleCount < results.length && (
+            <div className={`text-center p-4 animate-pulse ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              さらに結果を読み込み中...
+            </div>
+          )}
 
-        {results.length === 0 && !loading && (
-          <div className={`text-center p-4 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            条件に一致する科目が見つかりません
-          </div>
-        )}
+          {results.length === 0 && !loading && (
+            <div className={`text-center p-4 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              条件に一致する科目が見つかりません
+            </div>
+          )}
+        </div>
       </div>
     </div>
-    );
-  };
+  );
+};
 
-  export default SearchPage;
+export default SearchPage;
