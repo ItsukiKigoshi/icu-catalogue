@@ -50,8 +50,8 @@ export default function CourseCard(props: {
                   {props.course.lang})
                 </Text>
                 <Text size="xs" c="dimmed">
-                  {props.course.schedule?.map((s, i) =>
-                    i === props.course.schedule!.length - 1 ? s : s + ", "
+                  {(Array.isArray(props.course.schedule) ? props.course.schedule : []).map(
+                    (s, i, arr) => i === arr.length - 1 ? s : s + ", "
                   )}
                 </Text>
               </Stack>

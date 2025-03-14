@@ -161,7 +161,8 @@ export default function Page() {
   );
 
   enrolledCoursesInSelectedTerm.forEach((course) => {
-    course.schedule?.forEach((entry) => {
+    const scheduleEntries = Array.isArray(course.schedule) ? course.schedule : [];
+    scheduleEntries.forEach((entry) => {
       const [time, day] = entry.split("/");
       if (!timetable[`${time}/${day}`]) {
         timetable[`${time}/${day}`] = [];
@@ -169,7 +170,7 @@ export default function Page() {
       timetable[`${time}/${day}`].push(course);
     });
   });
-
+  
   // Toggle the isEnrolled property of a certain course
   const toggleIsEnrolled = (regno: number) => {
     setCourses(
