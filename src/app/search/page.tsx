@@ -60,12 +60,20 @@ const SearchPage = () => {
   const handleInputChange = (field: string) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setFilters(prev => ({
-      ...prev,
-      [field]: e.target.value
-    }));
+    let value = e.target.value;
+    if (field !== 'j' && field !== 'e') {
+      value = value.trim();
+    }
+    setFilters(prev => {
+      if (value === '') {
+        const newFilters = { ...prev };
+        delete newFilters[field]; 
+        return newFilters;
+      }
+      return { ...prev, [field]: value }; 
+    });
   };
-
+  
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
