@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Course } from '../../type/Types';
 
-// フィルターのラベル対応表
 const filterLabels: Record<string, string> = {
   regno: '登録番号',
   season: '学期',
@@ -41,7 +40,6 @@ const SearchPage = () => {
       const response = await fetch(`/api/search?${queryParams}`);
       if (!response.ok) throw new Error('検索に失敗しました');
       const data = await response.json();
-      console.log(data);
       setResults(data.result || []);
       setError('');
     } catch (err) {
@@ -61,9 +59,11 @@ const SearchPage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     let value = e.target.value;
-    if (field !== 'j' && field !== 'e') {
-      value = value.trim();
+  
+    if (field !== 'j' && field !== 'e' && field !== 'schedule') {
+      value = value.trim(); 
     }
+  
     setFilters(prev => {
       if (value === '') {
         const newFilters = { ...prev };

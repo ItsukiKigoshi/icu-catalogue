@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import supabase from '../../../lib/supabase';
-import {Course} from '../../../type/Types'
+import { Course } from '../../../type/Types';
 
-// filters witohout period
+// Filters without period
 const allowedFilters = [
   'status',
   'regno',
@@ -27,37 +27,36 @@ export async function GET(request: Request) {
     allowedFilters.forEach(field => {
       const value = searchParams.get(field);
       if (value) {
-        query = query.ilike(field, `%${value}%`);
+        query = query.or(`${field}.ilike.%${value}%`);
       }
     });
 
     const scheduleParam = searchParams.get('schedule');
     if (scheduleParam) {
-      const [periodStr, day] = scheduleParam.split('/');
-    
-      if (!periodStr || !day) {
+      const scheduleRegex = /^(\*?)(\d+)\/([A-Za-z]+)$/;
+      const match = scheduleParam.match(scheduleRegex);
+
+      if (!match) {
         return NextResponse.json(
-          { error: 'Invalid schedule format. Expected pattern: period/day (e.g. 3/M)' },
+          { error: 'Invalid schedule format. Expected pattern: period/day (e.g. 3/M or *3/M)' },
           { status: 400 }
         );
       }
 
+      const [_, isSuperFlag, periodStr, day] = match;
+      const isSuper = Boolean(isSuperFlag); 
       const period = parseInt(periodStr);
-      if (isNaN(period)) {
-        return NextResponse.json(
-          { error: 'Invalid period value. Must be a number' },
-          { status: 400 }
-        );
-      }
 
-      const scheduleFilter = { 
+      const scheduleFilter = {
         day: day.toUpperCase(),
-        period: period
+        period: period,
+        isSuper: isSuper
       };
 
       query = query.filter('schedule', 'cs', `[${JSON.stringify(scheduleFilter)}]`);
     }
-    // execute search
+
+    // Execute query
     const { data, error } = await query;
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
@@ -66,10 +65,7 @@ export async function GET(request: Request) {
     const courses = data as Course[];
     return NextResponse.json({ result: courses });
   } catch (error) {
-      if (error instanceof Error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-      } else {
-        return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
-      }
-    }
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
+  }
 }
