@@ -179,8 +179,9 @@ const SearchPage = () => {
                 isDarkMode ? 'bg-gray-800' : 'bg-white'
               }`}
             >
+              {/*// change to language selection (j: j, e:e) later*/}
               <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
-                {course.j || course.e}
+                {course.j ? `${course.no} ${course.j}` : `${course.no} ${course.e}`} 
               </h3>
               <div className="mt-2 space-y-1">
                 <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -192,8 +193,11 @@ const SearchPage = () => {
                   {course.room || '未定'}
                 </p>
                 <div className="flex gap-4 mt-2">
+                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-purple-900 text-blue-300' : 'bg-blue-100 text-blue-800'}`}>
+                    学期：{course.season}
+                  </span>
                   <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'}`}>
-                    登録番号：{course.regno}
+                    専門：{course.no}
                   </span>
                   <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-800'}`}>
                     単位：{course.unit}
