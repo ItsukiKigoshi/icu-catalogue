@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
