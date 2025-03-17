@@ -1,5 +1,5 @@
-import ModalConfirm from "@/src/components/ModalConfirm";
-import { Course } from "@/src/type/Types";
+import ModalConfirm from "@/src/components/classic-2024/ClassicModalConfirm";
+import { Course } from "@/src/type/classic-2024/Types";
 import {
   ActionIcon,
   Card,

@@ -14,16 +14,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en">
-      <head title="icu-catalogue">
+      <head>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
         <ColorSchemeScript defaultColorScheme="auto" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="shortcut icon" href="./favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="./icon.png" />
+        <link rel="apple-touch-icon" href="/icon.png" />
       </head>
       <body>
         <MantineProvider defaultColorScheme="auto">

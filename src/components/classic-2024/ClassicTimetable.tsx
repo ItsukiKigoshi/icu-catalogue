@@ -1,5 +1,5 @@
 "use client";
-import { Course } from "@/src/type/Types";
+import { Course } from "@/src/type/classic-2024/Types";
 import {
   Card,
   Divider,
@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import ModalDetail from "../ModalDetail";
+import ModalDetail from "@/src/components/classic-2024/ClassicModalDetail";
 
 export function Timetable(props: {
   timetable: { [key: string]: Course[] };

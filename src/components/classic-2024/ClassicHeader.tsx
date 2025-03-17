@@ -40,7 +40,7 @@ export function Header(props: {
             size="sm"
           />
           <Text size="lg" fw={700}>
-            ICU Catalogue
+            ICU Catalogue Classic (2024)
           </Text>
         </Group>
         <Group gap={5}>

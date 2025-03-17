@@ -1,4 +1,4 @@
-import { Course } from "@/src/type/Types";
+import { Course } from "@/src/type/classic-2024/Types";
 import {
   Accordion,
   ActionIcon,
@@ -19,8 +19,8 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useState } from "react";
-import ModalConfirm from "../ModalConfirm";
-import ModalCourseEditor from "../ModalCourseEditor";
+import ModalConfirm from "./ClassicModalConfirm";
+import ModalCourseEditor from "./ClassicModalCourseEditor";
 
 export default function ModalDetail(props: {
   courses: Course[];
