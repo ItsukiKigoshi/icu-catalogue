@@ -1,4 +1,4 @@
-import { Course } from "@/src/type/Types";
+import { Course } from "@/src/type/classic-2024/Types";
 import {
   ActionIcon,
   Alert,
@@ -27,7 +27,7 @@ import {
 } from "@tabler/icons-react";
 import { saveAs } from "file-saver";
 import { useState } from "react";
-import ModalConfirm from "../ModalConfirm";
+import ModalConfirm from "./ClassicModalConfirm";
 
 export default function ModalSetting(props: {
   modalSettingOpened: boolean;

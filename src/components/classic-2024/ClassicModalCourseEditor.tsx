@@ -1,4 +1,4 @@
-import { Course } from "@/src/type/Types";
+import { Course } from "@/src/type/classic-2024/Types";
 import {
   Button,
   ColorInput,
@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-import ModalConfirm from "../ModalConfirm";
+import ModalConfirm from "./ClassicModalConfirm";
 
 export default function ModalCourseEditor(props: {
   title: string;

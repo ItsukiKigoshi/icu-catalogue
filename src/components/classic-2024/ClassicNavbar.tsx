@@ -1,12 +1,12 @@
 "use client";
 import { ScrollArea, Stack } from "@mantine/core";
 
-import CourseCard from "@/src/components/CourseCard";
-import { Course, Term } from "@/src/type/Types";
+import CourseCard from "@/src/components/classic-2024/ClassicCourseCard";
+import { Course, Term } from "@/src/type/classic-2024/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import AddCourse from "../AddCourse";
-import ModalDetail from "../ModalDetail";
+import ClassicAddCourse from "./ClassicAddCourse";
+import ModalDetail from "./ClassicModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
@@ -55,7 +55,7 @@ export function Navbar(props: {
   return (
     <>
       <Stack justify="flex-start" p="sm" h="100%">
-        <AddCourse
+        <ClassicAddCourse
           courses={props.courses}
           courseController={props.courseController}
           selectedTerm={props.selectedTerm}

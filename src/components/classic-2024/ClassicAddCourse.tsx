@@ -1,4 +1,4 @@
-import { Course, Term } from "@/src/type/Types";
+import { Course, Term } from "@/src/type/classic-2024/Types";
 import { Carousel } from "@mantine/carousel";
 import {
   ActionIcon,
@@ -12,9 +12,9 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconClipboard, IconPlus, IconQuestionMark } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import ModalCourseEditor from "../ModalCourseEditor";
+import ModalCourseEditor from "@/src/components/classic-2024/ClassicModalCourseEditor";
 
-export default function AddCourse(props: {
+export default function ClassicAddCourse(props: {
   courses: Course[];
   courseController: {
     addCourse: (course: Course) => void;

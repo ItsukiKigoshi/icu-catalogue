@@ -1,9 +1,9 @@
 {
-  "name": "ICU Catalogue",
+  "name": "icu-catalogue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -32,40 +32,26 @@
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
     "file-saver": "^2.0.5",
-    "next": "14.0.3",
+    "next": "15.2.2",
     "next-pwa": "^5.6.0",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.5.3",
-    "@storybook/addon-interactions": "^7.5.3",
-    "@storybook/addon-links": "^7.5.3",
-    "@storybook/addon-onboarding": "^1.0.8",
-    "@storybook/addon-styling-webpack": "^0.0.5",
-    "@storybook/blocks": "^7.5.3",
-    "@storybook/nextjs": "^7.5.3",
-    "@storybook/preset-typescript": "^3.0.0",
-    "@storybook/react": "^7.5.3",
-    "@storybook/testing-library": "^0.2.2",
     "@types/file-saver": "^2",
-    "@types/jest": "^29.5.12",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
     "eslint": "^8",
-    "eslint-config-next": "14.0.3",
-    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-config-next": "15.2.2",
     "postcss": "^8.4.31",
     "postcss-preset-mantine": "^1.11.0",
     "postcss-simple-vars": "^7.0.1",
-    "storybook": "^7.5.3",
-    "storybook-addon-mantine": "^3.0.1",
-    "storybook-dark-mode": "^3.0.3",
     "typescript": "^5"
   },
   "resolutions": {
-    "jackspeak": "2.1.1"
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4"
   },
   "packageManager": "yarn@4.1.0"
 }
