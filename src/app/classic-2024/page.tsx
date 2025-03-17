@@ -3,9 +3,9 @@ import {
   AppShell,
   em
 } from "@mantine/core";
-import { useDisclosure, useMediaQuery, useToggle } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Header } from "@/src/components/classic-2024/ClassicHeader";
 import ModalSetting from "@/src/components/classic-2024/ClassicModalSetting";
 import { Navbar } from "@/src/components/classic-2024/ClassicNavbar";
@@ -15,8 +15,6 @@ import { Course, Term } from "@/src/type/classic-2024/Types";
 
 export default function Page() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(false);
-
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   // This "weekdays" handler can be refactored by using useToggle hook
   const [weekdays, setWeekdays] = useLocalStorage<string[]>("weekdays", [

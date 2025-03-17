@@ -1,17 +1,9 @@
-import { Course, Term } from "@/src/type/classic-2024/Types";
-import { Carousel } from "@mantine/carousel";
-import {
-  ActionIcon,
-  Grid,
-  Image,
-  Modal,
-  Stack,
-  TextInput,
-  Title,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconClipboard, IconPlus, IconQuestionMark } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import {Course, Term} from "@/src/type/classic-2024/Types";
+import {Carousel} from "@mantine/carousel";
+import {ActionIcon, Grid, Image, Modal, Stack, TextInput, Title,} from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks";
+import {IconClipboard, IconPlus, IconQuestionMark} from "@tabler/icons-react";
+import {useEffect, useState} from "react";
 import ModalCourseEditor from "@/src/components/classic-2024/ClassicModalCourseEditor";
 
 export default function ClassicAddCourse(props: {
@@ -53,7 +45,7 @@ export default function ClassicAddCourse(props: {
     // console.log(`modifiedStr: ${modifiedStr}`);
 
     const regex =
-      /(\d+)\s(\w+)\s(\d+)\s(\[change\]\s(\d{4}\/\d{2}\/\d{2})\s)?(\s)?(\w+)\s?([JEO])?(\s\w{1})?\s(.+)?\s?\s(.+?)\s(\d\/[A-Z]+(,\d\/[A-Z]+)*)\s((.+?))?\s?(\((\d+)\))?\s(Online|(Face to Face))?(.+)\s(.+)\s(\d+(\/\d+)*)/;
+      /(\d+)\s(\w+)\s(\d+)\s(\[change]\s(\d{4}\/\d{2}\/\d{2})\s)?(\s)?(\w+)\s?([JEO])?(\s\w{1})?\s(.+)?\s?\s(.+?)\s(\d\/[A-Z]+(,\d\/[A-Z]+)*)\s(.+?)?\s?(\((\d+)\))?\s(Online|(Face to Face))?(.+)\s(.+)\s(\d+(\/\d+)*)/;
 
     const match = modifiedStr.match(regex);
 
@@ -82,7 +74,7 @@ export default function ClassicAddCourse(props: {
         unit = parseInt(inputUnit);
       }
 
-      const course: Course = {
+      return {
         regno: parseInt(match[1]),
         season: match[2],
         ay: parseInt(match[3]),
@@ -99,8 +91,6 @@ export default function ClassicAddCourse(props: {
         note: "",
         color: randomColor(),
       };
-
-      return course;
     } else if (query !== "") {
       setErrorMessage(`The string does not match the expected format.`);
     }
