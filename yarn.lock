@@ -5732,6 +5732,7 @@ __metadata:
     eslint-config-next: "npm:14.0.3"
     eslint-plugin-storybook: "npm:^0.6.15"
     file-saver: "npm:^2.0.5"
+    jotai: "npm:^2.12.2"
     next: "npm:14.0.3"
     next-pwa: "npm:^5.6.0"
     postcss: "npm:^8.4.31"
@@ -11179,6 +11180,21 @@ __metadata:
   bin:
     jiti: lib/jiti-cli.mjs
   checksum: 10c0/4ceac133a08c8faff7eac84aabb917e85e8257f5ad659e843004ce76e981c457c390a220881748ac67ba1b940b9b729b30fb85cbaf6e7989f04b6002c94da331
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^2.12.2":
+  version: 2.12.2
+  resolution: "jotai@npm:2.12.2"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/df135d8a8c635df5d34bdb30b2e24afa93292c9c0bdac589ed9df31da50cec8c4820f66d04f23fa05f6c0ed0726e86c83b0767ca9c6abae4d281a253526d2db3
   languageName: node
   linkType: hard
 

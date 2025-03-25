@@ -2,6 +2,8 @@
 
 "use client"
 import { useState, useEffect } from 'react';
+import { useAtom } from "jotai";
+import { selectedCoursesAtom } from "../../stories/atoms";
 import { Course } from '../../type/Types';
 import Link from "next/link";
 
@@ -25,6 +27,7 @@ const allowedFilters = Object.keys(filterLabels);
 const SearchPage = () => {
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Course[]>([]);
+  const [selectedCourses, setSelectedCourses] = useAtom(selectedCoursesAtom);
   const [visibleCount, setVisibleCount] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -76,6 +79,23 @@ const SearchPage = () => {
       return { ...prev, [field]: value }; 
     });
   };
+
+  const handleCourseSelect = (course: Course) => {
+    setSelectedCourses((prev) => {
+      const exists = prev.find((c) => c.regno === course.regno);
+      if (exists) {
+        return prev.filter((c) => c.regno !== course.regno); // cancel selection
+      }
+      return [...prev.filter((c) => c.regno !== course.regno), course]; // make sure stored the latest course data
+    });
+  };
+  
+
+  // check selectedCourses storage
+  useEffect(() => {
+    console.log("現在の選択済みコース:", selectedCourses);
+  }, [selectedCourses]);
+  
   
   useEffect(() => {
     const handleScroll = () => {
@@ -172,7 +192,9 @@ const SearchPage = () => {
       {/* 右側の結果エリア */}
       <div className="flex-1 p-6">
         <div className="grid gap-4 max-w-4xl mx-auto">
-          {results.slice(0, visibleCount).map(course => (
+          {results.slice(0, visibleCount).map(course => {
+            const isSelected = selectedCourses.some((c) => c.regno === course.regno);
+          return (
             <div
               key={course.regno}
               className={`p-4 h-48 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ${
@@ -213,11 +235,17 @@ const SearchPage = () => {
                         )
                         .join(', ')}
                     </p>
+                    <button
+                      className={`mt-2 px-4 py-2 rounded ${isSelected ? "bg-red-500 text-white" : "bg-green-500 text-white"}`}
+                      onClick={() => handleCourseSelect(course)}
+                    >
+                      {isSelected ? "削除" : "追加"}
+                    </button>
                   </div>
                 )}
               </div>
             </div>
-          ))}
+          );})}
 
           {visibleCount < results.length && (
             <div className={`text-center p-4 animate-pulse ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -231,8 +259,26 @@ const SearchPage = () => {
             </div>
           )}
         </div>
+
+        {/** selectedCourses display on the button of 右側 */}
+        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
+          <h2 className="text-lg font-semibold">選択した科目</h2>
+          {selectedCourses.length > 0 ? (
+            <ul className="mt-2 space-y-1">
+              {selectedCourses.map(course => (
+                <li key={course.regno} className="text-sm">
+                  {course.no} {course.j || course.e}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-gray-500">まだ選択されていません</p>
+          )}
+
+        </div>
       </div>
     </div>
+    
   );
 };
 
