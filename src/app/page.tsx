@@ -282,7 +282,7 @@ export default function Page() {
       </AppShell.Navbar>
       <AppShell.Main>
         <Timetable
-          timetableCells={timetableCells}
+          // timetableCells={timetableCells}
           enrolledCourses={coursesInSelectedTerm.filter(course => course.isEnrolled)}
           courseController={{
             toggleIsEnrolled,

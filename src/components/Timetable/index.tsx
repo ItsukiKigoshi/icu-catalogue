@@ -1,6 +1,6 @@
 "use client";
 import { Course } from "@/src/type/Types";
-import { TimetableCell } from "../../stories/atoms";
+// import { TimetableCell } from "../../stories/atoms";
 import {
   Card,
   Divider,
@@ -15,7 +15,7 @@ import { useState } from "react";
 import ModalDetail from "../ModalDetail";
 
 interface TimetableProps {
-  timetableCells: TimetableCell[];
+  // timetableCells: TimetableCell[];
   enrolledCourses: Course[];
   courseController: {
     toggleIsEnrolled: (regno: number) => void;
@@ -27,7 +27,7 @@ interface TimetableProps {
 }
 
 export function Timetable({
-  timetableCells,
+  // timetableCells,
   enrolledCourses,
   weekdays,
   courseController,
@@ -49,9 +49,14 @@ export function Timetable({
   ];
 
   // timetableLookup
-  const timetableLookup = timetableCells.reduce((acc, cell) => {
-    const key = `${cell.period}/${cell.day}`;
-    acc[key] = cell.courses;
+  const timetableLookup = enrolledCourses.reduce((acc, course) => {
+    course.schedule.forEach(schedule => {
+      const key = `${schedule.period}/${schedule.day}`;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(course);
+    });
     return acc;
   }, {} as Record<string, Course[]>);
 
