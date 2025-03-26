@@ -1,5 +1,5 @@
 import { ComboboxItem } from "@mantine/core";
-interface Schedule{
+export interface Schedule{
   day: string;       // 例如 "M", "TU" 等
   period: string;    // 例如 "1", "2" 等
   isOR?: boolean;    // 可选，是否为 OR 条件

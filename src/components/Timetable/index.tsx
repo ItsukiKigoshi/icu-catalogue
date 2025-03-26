@@ -1,5 +1,5 @@
 "use client";
-import { Course } from "@/src/type/Types";
+import { Course, Schedule } from "@/src/type/Types";
 // import { TimetableCell } from "../../stories/atoms";
 import {
   Card,
@@ -11,7 +11,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ModalDetail from "../ModalDetail";
 
 interface TimetableProps {
@@ -60,16 +60,18 @@ export function Timetable({
   }).filter(Boolean); 
 
   // timetableLookup
-  const timetableLookup = enrolledCourses.reduce((acc, course) => {
-    course.schedule.forEach(schedule => {
-      const key = `${schedule.period}/${schedule.day}`; // ${schedule.isSuper ? "super" : "normal"}
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(course);
-    });
-    return acc;
-  }, {} as Record<string, Course[]>);
+const timetableLookup = enrolledCourses.reduce((acc, course) => {
+  course.schedule.forEach(schedule => {
+    const key = `${schedule.period}/${schedule.day}`;
+    if (!acc[key]) {
+      acc[key] = { courses: [], schedules: [] };
+    }
+    acc[key].courses.push(course);
+    acc[key].schedules.push(schedule);
+  });
+  return acc;
+}, {} as Record<string, { courses: Course[]; schedules: Schedule[] }>);
+
 
   return (
     <Stack h="100%" gap="0">
@@ -107,7 +109,7 @@ export function Timetable({
         const period = scheduleItems[i][1]; */}
       {Array(7).fill(0).map((_, i) => {
         const period = Number(i + 1);
-        // const rowItem = processedScheduleItems.find(item => item[1] === period );
+        const rowItem = processedScheduleItems?.find(item => item?.[1] === period);
         return (
           <Grid key={period} gutter="0" align="stretch">
             <Grid.Col span={1}>
@@ -122,9 +124,11 @@ export function Timetable({
             
             {weekdays.map((day) => {
               // const isSuper = ScheduleItems_super.some(item => item[1] === period && item[3]);
-              const cellKey = `${period}/${day}`; // ${schedule.isSuper ? "super" : "normal"}
-              const courses = timetableLookup[cellKey] || [];
-              
+              const cellKey = `${period}/${day}`;
+              const cellData = timetableLookup[cellKey] || { courses: [], schedules: [] };
+              const { courses, schedules } = cellData;
+              const isSuper = schedules.some(schedule => schedule.isSuper);
+
               return (
                 <Grid.Col key={`${period}-${day}`} span={11 / weekdays.length}>
                   <Card radius="0" withBorder h="100%" mih="12vh" p="4px">
@@ -151,10 +155,10 @@ export function Timetable({
                               <Text size="xs" c="dimmed" lineClamp={1}>
                                 {course.room}
                               </Text>
-                              {ScheduleItems_normal[i][3] && (
+                              {isSuper && (
                                 <Text size="xs" c="red" lineClamp={2}>
-                                  {ScheduleItems_super[i][0]} - {ScheduleItems_super[i][2]}
-                                  </Text>
+                                  {(rowItem?.[0] || "N/A")} - {(rowItem?.[2] || "N/A")}
+                                </Text>
                               )}
                             </Stack>
                           </Flex>
