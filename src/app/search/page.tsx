@@ -42,7 +42,7 @@ const SearchPage = () => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams(filters).toString();
-      console.log(queryParams);
+      console.log("queryParams",queryParams);
       const response = await fetch(`/api/search?${queryParams}`);
       if (!response.ok) throw new Error('検索に失敗しました');
       const data = await response.json();
@@ -80,17 +80,36 @@ const SearchPage = () => {
     });
   };
 
+  const getRandomColor = () => {
+    const colors = [
+      "#868e96",
+      "#fa5252",
+      "#e64980",
+      "#be4bdb",
+      "#7950f2",
+      "#4c6ef5",
+      "#228be6",
+      "#15aabf",
+      "#12b886",
+      "#40c057",
+      "#82c91e",
+      "#fab005",
+      "#fd7e14",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+  
   const handleCourseSelect = (course: Course) => {
     setSelectedCourses((prev) => {
       const exists = prev.find((c) => c.regno === course.regno);
       if (exists) {
         return prev.filter((c) => c.regno !== course.regno); // cancel selection
       }
-      return [...prev.filter((c) => c.regno !== course.regno), course]; // make sure stored the latest course data
-    });
-  };
+      const newCourse = { ...course, color: getRandomColor() };
+    return [...prev, newCourse];
+  });
+};
   
-
   // check selectedCourses storage
   useEffect(() => {
     console.log("現在の選択済みコース:", selectedCourses);
