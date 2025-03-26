@@ -50,6 +50,13 @@ export function Timetable({
     ["18:15", 7, "19:30", true], 
     ["18:15", 7, "20:10", false], 
   ];
+  const ScheduleItems_normal = scheduleItems.filter(item => item[3] === false);
+
+  const processedScheduleItems = Array.from({ length: 7 }, (_, i) => {
+    const period = i + 1;
+    const items = scheduleItems.filter(item => item[1] === period);
+    return items.find(item => item[3] === true) || items.find(item => item[3] === false);
+  }).filter(Boolean); 
 
   // timetableLookup
   const timetableLookup = enrolledCourses.reduce((acc, course) => {
@@ -97,21 +104,23 @@ export function Timetable({
       {/* timetable body */}
       {/* {Array(7).fill(0).map((_, i) => { 
         const period = scheduleItems[i][1]; */}
-      {scheduleItems.map(([start, period, end, isSuper], i) => {
+      {Array(7).fill(0).map((_, i) => {
+        const period = Number(i + 1);
+        const rowItem = processedScheduleItems.find(item => item[1] === period );
         return (
           <Grid key={period} gutter="0" align="stretch">
             <Grid.Col span={1}>
               <Card radius="0" withBorder h="100%" mih="12vh" p="4">
                 <Stack align="center" justify="center" gap="0" h="100%">
-                  <Text size="xs" c="dimmed">{scheduleItems[i][0]}</Text>
+                  <Text size="xs" c="dimmed">{ScheduleItems_normal[i][0]}</Text>
                   <Text size="md">{period}</Text>
-                  <Text size="xs" c="dimmed">{scheduleItems[i][2]}</Text>
+                  <Text size="xs" c="dimmed">{ScheduleItems_normal[i][2]}</Text>
                 </Stack>
               </Card>
             </Grid.Col>
             
             {weekdays.map((day) => {
-              const cellKey = `${period}/${day}/${isSuper ? "super" : "normal"}`;
+              const cellKey = `${period}/${day}/${rowItem?.[3]? "super" : "normal"}`;
               const courses = timetableLookup[cellKey] || [];
               
               return (
@@ -140,9 +149,9 @@ export function Timetable({
                               <Text size="xs" c="dimmed" lineClamp={1}>
                                 {course.room}
                               </Text>
-                              {isSuper && (
+                              {rowItem?.[3] && (
                                 <Text size="xs" c="red" lineClamp={2}>
-                                  {scheduleItems[i][0]} {scheduleItems[i][2]}
+                                  {rowItem?.[0]} - {rowItem?.[2]}
                                   </Text>
                               )}
                             </Stack>
