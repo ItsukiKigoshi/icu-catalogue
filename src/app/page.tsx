@@ -25,10 +25,10 @@ import {
   IconCoinYen,
   IconSend,
 } from "@tabler/icons-react";
-
+import { useAtom } from "jotai";
+import { selectedCoursesAtom, timetableAtom, TimetableCell } from "../stories/atoms";
 export default function Page() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(false);
-
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   // This "weekdays" handler can be refactored by using useToggle hook
@@ -82,10 +82,9 @@ export default function Page() {
     },
   ];
   const [selectedTermValue, setSelectedTermValue] = useState("2025Spring");
-  const selectedTerm: Term | undefined = terms
-    .map((term) => term.items)
-    .flat()
-    .find((term) => term.value === selectedTermValue);
+  const selectedTerm = terms
+    .flatMap(term => term.items)
+    .find(term => term.value === selectedTermValue);
 
   const [language, setLanguage] = useLocalStorage<string>("language", "E");
 
@@ -95,7 +94,7 @@ export default function Page() {
   ] = useDisclosure(false);
 
   // Get the list of courses from the local storage
-  const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
+/*   const [courses, setCourses] = useLocalStorage<Course[]>("courses", [
     {
       regno: 99997,
       season: "Spring",
@@ -147,16 +146,23 @@ export default function Page() {
       note: "",
       modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
     },
-  ]);
+  ]); */
+/*  */
+  // const timetable: { [key: string]: Course[] } = {};
+  const [selectedCourses, setSelectedCourses] = useAtom(selectedCoursesAtom);
+  const [timetableCells] = useAtom(timetableAtom);
 
-  const timetable: { [key: string]: Course[] } = {};
-  const coursesInSelectedTerm = courses.filter(
+  const coursesInSelectedTerm = selectedCourses.filter(
     (course) =>
       course.season === selectedTerm?.season &&
       course.ay.toString() === selectedTerm?.ay
   );
+  useEffect(() => {
+    console.log("coursesInSelectedTerm:", coursesInSelectedTerm);
+  }, [coursesInSelectedTerm]);
+  
 
-  const enrolledCoursesInSelectedTerm = coursesInSelectedTerm.filter(
+  /* const enrolledCoursesInSelectedTerm = coursesInSelectedTerm.filter(
     (course) => course.isEnrolled
   );
 
@@ -169,10 +175,10 @@ export default function Page() {
       }
       timetable[`${time}/${day}`].push(course);
     });
-  });
+  }); */
   
   // Toggle the isEnrolled property of a certain course
-  const toggleIsEnrolled = (regno: number) => {
+  /* const toggleIsEnrolled = (regno: number) => {
     setCourses(
       courses.map((course: Course) => {
         if (course.regno === regno) {
@@ -182,11 +188,18 @@ export default function Page() {
         }
       })
     );
+  }; */
+  const toggleIsEnrolled = (regno: number) => {
+    setSelectedCourses(prev => 
+      prev.map(course => 
+        course.regno === regno ? { ...course, isEnrolled: !course.isEnrolled } : course
+      )
+    );
   };
 
   // Add a course to the list "courses"
-  const addCourse = (course: Course) => {
-    setCourses([...courses, course]);
+ /*  const addCourse = (course: Course) => {
+    setSelectedCourses(prev => [...prev, course]);
   };
 
   const addCourseAndMoveToTheTerm = (course: Course) => {
@@ -197,28 +210,22 @@ export default function Page() {
       autoClose: 5000,
     });
     setSelectedTermValue(`${course.ay}${course.season}`);
-  };
+  }; */
 
   // Update a certain course in the list "courses"
   // If the course is not in the list, add it
   const updateCourse = (course: Course) => {
-    const courseIndex = courses.findIndex(
-      (c: Course) => c.regno === course.regno
-    );
-    if (courseIndex !== -1) {
-      setCourses(
-        courses.map((c: Course, index: number) =>
-          index === courseIndex ? course : c
-        )
-      );
-    } else {
-      addCourse(course);
-    }
+    setSelectedCourses(prev => {
+      const index = prev.findIndex(c => c.regno === course.regno);
+      return index !== -1
+        ? prev.map((c, i) => i === index ? course : c)
+        : [...prev, course];
+    });
   };
-
+  
   // Delete a certain course from the list "courses"
   const deleteCourse = (regno: number) => {
-    setCourses(courses.filter((course: Course) => course.regno !== regno));
+    setSelectedCourses(prev => prev.filter(course => course.regno !== regno));
   };
 
   return (
@@ -256,8 +263,8 @@ export default function Page() {
             language,
             setLanguage,
           }}
-          courses={courses}
-          setCourses={setCourses}
+          courses={selectedCourses}
+          setCourses={setSelectedCourses}
         />
       </AppShell.Header>
       <AppShell.Navbar>
@@ -265,7 +272,7 @@ export default function Page() {
           courses={coursesInSelectedTerm}
           courseController={{
             toggleIsEnrolled,
-            addCourse: addCourseAndMoveToTheTerm,
+            // addCourse: addCourseAndMoveToTheTerm,
             updateCourse,
             deleteCourse,
           }}
@@ -275,8 +282,8 @@ export default function Page() {
       </AppShell.Navbar>
       <AppShell.Main>
         <Timetable
-          timetable={timetable}
-          enrolledCourses={enrolledCoursesInSelectedTerm}
+          timetableCells={timetableCells}
+          enrolledCourses={coursesInSelectedTerm.filter(course => course.isEnrolled)}
           courseController={{
             toggleIsEnrolled,
             updateCourse,

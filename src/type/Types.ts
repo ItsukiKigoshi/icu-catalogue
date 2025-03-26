@@ -1,4 +1,11 @@
 import { ComboboxItem } from "@mantine/core";
+interface Schedule{
+  day: string;       // 例如 "M", "TU" 等
+  period: string;    // 例如 "1", "2" 等
+  isOR?: boolean;    // 可选，是否为 OR 条件
+  isSuper?: boolean; // 可选，是否为超级时段
+}
+
 
 export interface Course {
   regno: number;
@@ -8,7 +15,7 @@ export interface Course {
   lang: string;
   e: string;
   j: string;
-  schedule: string[] | [];
+  schedule: Schedule[];
   instructor?: string;
   unit: number;
   room: string;

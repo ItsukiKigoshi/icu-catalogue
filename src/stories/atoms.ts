@@ -3,29 +3,35 @@ import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { Course } from '../type/Types';
 
+// generate timeTable from selectedCourses Atom(DerivedAtom) 
+export interface TimetableCell {
+  day: string;
+  period: string;
+  isSuper?: boolean;
+  courses: Course[];
+}
+
 // user selectedCourse（storaged in localStorage）
 export const selectedCoursesAtom = atomWithStorage<Course[]>('selectedCourses', []);
 
-// generate timeTable from selectedCourses Atom(DerivedAtom) 
 export const timetableAtom = atom((get) => {
   const courses = get(selectedCoursesAtom);
-  const timetable: Record<string, Course[]> = {};
-
-  courses.forEach((course) => {
-    //check the type of schedule in timetable
-    // might need:
-    // const timeKey = `${time.period}/${time.day}`; 
-    // if (!timetable[timeKey]) { ...
-
-    course.schedule.forEach((time) => { 
-      if (!timetable[time]) {
-        timetable[time] = [];
+  const timeSlots = new Map<string, TimetableCell>();
+  
+  courses.forEach(course => {
+    course.schedule.forEach(slot => {
+      const key = `${slot.day}-${slot.period}`;
+      if (!timeSlots.has(key)) {
+        timeSlots.set(key, {
+          day: slot.day,
+          period: slot.period,
+          isSuper: slot.isSuper,
+          courses: []
+        });
       }
-      timetable[time].push(course);
+      timeSlots.get(key)!.courses.push(course);
     });
   });
 
-  return timetable;
+  return Array.from(timeSlots.values());
 });
-
-

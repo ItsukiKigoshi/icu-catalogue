@@ -104,11 +104,11 @@ export default function ModalDetail(props: {
     return (
       <Stack gap="xs" p="xs" key={props.course.regno}>
         <Group>
-          <Text size="sm">
-            {props.course?.schedule?.map((s, i) =>
-              i === props.course?.schedule!.length - 1 ? s : s + ", "
-            )}
-          </Text>
+        <Text size="sm">
+          {(props.course.schedule ?? [])
+            .map((s) => `${s.period}/${s.day}`)
+            .join(", ")}
+        </Text>
           <Text size="sm">({props.course?.unit} Units)</Text>
         </Group>
         <Text size="sm">

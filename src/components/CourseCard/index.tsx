@@ -50,9 +50,9 @@ export default function CourseCard(props: {
                   {props.course.lang})
                 </Text>
                 <Text size="xs" c="dimmed">
-                  {(Array.isArray(props.course.schedule) ? props.course.schedule : []).map(
-                    (s, i, arr) => i === arr.length - 1 ? s : s + ", "
-                  )}
+                {(props.course.schedule ?? [])
+                  .map((s) => `${s.period}/${s.day}`)
+                  .join(", ")}
                 </Text>
               </Stack>
             </Flex>

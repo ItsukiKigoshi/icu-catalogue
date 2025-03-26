@@ -7,7 +7,7 @@ import CourseCard from "@/src/components/CourseCard";
 import { Course, Term } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import AddCourse from "../AddCourse";
+// import AddCourse from "../AddCourse";
 import ModalDetail from "../ModalDetail";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ export function Navbar(props: {
   courses: Course[];
   courseController: {
     toggleIsEnrolled: (regno: number) => void;
-    addCourse: (course: Course) => void;
+    // addCourse: (course: Course) => void;
     updateCourse: (course: Course) => void;
     deleteCourse: (regno: number) => void;
   };
@@ -58,11 +58,11 @@ export function Navbar(props: {
   return (
     <>
       <Stack justify="flex-start" p="sm" h="100%">
-        <AddCourse
+        {/* <AddCourse
           courses={props.courses}
           courseController={props.courseController}
           selectedTerm={props.selectedTerm}
-        />
+        /> */}
         {/* navigate to search page*/}
         <Link href="/search" passHref>
           <Button variant="outline" fullWidth>
