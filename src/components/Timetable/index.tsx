@@ -62,7 +62,7 @@ export function Timetable({
   // timetableLookup
   const timetableLookup = enrolledCourses.reduce((acc, course) => {
     course.schedule.forEach(schedule => {
-      const key = `${schedule.period}/${schedule.day}/${schedule.isSuper ? "super" : "normal"}`;
+      const key = `${schedule.period}/${schedule.day}`; // ${schedule.isSuper ? "super" : "normal"}
       if (!acc[key]) {
         acc[key] = [];
       }
@@ -122,7 +122,7 @@ export function Timetable({
             
             {weekdays.map((day) => {
               // const isSuper = ScheduleItems_super.some(item => item[1] === period && item[3]);
-              const cellKey = `${period}/${day}/${ScheduleItems_normal[i][3]? "super" : "normal"}`;
+              const cellKey = `${period}/${day}`; // ${schedule.isSuper ? "super" : "normal"}
               const courses = timetableLookup[cellKey] || [];
               
               return (
