@@ -64,7 +64,7 @@ export function Timetable({
             <Stack align="center" justify="center" gap="0" h="100%">
               <Flex justify="center" align="center" gap="4px">
                 <Text size="md" fw="bold">
-                  {enrolledCourses.reduce((sum, course) => sum + (course.unit ?? 0), 0)}
+                  {enrolledCourses.reduce((sum, course) => sum + (Number(course.unit) || 0), 0)}
                 </Text>
                 <Text size="xs" c="dimmed" visibleFrom="sm">
                   units
