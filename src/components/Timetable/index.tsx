@@ -37,21 +37,24 @@ export function Timetable({
     useDisclosure(false);
   const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<Course[]>([]);
 
-  type ScheduleItem = [string, number, string];
+  type ScheduleItem = [string, number, string, boolean];
   const scheduleItems: ScheduleItem[] = [
-    ["8:45", 1, "10:00"],
-    ["10:10", 2, "11:25"],
-    ["11:35", 3, "12:50"],
-    ["14:00", 4, "15:15"],
-    ["15:25", 5, "16:40"],
-    ["16:50", 6, "18:05"],
-    ["18:15", 7, "19:30"],
+    ["8:45", 1, "10:00", false],
+    ["10:10", 2, "11:25", false],
+    ["11:35", 3, "12:50", false],
+    ["14:00", 4, "15:15", false], 
+    ["13:20", 4, "15:15", true], 
+    ["15:25", 5, "16:40", false], 
+    ["15:25", 5, "17:20", true], 
+    ["16:50", 6, "18:05", false],
+    ["18:15", 7, "19:30", true], 
+    ["18:15", 7, "20:10", false], 
   ];
 
   // timetableLookup
   const timetableLookup = enrolledCourses.reduce((acc, course) => {
     course.schedule.forEach(schedule => {
-      const key = `${schedule.period}/${schedule.day}`;
+      const key = `${schedule.period}/${schedule.day}/${schedule.isSuper ? "super" : "normal"}`; // 增加 isSuper 判断
       if (!acc[key]) {
         acc[key] = [];
       }
@@ -92,8 +95,9 @@ export function Timetable({
       </Grid>
 
       {/* timetable body */}
-      {Array(7).fill(0).map((_, i) => {
-        const period = scheduleItems[i][1];
+      {/* {Array(7).fill(0).map((_, i) => { 
+        const period = scheduleItems[i][1]; */}
+      {scheduleItems.map(([start, period, end, isSuper], i) => {
         return (
           <Grid key={period} gutter="0" align="stretch">
             <Grid.Col span={1}>
@@ -107,7 +111,7 @@ export function Timetable({
             </Grid.Col>
             
             {weekdays.map((day) => {
-              const cellKey = `${period}/${day}`;
+              const cellKey = `${period}/${day}/${isSuper ? "super" : "normal"}`;
               const courses = timetableLookup[cellKey] || [];
               
               return (
@@ -136,6 +140,11 @@ export function Timetable({
                               <Text size="xs" c="dimmed" lineClamp={1}>
                                 {course.room}
                               </Text>
+                              {isSuper && (
+                                <Text size="xs" c="red" lineClamp={2}>
+                                  {scheduleItems[i][0]} {scheduleItems[i][2]}
+                                  </Text>
+                              )}
                             </Stack>
                           </Flex>
                         ))}
