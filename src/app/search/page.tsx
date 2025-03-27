@@ -3,10 +3,10 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useMantineColorScheme, Container, Paper, Title, TextInput, Select, 
-  Button, Group, Table, Text, Stack, Alert, Box, Grid } from '@mantine/core';
+  Button, Group, Table, Text, Stack, Alert, Box, Grid, Modal, Radio } from '@mantine/core';
 import { useAtom } from "jotai";
 import { selectedCoursesAtom } from "../../stories/atoms";
-import { Course } from '../../type/Types';
+import { Course, Schedule } from '../../type/Types';
 import Link from "next/link";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
@@ -30,7 +30,6 @@ const allowedFilters = Object.keys(filterLabels);
 const SearchPage = () => {
   const { colorScheme } = useMantineColorScheme();
   const isDarkMode = colorScheme === 'dark';
-
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Course[]>([]);
   const [selectedCourses, setSelectedCourses] = useAtom(selectedCoursesAtom);
@@ -39,6 +38,11 @@ const SearchPage = () => {
   const [error, setError] = useState('');
   const [weekdays] = useLocalStorage<string[]>("weekdays", ["M", "TU", "W", "TH", "F"]);
   const [selectedSchedules, setSelectedSchedules] = useState<string[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<'group1' | 'group2' | 'both' | null>(null);
+  const [orGroups, setOrGroups] = useState<{group1: Schedule[], group2: Schedule[]}>({group1: [], group2: []});
+
 
   const fetchResults = async () => {
     setLoading(true);
@@ -99,14 +103,58 @@ const SearchPage = () => {
   };
 
   const handleCourseSelect = (course: Course) => {
-    setSelectedCourses(prev => {
-      const exists = prev.find(c => c.regno === course.regno);
-      if (exists) {
-        return prev.filter(c => c.regno !== course.regno);
-      }
-      return [...prev, { ...course, color: getRandomColor() }];
-    });
+    const exists = selectedCourses.find(c => c.regno === course.regno);
+    if (exists) {
+      setSelectedCourses(prev => prev.filter(c => c.regno !== course.regno));
+      return;
+    }
+    // selection needed courses 
+    const orItems = course.schedule?.filter(item => item.isOR) || [];
+    if (orItems.length >= 4) { 
+      setSelectedCourse(course);
+      const group1 = orItems.slice(0, 2);
+      const group2 = orItems.slice(2, 4);
+      setOrGroups({ group1, group2 });
+      setModalOpen(true);
+    } else {
+      // normal courses selectoin
+      setSelectedCourses(prev => [...prev, { ...course, color: getRandomColor() }]);
+    }
   };
+  const confirmGroupSelection = () => {
+    if (!selectedCourse || !selectedGroup) return;
+
+    // 获取非OR时间段
+    const nonORItems = selectedCourse.schedule?.filter(item => !item.isOR) || [];
+    
+    // 根据选择的组添加时间段
+    let selectedItems: Schedule[] = [];
+    if (selectedGroup === 'group1') {
+      selectedItems = orGroups.group1;
+    } else if (selectedGroup === 'group2') {
+      selectedItems = orGroups.group2;
+    } else if (selectedGroup === 'both') {
+      selectedItems = [...orGroups.group1, ...orGroups.group2];
+    }
+    const finalSchedule = [...nonORItems, ...selectedItems];
+
+    const modifiedCourse = {
+      ...selectedCourse,
+      schedule: finalSchedule,
+      color: getRandomColor()
+    };
+
+    setSelectedCourses(prev => [...prev, modifiedCourse]);
+    setModalOpen(false);
+    setSelectedCourse(null);
+    setSelectedGroup(null);
+    setOrGroups({group1: [], group2: []});
+  };
+
+  const formatSchedule = (item: Schedule) => {
+    return `${item.period}/${item.day}`;
+  };
+
 
   const toggleSchedule = (value: string) => {
     setSelectedSchedules(prev => {
@@ -183,7 +231,7 @@ const SearchPage = () => {
                   </Grid.Col>
 
                   {/* 单列显示的筛选条件 */}
-                  {['regno', 'no', 'j', 'e'].map(filter => (
+                  {['regno', 'no', 'j', 'e', 'major', 'instructor'].map(filter => (
                     <Grid.Col key={filter} span={12}>
                       <TextInput
                         label={filterLabels[filter]}
@@ -294,7 +342,11 @@ const SearchPage = () => {
                       </Group>
                       {course.schedule && Array.isArray(course.schedule) && course.schedule.length > 0 && (
                         <Text size="sm" mt="xs">
-                          授業時間：{course.schedule.join(', ')}
+                          授業時間：{course.schedule
+                          .map((item: any) =>
+                            item.isSuper ? `*${item.period}/${item.day}` : `${item.period}/${item.day}`
+                          )
+                          .join(', ')}
                         </Text>
                       )}
                     </Paper>
@@ -335,6 +387,73 @@ const SearchPage = () => {
           </Stack>
         </Grid.Col>
       </Grid>
+       {/* OR时间段选择的模态框 */}
+       <Modal
+        opened={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="演習時間の選択"
+        centered
+        size="md"
+      >
+        <Stack>
+          <Text>この科目には選択可能な演習時間があります。いずれかのグループを選択してください:</Text>
+          
+          <Box>
+            <Text fw={500} mb="sm">講義時間:</Text>
+            {selectedCourse?.schedule
+              ?.filter(item => !item.isOR)
+              .map(item => (
+                <Text key={`${item.day}-${item.period}`} size="sm" mb="xs">
+                  {formatSchedule(item)}
+                </Text>
+              ))}
+          </Box>
+
+          <Radio.Group
+            value={selectedGroup || ''}
+            onChange={(value) => setSelectedGroup(value as 'group1' | 'group2' | 'both')}
+            name="orGroupSelection"
+            label="選択可能な演習時間"
+          >
+            <Stack mt="sm">
+              <Radio 
+                value="group1" 
+                label={
+                  <Text size="sm">
+                    グループ1: {orGroups.group1.map(item => formatSchedule(item)).join(', ')}
+                  </Text>
+                } 
+              />
+              <Radio 
+                value="group2" 
+                label={
+                  <Text size="sm">
+                    グループ2: {orGroups.group2.map(item => formatSchedule(item)).join(', ')}
+                  </Text>
+                } 
+              />
+              <Radio 
+                value="both" 
+                label={
+                  <Text size="sm">
+                    一旦放置（両方選択）: {[...orGroups.group1, ...orGroups.group2].map(item => formatSchedule(item)).join(', ')}
+                  </Text>
+                } 
+              />
+            </Stack>
+          </Radio.Group>
+
+          <Group justify="flex-end" mt="md">
+            <Button 
+              variant="filled" 
+              onClick={confirmGroupSelection}
+              disabled={!selectedGroup}
+            >
+              選択を確定
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
     </Container>
   );
 };
