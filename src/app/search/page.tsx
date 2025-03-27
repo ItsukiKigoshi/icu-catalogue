@@ -6,6 +6,8 @@ import { useAtom } from "jotai";
 import { selectedCoursesAtom } from "../../stories/atoms";
 import { Course } from '../../type/Types';
 import Link from "next/link";
+// 新增：导入 useLocalStorage
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const filterLabels: Record<string, string> = {
   regno: '登録番号',
@@ -32,6 +34,9 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  // 使用本地存储获取 weekdays，默认为五个工作日
+  const [weekdays] = useLocalStorage<string[]>("weekdays", ["M", "TU", "W", "TH", "F"]);
+  // 新增：存储表格选择的时限
   const [selectedSchedules, setSelectedSchedules] = useState<string[]>([]);
 
   useEffect(() => {
@@ -109,6 +114,7 @@ const SearchPage = () => {
     });
   };
 
+  // 点击时限格子时的处理函数
   const toggleSchedule = (value: string) => {
     setSelectedSchedules(prev => {
       let newSchedules;
@@ -117,13 +123,15 @@ const SearchPage = () => {
       } else {
         newSchedules = [...prev, value];
       }
+      // 将选择的时限更新到 filters.schedule，多个时限以逗号分隔
       setFilters(prevFilters => ({ ...prevFilters, schedule: newSchedules.join(',') }));
       return newSchedules;
     });
   };
 
+  // 使用 local storage 中的 weekdays 数组来生成选择表格的列
+  // 这里依然使用固定的 7 行时限
   const periods = [1, 2, 3, 4, 5, 6, 7];
-  const days = ["M", "TU", "W", "TH", "F"];
 
   // check selectedCourses storage
   useEffect(() => {
@@ -197,7 +205,7 @@ const SearchPage = () => {
             </div>
           ))}
 
-          {/* 特別处理：授業時間 */}
+          {/* 特别处理：授業時間 */}
           <div className="space-y-2">
             <label className="block text-sm font-medium">授業時間（時限/曜日）</label>
             <input
@@ -210,12 +218,12 @@ const SearchPage = () => {
               value={filters.schedule || ''}
             />
             <p className="text-xs mt-1">フォーマット：時限/曜日（例: 3/M は月曜日3限）</p>
-            {/* 授業時間：選択table */}
+            {/* 新增：选择表格 */}
             <div className="mt-4 overflow-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    {days.map((day) => (
+                    {weekdays.map((day) => (
                       <th
                         key={day}
                         className={`px-2 py-1 border ${isDarkMode ? 'border-gray-600' : 'border-gray-300'} text-center`}
@@ -228,7 +236,7 @@ const SearchPage = () => {
                 <tbody>
                   {periods.map(period => (
                     <tr key={period}>
-                      {days.map(day => {
+                      {weekdays.map(day => {
                         const value = `${period}/${day}`;
                         const isSelected = selectedSchedules.includes(value);
                         return (
@@ -267,7 +275,7 @@ const SearchPage = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
       </div>
-      {/* 右側の結果エリア */}
+      {/* 右侧的结果区 */}
       <div className="flex-1 p-6">
         <div className="grid gap-4 max-w-4xl mx-auto">
           {results.slice(0, visibleCount).map(course => {
@@ -338,7 +346,7 @@ const SearchPage = () => {
           )}
         </div>
 
-        {/** selectedCourses display on the 右側 */}
+        {/* 底部显示已选择的科目 */}
         <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-md mt-6">
           <h2 className="text-lg font-semibold">選択した科目</h2>
           {selectedCourses.length > 0 ? (
