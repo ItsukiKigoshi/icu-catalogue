@@ -347,7 +347,15 @@ const SearchPage = () => {
                         </Button>
                       </Group>
                       <Text size="sm" c="dimmed">
-                        {language === 'J' ? `担当教員：${course.instructor || '未定'}` : `Instructor: ${course.instructor || 'TBA'}`} | {language === 'J' ? `教室：${course.room || '未定'}` : `Room: ${course.room || 'TBA'}`}
+                      {
+                        language === 'J' 
+                          ? `担当教員：${course.instructor === "NULL" ? '未定' : course.instructor}` 
+                          : `Instructor: ${course.instructor === "NULL" ? 'TBA' : course.instructor}`
+                      } | {
+                        language === 'J' 
+                          ? `教室：${course.room === "NULL" ? '未定' : course.room}` 
+                          : `Room: ${course.room === "NULL" ? 'TBA' : course.room}`
+                      }
                       </Text>
                       <Group gap="xs" mt="xs">
                         <Text size="xs" c="blue">

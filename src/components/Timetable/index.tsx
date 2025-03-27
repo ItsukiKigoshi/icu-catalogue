@@ -153,7 +153,11 @@ const timetableLookup = enrolledCourses.reduce((acc, course) => {
                                 {language === "E" ? course.e : course.j} ({course.lang})
                               </Text>
                               <Text size="xs" c="dimmed" lineClamp={1}>
-                                {course.room}
+                                {
+                                language === 'J' 
+                                  ? `${course.room === "NULL" ? '未定' : course.room}` 
+                                  : `${course.room === "NULL" ? 'TBA' : course.room}`
+                                }  
                               </Text>
                               {isSuper && (
                                 <Text size="xs" c="red" lineClamp={2}>
