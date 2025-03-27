@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Burger,
+  Button,
   ComboboxData,
   Container,
   Group,
@@ -8,6 +9,7 @@ import {
   Text,
 } from "@mantine/core";
 import { IconSettings } from "@tabler/icons-react";
+import React from "react";
 
 export function Header(props: {
   navbarOpened: boolean;
@@ -42,6 +44,9 @@ export function Header(props: {
           <Text size="lg" fw={700}>
             ICU Catalogue Classic (2024)
           </Text>
+          <Button component="a" href="/" variant="default">
+            Go to Latest
+          </Button>
         </Group>
         <Group gap={5}>
           <NativeSelect
