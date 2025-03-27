@@ -10,23 +10,26 @@ import { Course, Schedule } from '../../type/Types';
 import Link from "next/link";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const filterLabels: Record<string, string> = {
-  regno: '登録番号',
-  season: '学期',
-  ay: '学年度',
-  no: '科目番号',
-  major: 'メジャー',
-  level: 'レベル',
-  lang: '言語',
-  j: '科目名（日本語）',
-  e: '科目名（英語）',
-  room: '教室',
-  instructor: '担当教員',
-  unit: '単位数'
+// 日本語と英語のフィルターラベル
+const filterLabels: Record<string, { j: string; e: string }> = {
+  regno: { j: '登録番号', e: 'Registration No.' },
+  season: { j: '学期', e: 'Term' },
+  ay: { j: '学年度', e: 'Academic Year' },
+  no: { j: '科目番号', e: 'Course No.' },
+  major: { j: 'メジャー', e: 'Major' },
+  level: { j: 'レベル', e: 'Level' },
+  lang: { j: '言語', e: 'Language' },
+  j: { j: '科目名（日本語）', e: 'Title (Japanese)' },
+  e: { j: '科目名（英語）', e: 'Title (English)' },
+  room: { j: '教室', e: 'Room' },
+  instructor: { j: '担当教員', e: 'Instructor' },
+  unit: { j: '単位数', e: 'Credits' },
 };
 
+// 使用可能なフィルターキーのリスト
 const allowedFilters = Object.keys(filterLabels);
 
+// 検索ページコンポーネント
 const SearchPage = () => {
   const { colorScheme } = useMantineColorScheme();
   const isDarkMode = colorScheme === 'dark';
@@ -42,30 +45,38 @@ const SearchPage = () => {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<'group1' | 'group2' | 'both' | null>(null);
   const [orGroups, setOrGroups] = useState<{group1: Schedule[], group2: Schedule[]}>({group1: [], group2: []});
+  const [language, setLanguage] = useLocalStorage<string>("language", "J"); 
 
+  // 言語に応じたテキストを返す関数
+  const t = (key: string) => {
+    return language === 'J' ? filterLabels[key]?.j || key : filterLabels[key]?.e || key;
+  };
 
+  // 検索結果を取得する関数
   const fetchResults = async () => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams(filters).toString();
       const response = await fetch(`/api/search?${queryParams}`);
-      if (!response.ok) throw new Error('検索に失敗しました');
+      if (!response.ok) throw new Error(language === 'J' ? '検索に失敗しました' : 'Search failed');
       const data = await response.json();
       setResults(data.result || []);
       setError('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : '不明なエラー');
+      setError(err instanceof Error ? err.message : language === 'J' ? '不明なエラー' : 'Unknown error');
     } finally {
       setLoading(false);
     }
   };
 
+  // フォーム送信時の処理
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setVisibleCount(10);
     fetchResults();
   };
 
+  // 入力フィールドの変更を処理する関数
   const handleInputChange = (field: string) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -83,6 +94,7 @@ const SearchPage = () => {
     });
   };
 
+  // ランダムな色を生成する関数
   const getRandomColor = () => {
     const colors = [
       "#868e96",
@@ -102,13 +114,15 @@ const SearchPage = () => {
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
+  // 科目選択時の処理
   const handleCourseSelect = (course: Course) => {
     const exists = selectedCourses.find(c => c.regno === course.regno);
     if (exists) {
       setSelectedCourses(prev => prev.filter(c => c.regno !== course.regno));
       return;
     }
-    // selection needed courses 
+    
+    // OR条件のある科目を選択する場合の処理
     const orItems = course.schedule?.filter(item => item.isOR) || [];
     if (orItems.length >= 4) { 
       setSelectedCourse(course);
@@ -117,17 +131,19 @@ const SearchPage = () => {
       setOrGroups({ group1, group2 });
       setModalOpen(true);
     } else {
-      // normal courses selectoin
+      // 通常の科目選択
       setSelectedCourses(prev => [...prev, { ...course, color: getRandomColor() }]);
     }
   };
+
+  // ORグループ選択を確定する関数
   const confirmGroupSelection = () => {
     if (!selectedCourse || !selectedGroup) return;
 
-    // 获取非OR时间段
+    // 非ORのスケジュール項目を取得
     const nonORItems = selectedCourse.schedule?.filter(item => !item.isOR) || [];
     
-    // 根据选择的组添加时间段
+    // 選択されたグループに基づいてスケジュールを追加
     let selectedItems: Schedule[] = [];
     if (selectedGroup === 'group1') {
       selectedItems = orGroups.group1;
@@ -151,11 +167,12 @@ const SearchPage = () => {
     setOrGroups({group1: [], group2: []});
   };
 
+  // スケジュールをフォーマットする関数
   const formatSchedule = (item: Schedule) => {
     return `${item.period}/${item.day}`;
   };
 
-
+  // スケジュール選択をトグルする関数
   const toggleSchedule = (value: string) => {
     setSelectedSchedules(prev => {
       let newSchedules;
@@ -171,6 +188,7 @@ const SearchPage = () => {
 
   const periods = [1, 2, 3, 4, 5, 6, 7];
 
+  // 無限スクロールのためのイベントリスナー設定
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -187,25 +205,25 @@ const SearchPage = () => {
     <Container fluid p="md" style={{ minHeight: '100vh', backgroundColor: isDarkMode ? '#1A1B1E' : '#F8F9FA' }}>
       <Box mb="md">
         <Group justify="space-between">
-          <Title order={2}>科目検索</Title>
+          <Title order={2}>{language === 'J' ? '科目検索' : 'Course Search'}</Title>
           <Button component={Link} href="/" variant="filled" color="teal">
-            戻る
+            {language === 'J' ? '戻る' : 'Back'}
           </Button>
         </Group>
       </Box>
 
       <Grid gutter="xl">
-        {/* 左边搜索栏 - 修正后的紧凑布局 */}
+        {/* 左側の検索フォーム */}
         <Grid.Col span={{ base: 12, lg: 4 }}>
           <Paper shadow="sm" p="md" withBorder style={{ position: 'sticky', top: '1rem' }}>
             <form onSubmit={handleSubmit}>
               <Stack gap={4}>
                 <Grid gutter={4}>
-                  {/* 并排显示的筛选条件 */}
+                  {/* 並べて表示するフィルター */}
                   <Grid.Col span={{ base: 12, sm: 6 }}>
                     <Select
-                      label="レベル"
-                      placeholder="選択"
+                      label={t('level')}
+                      placeholder={language === 'J' ? '選択' : 'Select'}
                       size="xs"
                       data={[
                         { value: "1", label: "100" },
@@ -218,24 +236,24 @@ const SearchPage = () => {
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6 }}>
                     <Select
-                      label="言語"
-                      placeholder="選択"
+                      label={t('lang')}
+                      placeholder={language === 'J' ? '選択' : 'Select'}
                       size="xs"
                       data={[
-                        { value: "E", label: "英語" },
-                        { value: "J", label: "日本語" }
+                        { value: "E", label: language === 'J' ? '英語' : 'English' },
+                        { value: "J", label: language === 'J' ? '日本語' : 'Japanese' }
                       ]}
                       value={filters.lang || ''}
                       onChange={(value) => setFilters(prev => ({ ...prev, lang: value || '' }))}
                     />
                   </Grid.Col>
 
-                  {/* 单列显示的筛选条件 */}
+                  {/* 単一列で表示するフィルター */}
                   {['regno', 'no', 'j', 'e', 'major', 'instructor'].map(filter => (
                     <Grid.Col key={filter} span={12}>
                       <TextInput
-                        label={filterLabels[filter]}
-                        placeholder={`${filterLabels[filter]}...`}
+                        label={t(filter)}
+                        placeholder={`${t(filter)}...`}
                         size="xs"
                         value={filters[filter] || ''}
                         onChange={handleInputChange(filter)}
@@ -244,11 +262,11 @@ const SearchPage = () => {
                   ))}
                 </Grid>
 
-                {/* 授業時間选择表格 */}
+                {/* 授業時間選択テーブル */}
                 <Box mt={8}>
-                  <TextInput
-                    label="授業時間"
-                    placeholder="例: 3/M"
+                <TextInput
+                    label={language === 'J' ? '授業時間' : 'Schedule'}
+                    placeholder={language === 'J' ? '例: 3/M' : 'e.g. 3/M'}
                     size="xs"
                     value={filters.schedule || ''}
                     onChange={handleInputChange('schedule')}
@@ -299,7 +317,7 @@ const SearchPage = () => {
                   loading={loading}
                   mt={8}
                 >
-                  {loading ? "検索中..." : "検索実行"}
+                  {loading ? (language === 'J' ? "検索中..." : "Searching...") : language === 'J' ? "検索実行" : "Search"}
                 </Button>
                 {error && <Alert color="red" variant="light">{error}</Alert>}
               </Stack>
@@ -307,42 +325,44 @@ const SearchPage = () => {
           </Paper>
         </Grid.Col>
 
-        {/* 右边 - 搜索结果和已选课程 */}
+        {/* 右側の検索結果と選択科目 */}
         <Grid.Col span={{ base: 12, lg: 8 }}>
           <Stack>
-            {/* 搜索结果 */}
+            {/* 検索結果セクション */}
             <Paper shadow="sm" p="md" withBorder>
-              <Title order={4} mb="md">検索結果</Title>
+              <Title order={4} mb="md">{language === 'J' ? '検索結果' : 'Search Results'}</Title>
               <Stack>
                 {results.slice(0, visibleCount).map(course => {
                   const isSelected = selectedCourses.some(c => c.regno === course.regno);
                   return (
                     <Paper key={course.regno} shadow="sm" p="md" withBorder>
                       <Group justify="space-between">
-                        <Title order={4}>
-                          {course.j ? `${course.no} ${course.j}` : `${course.no} ${course.e}`}
+                      <Title order={4}>
+                          {language === 'J' 
+                            ? `${course.no} ${course.j || course.e}`  
+                            : `${course.no} ${course.e || course.j}`}  
                         </Title>
                         <Button variant={isSelected ? "outline" : "filled"} color={isSelected ? "red" : "green"} onClick={() => handleCourseSelect(course)}>
-                          {isSelected ? "削除" : "追加"}
+                          {isSelected ? (language === 'J' ? "削除" : "Remove") : language === 'J' ? "追加" : "Add"}
                         </Button>
                       </Group>
                       <Text size="sm" c="dimmed">
-                        担当教員：{course.instructor || '未定'} | 教室：{course.room || '未定'}
+                        {language === 'J' ? `担当教員：${course.instructor || '未定'}` : `Instructor: ${course.instructor || 'TBA'}`} | {language === 'J' ? `教室：${course.room || '未定'}` : `Room: ${course.room || 'TBA'}`}
                       </Text>
                       <Group gap="xs" mt="xs">
                         <Text size="xs" c="blue">
-                          学期：{course.season}
+                          {language === 'J' ? `学期：${course.season}` : `Term: ${course.season}`}
                         </Text>
                         <Text size="xs" c="blue">
-                          専門：{course.no}
+                          {language === 'J' ? `専門：${course.no}` : `Major: ${course.no}`}
                         </Text>
                         <Text size="xs" c="blue">
-                          単位：{course.unit}
+                          {language === 'J' ? `単位：${course.unit}` : `Credits: ${course.unit}`}
                         </Text>
                       </Group>
                       {course.schedule && Array.isArray(course.schedule) && course.schedule.length > 0 && (
                         <Text size="sm" mt="xs">
-                          授業時間：{course.schedule
+                          {language === 'J' ? '授業時間：' : 'Schedule: '}{course.schedule
                           .map((item: any) =>
                             item.isSuper ? `*${item.period}/${item.day}` : `${item.period}/${item.day}`
                           )
@@ -355,51 +375,56 @@ const SearchPage = () => {
 
                 {visibleCount < results.length && (
                   <Text ta="center" c="dimmed" mt="md">
-                    さらに結果を読み込み中...
+                    {language === 'J' ? 'さらに結果を読み込み中...' : 'Loading more results...'}
                   </Text>
                 )}
 
                 {results.length === 0 && !loading && (
                   <Text ta="center" c="dimmed" mt="md">
-                    条件に一致する科目が見つかりません
+                    {language === 'J' ? '条件に一致する科目が見つかりません' : 'No courses match your criteria'}
                   </Text>
                 )}
               </Stack>
             </Paper>
 
-            {/* 已选课程 */}
+            {/* 選択科目セクション */}
             <Paper shadow="sm" p="md" withBorder>
-              <Title order={4}>選択した科目 ({selectedCourses.length})</Title>
+              <Title order={4}>
+                {language === 'J' ? '選択した科目' : 'Selected Courses'} ({selectedCourses.length})
+              </Title>
               {selectedCourses.length > 0 ? (
                 <Stack mt="xs" gap="xs">
                   {selectedCourses.map(course => (
                     <Text key={course.regno} size="sm">
-                      {course.no} {course.j || course.e}
+                      {language === 'J' 
+                        ? `${course.no} ${course.j || course.e}`
+                        : `${course.no} ${course.e || course.j}`}
                     </Text>
                   ))}
                 </Stack>
               ) : (
                 <Text size="sm" c="dimmed">
-                  まだ選択されていません
+                  {language === 'J' ? 'まだ選択されていません' : 'No courses selected yet'}
                 </Text>
               )}
             </Paper>
           </Stack>
         </Grid.Col>
       </Grid>
-       {/* OR时间段选择的模态框 */}
-       <Modal
+      
+      {/* ORスケジュール選択モーダル */}
+      <Modal
         opened={modalOpen}
         onClose={() => setModalOpen(false)}
-        title="演習時間の選択"
+        title={language === 'J' ? "演習時間の選択" : "Select Exercise Periods"}
         centered
         size="md"
       >
         <Stack>
-          <Text>この科目には選択可能な演習時間があります。いずれかのグループを選択してください:</Text>
-          
-          <Box>
-            <Text fw={500} mb="sm">講義時間:</Text>
+        <Box>
+            <Text fw={500} mb="sm">
+              {language === 'J' ? "講義時間:" : "Lecture Periods:"}
+            </Text>
             {selectedCourse?.schedule
               ?.filter(item => !item.isOR)
               .map(item => (
@@ -409,18 +434,24 @@ const SearchPage = () => {
               ))}
           </Box>
 
+          <Text>
+            {language === 'J' 
+              ? "この科目には選択可能な演習時間があります。いずれかのグループを選択してください:" 
+              : "This course has selectable exercise periods. Please choose one of the following groups:"}
+          </Text>
+          
           <Radio.Group
             value={selectedGroup || ''}
             onChange={(value) => setSelectedGroup(value as 'group1' | 'group2' | 'both')}
             name="orGroupSelection"
-            label="選択可能な演習時間"
+            label={language === 'J' ? "選択可能な演習時間" : "Selectable Exercise Periods"}
           >
             <Stack mt="sm">
               <Radio 
                 value="group1" 
                 label={
                   <Text size="sm">
-                    グループ1: {orGroups.group1.map(item => formatSchedule(item)).join(', ')}
+                    {language === 'J' ? '選択1: ' : 'Choice 1: '}{orGroups.group1.map(item => formatSchedule(item)).join(', ')}
                   </Text>
                 } 
               />
@@ -428,7 +459,7 @@ const SearchPage = () => {
                 value="group2" 
                 label={
                   <Text size="sm">
-                    グループ2: {orGroups.group2.map(item => formatSchedule(item)).join(', ')}
+                    {language === 'J' ? '選択2: ' : 'Choice 2: '}{orGroups.group2.map(item => formatSchedule(item)).join(', ')}
                   </Text>
                 } 
               />
@@ -436,7 +467,7 @@ const SearchPage = () => {
                 value="both" 
                 label={
                   <Text size="sm">
-                    一旦放置（両方選択）: {[...orGroups.group1, ...orGroups.group2].map(item => formatSchedule(item)).join(', ')}
+                    {language === 'J' ? '一旦放置（両方選択）: ' : 'Tentative (Select Both): '}{[...orGroups.group1, ...orGroups.group2].map(item => formatSchedule(item)).join(', ')}
                   </Text>
                 } 
               />
@@ -449,7 +480,7 @@ const SearchPage = () => {
               onClick={confirmGroupSelection}
               disabled={!selectedGroup}
             >
-              選択を確定
+              {language === 'J' ? '選択を確定' : 'Confirm'}
             </Button>
           </Group>
         </Stack>

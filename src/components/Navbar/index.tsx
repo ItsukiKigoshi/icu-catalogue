@@ -66,7 +66,7 @@ export function Navbar(props: {
         {/* navigate to search page*/}
         <Link href="/search" passHref>
           <Button variant="outline" fullWidth>
-            Go to Search
+          {props.language === 'J' ? '授業添加' : 'Add Course'}
           </Button>
         </Link>
         <ScrollArea>
