@@ -3,11 +3,9 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useMantineColorScheme, Container, Paper, Title, TextInput, Select, 
-  Button, Group, Table, Text, Stack, Alert, Box, Grid, Modal, Radio } from '@mantine/core';
+  Button, Group, Table, Text, Stack, Alert, Box, Grid, Modal, Radio, Badge, ActionIcon } from '@mantine/core';
 import { useAtom } from "jotai";
-import {
-  IconExternalLink,
-} from "@tabler/icons-react";
+import { IconList, IconX, IconTrash, IconExternalLink} from '@tabler/icons-react';
 import { selectedCoursesAtom } from "../../stories/atoms";
 import { Course, Schedule } from '../../type/Types';
 import Link from "next/link";
@@ -49,7 +47,8 @@ const SearchPage = () => {
   const [selectedGroup, setSelectedGroup] = useState<'group1' | 'group2' | 'both' | null>(null);
   const [orGroups, setOrGroups] = useState<{group1: Schedule[], group2: Schedule[]}>({group1: [], group2: []});
   const [language, setLanguage] = useLocalStorage<string>("language", "J"); 
-
+  const [showSelectedCourses, setShowSelectedCourses] = useState(false);
+  
   // 言語に応じたテキストを返す関数
   const t = (key: string) => {
     return language === 'J' ? filterLabels[key]?.j || key : filterLabels[key]?.e || key;
@@ -264,7 +263,7 @@ const SearchPage = () => {
                   </Grid.Col>
 
                   {/* 単一列で表示するフィルター */}
-                  {['regno', 'no', 'j', 'e', 'major', 'instructor'].map(filter => (
+                  {['regno', 'no', 'j', 'e', 'major', 'instructor','season'].map(filter => (
                     <Grid.Col key={filter} span={12}>
                       <TextInput
                         label={t(filter)}
@@ -461,26 +460,113 @@ const SearchPage = () => {
             </Paper>
 
             {/* 選択科目セクション */}
-            <Paper shadow="sm" p="md" withBorder>
-              <Title order={4}>
-                {language === 'J' ? '選択した科目' : 'Selected Courses'} ({selectedCourses.length})
-              </Title>
-              {selectedCourses.length > 0 ? (
-                <Stack mt="xs" gap="xs">
-                  {selectedCourses.map(course => (
-                    <Text key={course.regno} size="sm">
-                      {language === 'J' 
-                        ? `${course.no} ${course.j || course.e}`
-                        : `${course.no} ${course.e || course.j}`}
-                    </Text>
-                  ))}
-                </Stack>
-              ) : (
-                <Text size="sm" c="dimmed">
-                  {language === 'J' ? 'まだ選択されていません' : 'No courses selected yet'}
-                </Text>
-              )}
-            </Paper>
+{/* フローティングボタンと選択科目パネル */}
+<div style={{
+  position: 'fixed',
+  right: '20px',
+  bottom: '20px',
+  zIndex: 1000,
+  display: 'flex',
+  alignItems: 'flex-end',
+  gap: '10px',
+  flexDirection: 'row-reverse'
+}}>
+  {/* フローティングボタン */}
+  <Button 
+    onClick={() => setShowSelectedCourses(!showSelectedCourses)}
+    style={{
+      borderRadius: '50%',
+      width: '45px',
+      height: '45px',
+      padding: '0',
+        overflow: 'visible' // 关键修改：允许内容溢出
+      }}
+  > <IconList size="1.2rem" />
+    {selectedCourses.length > 0 && (
+      <Badge 
+        color="red" 
+        variant="filled" 
+        circle 
+        style={{
+          position: 'absolute',
+          top: '-5px',
+          right: '-5px',
+          pointerEvents: 'none',
+          minWidth: '18px',
+          height: '18px',
+          display: 'flex',
+          alignItems: 'center',
+           justifyContent: 'center',
+      }}
+    >
+        {selectedCourses.length}
+      </Badge>
+    )}
+  </Button>
+
+  {/* 選択科目パネル（条件付き表示） */}
+  {showSelectedCourses && (
+    <Paper 
+      shadow="lg" 
+      p="md" 
+      withBorder 
+      style={{
+        width: 'min(400px, 90vw)', // 响应式宽度
+        maxHeight: '60vh',
+        overflow: 'auto',
+        marginRight: '10px'
+      }}
+    >
+      <Group justify="space-between" align="center" mb="sm" wrap="nowrap"> {/* 防止换行 */}
+        <Title order={4} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {language === 'J' ? '選択した科目' : 'Selected Courses'} ({selectedCourses.length})
+        </Title>
+        <ActionIcon 
+          variant="subtle" 
+          onClick={() => setShowSelectedCourses(false)}
+          aria-label={language === 'J' ? '閉じる' : 'Close'}
+          style={{ flexShrink: 0 }} // 防止按钮被挤压
+        >
+          <IconX size={18} />
+        </ActionIcon>
+      </Group>
+      
+      {selectedCourses.length > 0 ? (
+        <Stack gap="xs">
+          {selectedCourses.map(course => (
+            <Group key={course.regno} justify="space-between" wrap="nowrap">
+              <Text size="sm" style={{ 
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                flex: 1 
+              }}>
+                {language === 'J' 
+                  ? `${course.no} ${course.j || course.e}`
+                  : `${course.no} ${course.e || course.j}`
+                }
+              </Text>
+              <ActionIcon
+                color="red"
+                variant="subtle"
+                onClick={() => handleCourseSelect(course)}
+                aria-label={language === 'J' ? '削除' : 'Remove'}
+                style={{ flexShrink: 0 }} // 防止按钮被挤压
+              >
+                <IconTrash size={16} />
+              </ActionIcon>
+            </Group>
+          ))}
+        </Stack>
+      ) : (
+        <Text size="sm" c="dimmed">
+          {language === 'J' ? 'まだ選択されていません' : 'No courses selected yet'}
+        </Text>
+      )}
+    </Paper>
+  )}
+</div>
+            
           </Stack>
         </Grid.Col>
       </Grid>
