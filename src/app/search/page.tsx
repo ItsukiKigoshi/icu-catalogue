@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import { useMantineColorScheme, Container, Paper, Title, TextInput, Select, 
   Button, Group, Table, Text, Stack, Alert, Box, Grid, Modal, Radio } from '@mantine/core';
 import { useAtom } from "jotai";
+import {
+  IconExternalLink,
+} from "@tabler/icons-react";
 import { selectedCoursesAtom } from "../../stories/atoms";
 import { Course, Schedule } from '../../type/Types';
 import Link from "next/link";
@@ -187,6 +190,18 @@ const SearchPage = () => {
   };
 
   const periods = [1, 2, 3, 4, 5, 6, 7];
+  const seasonToNumber = (season: string) => {
+    switch (season) {
+      case "Spring":
+        return 1;
+      case "Autumn":
+        return 2;
+      case "Winter":
+        return 3;
+      default:
+        return 0;
+    }
+  };
 
   // 無限スクロールのためのイベントリスナー設定
   useEffect(() => {
@@ -336,47 +351,97 @@ const SearchPage = () => {
                   const isSelected = selectedCourses.some(c => c.regno === course.regno);
                   return (
                     <Paper key={course.regno} shadow="sm" p="md" withBorder>
-                      <Group justify="space-between">
-                      <Title order={4}>
-                          {language === 'J' 
-                            ? `${course.no} ${course.j || course.e}`  
-                            : `${course.no} ${course.e || course.j}`}  
-                        </Title>
-                        <Button variant={isSelected ? "outline" : "filled"} color={isSelected ? "red" : "green"} onClick={() => handleCourseSelect(course)}>
-                          {isSelected ? (language === 'J' ? "削除" : "Remove") : language === 'J' ? "追加" : "Add"}
-                        </Button>
-                      </Group>
-                      <Text size="sm" c="dimmed">
-                      {
-                        language === 'J' 
-                          ? `担当教員：${course.instructor === "NULL" ? '未定' : course.instructor}` 
-                          : `Instructor: ${course.instructor === "NULL" ? 'TBA' : course.instructor}`
-                      } | {
-                        language === 'J' 
-                          ? `教室：${course.room === "NULL" ? '未定' : course.room}` 
-                          : `Room: ${course.room === "NULL" ? 'TBA' : course.room}`
-                      }
-                      </Text>
-                      <Group gap="xs" mt="xs">
-                        <Text size="xs" c="blue">
-                          {language === 'J' ? `学期：${course.season}` : `Term: ${course.season}`}
-                        </Text>
-                        <Text size="xs" c="blue">
-                          {language === 'J' ? `専門：${course.no}` : `Major: ${course.no}`}
-                        </Text>
-                        <Text size="xs" c="blue">
-                          {language === 'J' ? `単位：${course.unit}` : `Credits: ${course.unit}`}
-                        </Text>
-                      </Group>
-                      {course.schedule && Array.isArray(course.schedule) && course.schedule.length > 0 && (
-                        <Text size="sm" mt="xs">
-                          {language === 'J' ? '授業時間：' : 'Schedule: '}{course.schedule
-                          .map((item: any) =>
-                            item.isSuper ? `*${item.period}/${item.day}` : `${item.period}/${item.day}`
-                          )
-                          .join(', ')}
-                        </Text>
-                      )}
+                      {/* グリッドレイアウトを使用 */}
+                      <div style={{ 
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto', // 左側は可変幅、右側はコンテンツ幅に合わせる
+                        gap: '16px',
+                        alignItems: 'flex-start' // 上部揃え
+                      }}>
+                        {/* 左側コンテンツ */}
+                        <div>
+                          <Title order={4}>
+                            {language === 'J' 
+                              ? `${course.no} ${course.j || course.e}`  
+                              : `${course.no} ${course.e || course.j}`}
+                          </Title>
+                          
+                          {/* 講師情報と教室情報 */}
+                          <Text size="sm" c="dimmed">
+                            {
+                              language === 'J' 
+                                ? `担当教員：${course.instructor === "NULL" ? '未定' : course.instructor}` 
+                                : `Instructor: ${course.instructor === "NULL" ? 'TBA' : course.instructor}`
+                            } | {
+                              language === 'J' 
+                                ? `教室：${course.room === "NULL" ? '未定' : course.room}` 
+                                : `Room: ${course.room === "NULL" ? 'TBA' : course.room}`
+                            }
+                          </Text>
+                          
+                          {/* 基本情報（学期/専門/単位） */}
+                          <Group gap="xs" mt="xs">
+                            <Text size="xs" c="blue">
+                              {language === 'J' ? `学期：${course.season}` : `Term: ${course.season}`}
+                            </Text>
+                            <Text size="xs" c="blue">
+                              {language === 'J' ? `専門：${course.no}` : `Major: ${course.no}`}
+                            </Text>
+                            <Text size="xs" c="blue">
+                              {language === 'J' ? `単位：${course.unit}` : `Credits: ${course.unit}`}
+                            </Text>
+                          </Group>
+                          
+                          {/* 授業スケジュール表示 */}
+                          {course.schedule && Array.isArray(course.schedule) && course.schedule.length > 0 && (
+                            <Text size="sm" mt="xs">
+                              {language === 'J' ? '授業時間：' : 'Schedule: '}{course.schedule
+                              .map((item: any) =>
+                                item.isSuper ? `*${item.period}/${item.day}` : `${item.period}/${item.day}`
+                              )
+                              .join(', ')}
+                            </Text>
+                          )}
+                        </div>
+                        
+                        {/* 右側ボタングループ */}
+                        <div style={{ 
+                          display: 'flex', 
+                          flexDirection: 'column', // 縦並び
+                          gap: '8px', // ボタン間隔
+                          alignItems: 'flex-end' // 右揃え
+                        }}>
+                          {/* 追加/削除ボタン */}
+                          <Button 
+                            variant={isSelected ? "outline" : "filled"} 
+                            color={isSelected ? "red" : "green"} 
+                            onClick={() => handleCourseSelect(course)}
+                          >
+                            {isSelected ? (language === 'J' ? "削除" : "Remove") : language === 'J' ? "追加" : "Add"}
+                          </Button>
+                          
+                          {/* シラバスリンクボタン */}
+                          <Button
+                            color="gray"
+                            data-autofocus
+                            component="a"
+                            href={`https://campus.icu.ac.jp/public/ehandbook/PreviewSyllabus.aspx?regno=${
+                              course.regno
+                            }&year=${course.ay}&term=${seasonToNumber(course.season)}`}
+                            target="_blank"
+                            style={{
+                              width: 40,  // 正方形ボタン
+                              height: 40, 
+                              padding: 0, // 余白削除
+                              display: 'flex',
+                              alignItems: 'center', // 垂直中央揃え
+                              justifyContent: 'center', // 水平中央揃え
+                            }}
+                          >
+                            <IconExternalLink /> 
+                          </Button>
+                        </div>
+                      </div>
                     </Paper>
                   );
                 })}
