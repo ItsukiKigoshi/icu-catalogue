@@ -1,7 +1,7 @@
 // src/app/search/page.tsx
 
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useMantineColorScheme, Container, Paper, Title, TextInput, Select, 
   Button, Group, Table, Text, Stack, Alert, Box, Grid, Modal, Radio, Badge, ActionIcon } from '@mantine/core';
 import { useAtom } from "jotai";
@@ -203,16 +203,21 @@ const SearchPage = () => {
   };
 
   // 無限スクロールのためのイベントリスナー設定
+  const scrollableRef = useRef<HTMLDivElement>(null); 
   useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 100 && !loading && visibleCount < results.length) {
-        setVisibleCount(prev => prev + 10);
-      }
-    };
+      const handleScroll = () => {
+        if (!scrollableRef.current) return;
+        
+        const { scrollTop, clientHeight, scrollHeight } = scrollableRef.current;
+        if (scrollTop + clientHeight >= scrollHeight - 100 && !loading && visibleCount < results.length) {
+          setVisibleCount(prev => prev + 10);
+        }
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+      const currentRef = scrollableRef.current;
+      currentRef?.addEventListener('scroll', handleScroll);
+      
+      return () => currentRef?.removeEventListener('scroll', handleScroll);
   }, [loading, results.length, visibleCount]);
 
   return (
@@ -345,7 +350,15 @@ const SearchPage = () => {
             {/* 検索結果セクション */}
             <Paper shadow="sm" p="md" withBorder>
               <Title order={4} mb="md">{language === 'J' ? '検索結果' : 'Search Results'}</Title>
-              <Stack>
+              {/* Scrollable container */}
+                <Stack 
+                  ref={scrollableRef}
+                  style={{
+                    overflowY: 'auto',
+                    maxHeight: 'calc(120vh - 10px)', 
+                    paddingRight: '8px' 
+                  }}
+                >
                 {results.slice(0, visibleCount).map(course => {
                   const isSelected = selectedCourses.some(c => c.regno === course.regno);
                   return (
