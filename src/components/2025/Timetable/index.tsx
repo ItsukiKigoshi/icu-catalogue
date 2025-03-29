@@ -141,32 +141,30 @@ const timetableLookup = enrolledCourses.reduce((acc, course) => {
                       disabled={courses.length === 0}
                     >
                       <Stack justify="center">
-                        {courses.map((course) => (
+                     {courses.map((course) => {
+                        const isCourseSuper = course.schedule.some(s => s.isSuper); 
+                        return (
                           <Flex gap="4px" key={course.regno}>
-                            <Divider
-                              color={course.color}
-                              size="md"
-                              orientation="vertical"
-                            />
+                            <Divider color={course.color} size="md" orientation="vertical" />
                             <Stack h="100%" w="100%" gap="0">
                               <Text size="xs" fw={700} lineClamp={2}>
                                 {language === "E" ? course.e : course.j} ({course.lang})
                               </Text>
                               <Text size="xs" c="dimmed" lineClamp={1}>
-                                {
-                                language === 'J' 
+                                {language === 'J' 
                                   ? `${course.room === "NULL" ? '未定' : course.room}` 
                                   : `${course.room === "NULL" ? 'TBA' : course.room}`
-                                }  
+                                }
                               </Text>
-                              {isSuper && (
+                              {isCourseSuper && (
                                 <Text size="xs" c="red" lineClamp={2}>
                                   {(rowItem?.[0] || "N/A")} - {(rowItem?.[2] || "N/A")}
                                 </Text>
                               )}
                             </Stack>
                           </Flex>
-                        ))}
+                        );
+                      })}
                       </Stack>
                     </UnstyledButton>
                   </Card>
