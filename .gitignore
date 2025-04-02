@@ -43,3 +43,5 @@ next-env.d.ts
 
 .env
 yarn.lock
+
+*storybook.log
