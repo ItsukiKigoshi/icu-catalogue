@@ -1,5 +1,5 @@
 import {Course} from "@/src/lib/types";
-import {Button, ColorInput, Group, Modal, NativeSelect, NumberInput, Stack, TagsInput, TextInput,} from "@mantine/core";
+import {Button, ColorInput, Group, Modal, NativeSelect, NumberInput, Stack, TextInput,} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import ModalConfirm from "./ModalConfirm";
@@ -105,24 +105,25 @@ export default function ModalCourseEditor(props: {
                         onChange={handleInputChange}
                     />
 
-                    <TagsInput
-                        label="Schedule (e.g. 3/TH)"
-                        placeholder="4/W, 3/TH, 5/F, ..."
-                        defaultValue={props.course.schedule}
-                        name="schedule"
-                        value={editedCourse.schedule}
-                        data={scheduleSelectData}
-                        onChange={(value: string[]) => {
-                            const scheduleArray = value.map((item) => item.trim());
-                            const validScheduleArray = scheduleArray.filter((item) =>
-                                /^[1-7]+\/(M|TU|W|TH|F|SA)$/.test(item)
-                            );
-                            setEditedCourse((prevCourse) => ({
-                                ...prevCourse,
-                                schedule: validScheduleArray,
-                            }));
-                        }}
-                    />
+                    // TODO - Should Refactor Here and the "ModalCourseEditor" to match a new schedule data type
+                    {/*<TagsInput*/}
+                    {/*    label="Schedule (e.g. 3/TH)"*/}
+                    {/*    placeholder="4/W, 3/TH, 5/F, ..."*/}
+                    {/*    defaultValue={props.course.schedule}*/}
+                    {/*    name="schedule"*/}
+                    {/*    value={editedCourse.schedule}*/}
+                    {/*    data={scheduleSelectData}*/}
+                    {/*    onChange={(value: string[]) => {*/}
+                    {/*        const scheduleArray = value.map((item) => item.trim());*/}
+                    {/*        const validScheduleArray = scheduleArray.filter((item) =>*/}
+                    {/*            /^[1-7]+\/(M|TU|W|TH|F|SA)$/.test(item)*/}
+                    {/*        );*/}
+                    {/*        setEditedCourse((prevCourse) => ({*/}
+                    {/*            ...prevCourse,*/}
+                    {/*            schedule: validScheduleArray,*/}
+                    {/*        }));*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <Group grow>
                         <TextInput
                             label="Room"
