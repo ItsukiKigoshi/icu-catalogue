@@ -65,8 +65,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "plugin:storybook/recommended",
-      "react-app"
+      "plugin:storybook/recommended"
     ]
   }
 }
