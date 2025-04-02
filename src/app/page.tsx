@@ -1,22 +1,19 @@
 // src/app/page.tsx
 
 "use client";
-import {AppShell, em,} from "@mantine/core";
-import {useDisclosure, useMediaQuery} from "@mantine/hooks";
+import {AppShell,} from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks";
 import {useEffect, useState} from "react";
-import {Header} from "../components/2025/Header";
-import ModalSetting from "../components/2025/ModalSetting";
-import {Navbar} from "../components/2025/Navbar";
-import {Timetable} from "../components/2025/Timetable";
-import {useLocalStorage} from "../hooks/classic-2024/useLocalStorage";
-import {Course, Term} from "../lib/types";
+import {Header} from "@/src/components/2025/organisms/Header";
+import ModalSetting from "@/src/components/2025/molecules/ModalSetting";
+import Navbar from "@/src/components/2025/organisms/Navbar";
+import Timetable from "@/src/components/2025/organisms/Timetable";
+import {useLocalStorage} from "@/src/hooks/classic-2024/useLocalStorage";
+import {Course, Term} from "@/src/lib/types";
 import {useAtom} from "jotai";
 import {selectedCoursesAtom, timetableAtom} from "../stories/atoms";
 
 export default function Page() {
-    const [navbarOpened, {toggle: toggleNavbar}] = useDisclosure(false);
-    const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-
     // This "weekdays" handler can be refactored by using useToggle hook
     const [weekdays, setWeekdays] = useLocalStorage<string[]>("weekdays", [
         "M",
@@ -121,17 +118,13 @@ export default function Page() {
         <AppShell
             header={{height: 60}}
             navbar={{
-                width: "400px",
+                width: "40px",
                 breakpoint: "sm",
-                collapsed: {mobile: !navbarOpened},
+                collapsed: {mobile: true}
             }}
         >
             <AppShell.Header>
                 <Header
-                    navbarOpened={navbarOpened}
-                    toggleNavbar={() => {
-                        toggleNavbar();
-                    }}
                     weekdays={weekdays}
                     toggleSaturday={() => {
                         toggleSaturday();
@@ -157,17 +150,7 @@ export default function Page() {
                 />
             </AppShell.Header>
             <AppShell.Navbar>
-                <Navbar
-                    courses={coursesInSelectedTerm}
-                    courseController={{
-                        toggleIsEnrolled,
-                        // addCourse: addCourseAndMoveToTheTerm,
-                        updateCourse,
-                        deleteCourse,
-                    }}
-                    language={language}
-                    selectedTerm={selectedTerm}
-                />
+                <Navbar/>
             </AppShell.Navbar>
             <AppShell.Main>
                 <Timetable
@@ -187,7 +170,7 @@ export default function Page() {
         h="60px"
         style={{ background: "rgba(0,0,0,0)" }}
       >
-     
+
       </AppShell.Footer> */}
         </AppShell>
     );

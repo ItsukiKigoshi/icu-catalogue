@@ -3,8 +3,8 @@ import {Accordion, ActionIcon, Button, Group, Modal, Stack, Text, Textarea,} fro
 import {useDisclosure} from "@mantine/hooks";
 import {IconEdit, IconExternalLink, IconEye, IconEyeOff, IconTrash, IconX,} from "@tabler/icons-react";
 import {useState} from "react";
-import ModalConfirm from "./ModalConfirm";
-import ModalCourseEditor from "./ModalCourseEditor";
+import ModalConfirm from "@/src/components/2025/molecules//ModalConfirm";
+import ModalCourseEditor from "@/src/components/2025/molecules/ModalCourseEditor";
 
 export default function ModalDetail(props: {
     courses: Course[];

@@ -3,15 +3,15 @@
 "use client";
 import {Button, ScrollArea, Stack} from "@mantine/core";
 
-import CourseCard from "@/src/components/2025/CourseCard";
+import CourseCard from "@/src/components/2025/molecules/CourseCard";
 import {Course, Term} from "@/src/lib/types";
 import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
 // import AddCourse from "../AddCourse";
-import ModalDetail from "./ModalDetail";
+import ModalDetail from "@/src/components/2025/molecules/ModalDetail";
 import Link from "next/link";
 
-export function Navbar(props: {
+export function ListCourseCard(props: {
     courses: Course[];
     courseController: {
         toggleIsEnrolled: (regno: number) => void;

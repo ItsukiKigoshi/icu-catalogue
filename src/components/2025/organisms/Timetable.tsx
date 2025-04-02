@@ -4,7 +4,7 @@ import {Course, Schedule} from "@/src/lib/types";
 import {Card, Divider, Flex, Grid, Stack, Text, UnstyledButton,} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
-import ModalDetail from "./ModalDetail";
+import ModalDetail from "../molecules/ModalDetail";
 
 interface TimetableProps {
     // timetableCells: TimetableCell[];
@@ -18,13 +18,13 @@ interface TimetableProps {
     weekdays: string[];
 }
 
-export function Timetable({
-                              // timetableCells,
-                              enrolledCourses,
-                              weekdays,
-                              courseController,
-                              language,
-                          }: TimetableProps) {
+export default function Timetable({
+                                      // timetableCells,
+                                      enrolledCourses,
+                                      weekdays,
+                                      courseController,
+                                      language,
+                                  }: TimetableProps) {
     const [modalDetailOpened, {open: modalDetailOpen, close: modalDetailClose}] =
         useDisclosure(false);
     const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<Course[]>([]);

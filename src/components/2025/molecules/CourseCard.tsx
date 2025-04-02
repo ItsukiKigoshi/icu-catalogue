@@ -1,4 +1,4 @@
-import ModalConfirm from "@/src/components/2025/ModalConfirm";
+import ModalConfirm from "@/src/components/2025/molecules/ModalConfirm";
 import {Course} from "@/src/lib/types";
 import {ActionIcon, Card, Divider, Flex, Grid, Stack, Text, UnstyledButton,} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";

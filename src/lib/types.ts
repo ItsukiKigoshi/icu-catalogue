@@ -16,7 +16,7 @@ export interface Course {
     lang: string;
     e: string;
     j: string;
-    schedule: string[];
+    schedule: Schedule[];
     instructor?: string;
     unit: number;
     room: string;
