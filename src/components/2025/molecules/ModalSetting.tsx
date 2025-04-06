@@ -1,28 +1,27 @@
 import {Course} from "@/src/lib/types";
 import {
-  ActionIcon,
-  Alert,
-  Button,
-  Checkbox,
-  Group,
-  Modal,
-  SegmentedControl,
-  Stack,
-  Text,
-  useComputedColorScheme,
-  useMantineColorScheme,
+    ActionIcon,
+    Alert,
+    Button,
+    Group,
+    Modal,
+    SegmentedControl,
+    Stack,
+    Text,
+    useComputedColorScheme,
+    useMantineColorScheme,
 } from "@mantine/core";
 import {useColorScheme, useDisclosure} from "@mantine/hooks";
 import {
-  IconBrandDiscord,
-  IconBrandGithub,
-  IconCoinYen,
-  IconDownload,
-  IconFileImport,
-  IconInfoCircle,
-  IconMoon,
-  IconSend,
-  IconSun,
+    IconBrandDiscord,
+    IconBrandGithub,
+    IconCoinYen,
+    IconDownload,
+    IconFileImport,
+    IconInfoCircle,
+    IconMoon,
+    IconSend,
+    IconSun,
 } from "@tabler/icons-react";
 import {saveAs} from "file-saver";
 import {useState} from "react";
@@ -32,7 +31,6 @@ export default function ModalSetting(props: {
     modalSettingOpened: boolean;
     close: () => void;
     weekdays: string[];
-    toggleSaturday: () => void;
     languageController: {
         language: string;
         setLanguage: (language: string) => void;
@@ -70,15 +68,6 @@ export default function ModalSetting(props: {
                     </Alert>
                 </Group>
                 <Group justify="space-between" wrap="nowrap" gap="xl">
-                    <Text fw="bold">Saturday</Text>
-                    <Checkbox
-                        checked={props.weekdays.length === 6}
-                        onChange={() => {
-                            props.toggleSaturday();
-                        }}
-                    />
-                </Group>
-                <Group justify="space-between" wrap="nowrap" gap="xl">
                     <Text fw="bold">Language</Text>
                     <SegmentedControl
                         data={["E", "J"]}
@@ -87,22 +76,6 @@ export default function ModalSetting(props: {
                         onChange={(value) => props.languageController.setLanguage(value)}
                     />
                 </Group>
-                {/* <Group
-        justify="space-between"
-        wrap="nowrap"
-        gap="xl"
-      >
-        <Text>ELA / JLP Core</Text>
-        <Input data-autofocus placeholder='Enter Section (e.g."5A")' />
-      </Group>
-      <Group
-        justify="space-between"
-        wrap="nowrap"
-        gap="xl"
-      >
-        <Text>ELA / JLP AS</Text>
-        <Input placeholder='Enter Section (e.g."5AS1")' />
-      </Group> */}
                 <Group justify="space-between" wrap="nowrap" gap="xl">
                     <Text fw="bold">Color</Text>
                     <Group>

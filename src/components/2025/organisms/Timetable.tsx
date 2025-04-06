@@ -1,80 +1,31 @@
 "use client";
-import {Course, Schedule} from "@/src/lib/types";
-// import { TimetableCell } from "../../stories/atoms";
 import {Card, Divider, Flex, Grid, Stack, Text, UnstyledButton,} from "@mantine/core";
-import {useDisclosure} from "@mantine/hooks";
-import {useState} from "react";
-import ModalDetail from "../molecules/ModalDetail";
+import ModalDetail from "@/src/components/classic-2024/ClassicModalDetail";
 
-interface TimetableProps {
-    // timetableCells: TimetableCell[];
-    enrolledCourses: Course[];
-    courseController: {
-        toggleIsEnrolled: (regno: number) => void;
-        updateCourse: (course: Course) => void;
-        deleteCourse: (regno: number) => void;
-    };
-    language: string;
-    weekdays: string[];
-}
-
-export default function Timetable({
-                                      // timetableCells,
-                                      enrolledCourses,
-                                      weekdays,
-                                      courseController,
-                                      language,
-                                  }: TimetableProps) {
-    const [modalDetailOpened, {open: modalDetailOpen, close: modalDetailClose}] =
-        useDisclosure(false);
-    const [modalDetailFocusedCourse, setModalDetailFocusedCourse] = useState<Course[]>([]);
-
-    type ScheduleItem = [string, number, string, boolean];
+export default function Timetable() {
+    type ScheduleItem = [string, number, string];
     const scheduleItems: ScheduleItem[] = [
-        ["8:45", 1, "10:00", false],
-        ["10:10", 2, "11:25", false],
-        ["11:35", 3, "12:50", false],
-        ["14:00", 4, "15:15", false],
-        ["13:20", 4, "15:15", true],
-        ["15:25", 5, "16:40", false],
-        ["15:25", 5, "17:20", true],
-        ["16:50", 6, "18:05", false],
-        ["18:15", 7, "19:30", true],
-        ["18:15", 7, "20:10", false],
+        ["8:50", 1, "10:00"],
+        ["10:10", 2, "11:20"],
+        ["11:30", 3, "12:40"],
+        ["13:50", 4, "15:00"],
+        ["15:10", 5, "16:20"],
+        ["16:30", 6, "17:40"],
+        ["17:50", 7, "19:00"],
     ];
-    const ScheduleItems_normal = scheduleItems.filter(item => item[3] === false);
-    const ScheduleItems_super = scheduleItems.filter(item => item[3] === true);
-
-    const processedScheduleItems = Array.from({length: 7}, (_, i) => {
-        const period = i + 1;
-        const items = scheduleItems.filter(item => item[1] === period);
-        return items.find(item => item[3] === true) || items.find(item => item[3] === false);
-    }).filter(Boolean);
-
-    // timetableLookup
-    const timetableLookup = enrolledCourses.reduce((acc, course) => {
-        course.schedule.forEach(schedule => {
-            const key = `${schedule.period}/${schedule.day}`;
-            if (!acc[key]) {
-                acc[key] = {courses: [], schedules: []};
-            }
-            acc[key].courses.push(course);
-            acc[key].schedules.push(schedule);
-        });
-        return acc;
-    }, {} as Record<string, { courses: Course[]; schedules: Schedule[] }>);
-
 
     return (
         <Stack h="100%" gap="0">
-            {/* head of the timetable */}
             <Grid gutter="0" align="stretch">
                 <Grid.Col span={1}>
                     <Card radius="0" withBorder p="4">
                         <Stack align="center" justify="center" gap="0" h="100%">
                             <Flex justify="center" align="center" gap="4px">
                                 <Text size="md" fw="bold">
-                                    {enrolledCourses.reduce((sum, course) => sum + (Number(course.unit) || 0), 0)}
+                                    {props.enrolledCourses.reduce(
+                                        (sum, course) => sum + (course.unit ?? 0),
+                                        0
+                                    )}
                                 </Text>
                                 <Text size="xs" c="dimmed" visibleFrom="sm">
                                     units
@@ -83,97 +34,93 @@ export default function Timetable({
                         </Stack>
                     </Card>
                 </Grid.Col>
-                {weekdays.map((day) => (
-                    <Grid.Col key={day} span={11 / weekdays.length}>
-                        <Card radius="0" withBorder p="4">
-                            <Stack align="center" justify="center" gap="0" h="100%">
-                                <Text size="md" fw="bold">
-                                    {day}
-                                </Text>
-                            </Stack>
-                        </Card>
-                    </Grid.Col>
-                ))}
-            </Grid>
-
-            {/* timetable body */}
-            {/* {Array(7).fill(0).map((_, i) => {
-        const period = scheduleItems[i][1]; */}
-            {Array(7).fill(0).map((_, i) => {
-                const period = Number(i + 1);
-                const rowItem = processedScheduleItems?.find(item => item?.[1] === period);
-                return (
-                    <Grid key={period} gutter="0" align="stretch">
-                        <Grid.Col span={1}>
-                            <Card radius="0" withBorder h="100%" mih="12vh" p="4">
+                {props.weekdays.map((day) => {
+                    return (
+                        <Grid.Col span={11 / props.weekdays.length}>
+                            <Card radius="0" withBorder p="4">
                                 <Stack align="center" justify="center" gap="0" h="100%">
-                                    <Text size="xs" c="dimmed">{ScheduleItems_normal[i][0]}</Text>
-                                    <Text size="md">{period}</Text>
-                                    <Text size="xs" c="dimmed">{ScheduleItems_normal[i][2]}</Text>
+                                    <Text size="md" fw="bold">
+                                        {day}
+                                    </Text>
                                 </Stack>
                             </Card>
                         </Grid.Col>
+                    );
+                })}
+            </Grid>
 
-                        {weekdays.map((day) => {
-                            // const isSuper = ScheduleItems_super.some(item => item[1] === period && item[3]);
-                            const cellKey = `${period}/${day}`;
-                            const cellData = timetableLookup[cellKey] || {courses: [], schedules: []};
-                            const {courses, schedules} = cellData;
-                            const isSuper = schedules.some(schedule => schedule.isSuper);
-
-                            return (
-                                <Grid.Col key={`${period}-${day}`} span={11 / weekdays.length}>
-                                    <Card radius="0" withBorder h="100%" mih="12vh" p="4px">
-                                        <UnstyledButton
-                                            onClick={() => {
-                                                setModalDetailFocusedCourse(courses);
-                                                modalDetailOpen();
-                                            }}
-                                            h="100%"
-                                            disabled={courses.length === 0}
-                                        >
-                                            <Stack justify="center">
-                                                {courses.map((course) => {
-                                                    const isCourseSuper = course.schedule.some(s => s.isSuper);
-                                                    return (
+            {Array(7)
+                .fill(0)
+                .map((_, i) => {
+                    return (
+                        <Grid key={scheduleItems[i][1]} gutter="0" align="stretch">
+                            <Grid.Col span={1}>
+                                <Card radius="0" withBorder h="100%" mih="12vh" p="4">
+                                    <Stack align="center" justify="center" gap="0" h="100%">
+                                        <Text size="xs" c="dimmed">
+                                            {scheduleItems[i][0]}
+                                        </Text>
+                                        <Text size="md">{scheduleItems[i][1]}</Text>
+                                        <Text size="xs" c="dimmed">
+                                            {scheduleItems[i][2]}
+                                        </Text>
+                                    </Stack>
+                                </Card>
+                            </Grid.Col>
+                            {props.weekdays.map((day) => {
+                                return (
+                                    <Grid.Col span={11 / props.weekdays.length}>
+                                        <Card radius="0" withBorder h="100%" mih="12vh" p="4px">
+                                            <UnstyledButton
+                                                onClick={() => {
+                                                    setModalDetailFocusedCourse(
+                                                        props.timetable[`${scheduleItems[i][1]}/${day}`]
+                                                    );
+                                                    modalDetailOpen();
+                                                }}
+                                                h="100%"
+                                                disabled={
+                                                    !props.timetable[`${scheduleItems[i][1]}/${day}`]
+                                                }
+                                            >
+                                                <Stack justify="center">
+                                                    {props.timetable[
+                                                        `${scheduleItems[i][1]}/${day}`
+                                                        ]?.map((course) => (
                                                         <Flex gap="4px" key={course.regno}>
-                                                            <Divider color={course.color} size="md"
-                                                                     orientation="vertical"/>
+                                                            <Divider
+                                                                color={course.color}
+                                                                size="md"
+                                                                orientation="vertical"
+                                                            />
                                                             <Stack h="100%" w="100%" gap="0">
                                                                 <Text size="xs" fw={700} lineClamp={2}>
-                                                                    {language === "E" ? course.e : course.j} ({course.lang})
+                                                                    {props.language === "E" ? course.e : course.j}{" "}
+                                                                    ({course.lang})
                                                                 </Text>
                                                                 <Text size="xs" c="dimmed" lineClamp={1}>
-                                                                    {language === 'J'
-                                                                        ? `${course.room === "NULL" ? '未定' : course.room}`
-                                                                        : `${course.room === "NULL" ? 'TBA' : course.room}`
-                                                                    }
+                                                                    {course.room}
                                                                 </Text>
-                                                                {isCourseSuper && (
-                                                                    <Text size="xs" c="red" lineClamp={2}>
-                                                                        {(rowItem?.[0] || "N/A")} - {(rowItem?.[2] || "N/A")}
-                                                                    </Text>
-                                                                )}
                                                             </Stack>
                                                         </Flex>
-                                                    );
-                                                })}
-                                            </Stack>
-                                        </UnstyledButton>
-                                    </Card>
-                                </Grid.Col>
-                            );
-                        })}
-                    </Grid>
-                );
-            })}
-
+                                                    ))}
+                                                </Stack>
+                                            </UnstyledButton>
+                                        </Card>
+                                    </Grid.Col>
+                                );
+                            })}
+                        </Grid>
+                    );
+                })}
             <ModalDetail
                 courses={modalDetailFocusedCourse}
                 modalDetailOpened={modalDetailOpened}
-                modalDetailClose={modalDetailClose}
-                courseController={courseController}
-                language={language}
+                modalDetailClose={() => {
+                    modalDetailClose();
+                }}
+                courseController={props.courseController}
+                language={props.language}
             />
         </Stack>
     );
