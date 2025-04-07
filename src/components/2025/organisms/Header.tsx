@@ -1,6 +1,5 @@
-import {ActionIcon, ComboboxData, Container, Group, NativeSelect, Text,} from "@mantine/core";
+import {ActionIcon, Button, ComboboxData, Container, Group, NativeSelect, Text,} from "@mantine/core";
 import {IconSettings} from "@tabler/icons-react";
-import Link from "next/link";
 import React from "react";
 
 export function Header(props: {
@@ -26,7 +25,6 @@ export function Header(props: {
                     <Text size="lg" fw={700}>
                         ICU Catalogue
                     </Text>
-                    <Link href="/classic-2024">Go to Classic Version</Link>
                 </Group>
                 <Group gap={5}>
                     <NativeSelect
@@ -38,6 +36,7 @@ export function Header(props: {
                     />
                 </Group>
                 <Group gap={5}>
+                    <Button component={"a"} size={"md"} variant={"default"} href="/classic-2024">Go to Classic</Button>
                     <ActionIcon
                         color="gray"
                         variant="default"

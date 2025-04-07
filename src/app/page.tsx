@@ -6,12 +6,12 @@ import {useDisclosure} from "@mantine/hooks";
 import {useEffect, useState} from "react";
 import {Header} from "@/src/components/2025/organisms/Header";
 import ModalSetting from "@/src/components/2025/molecules/ModalSetting";
-import Navbar from "@/src/components/2025/organisms/Navbar";
 import Timetable from "@/src/components/2025/organisms/Timetable";
 import {useLocalStorage} from "@/src/hooks/classic-2024/useLocalStorage";
 import {Course, Term} from "@/src/lib/types";
 import {useAtom} from "jotai";
 import {selectedCoursesAtom, timetableAtom} from "../stories/atoms";
+import {ListCourseCard} from "@/src/components/2025/organisms/ListCourseCard";
 
 export default function Page() {
     // This "weekdays" handler can be refactored by using useToggle hook
@@ -118,7 +118,7 @@ export default function Page() {
         <AppShell
             header={{height: 60}}
             navbar={{
-                width: "40px",
+                width: "400px",
                 breakpoint: "sm",
                 collapsed: {mobile: true}
             }}
@@ -150,7 +150,14 @@ export default function Page() {
                 />
             </AppShell.Header>
             <AppShell.Navbar>
-                <Navbar/>
+                <ListCourseCard
+                    courses={coursesInSelectedTerm}
+                    courseController={{
+                        toggleIsEnrolled,
+                        updateCourse,
+                        deleteCourse
+                    }}
+                    language={language}/>
             </AppShell.Navbar>
             <AppShell.Main>
                 <Timetable
@@ -165,13 +172,6 @@ export default function Page() {
                     weekdays={weekdays}
                 />
             </AppShell.Main>
-            {/* <AppShell.Footer
-        withBorder={false}
-        h="60px"
-        style={{ background: "rgba(0,0,0,0)" }}
-      >
-
-      </AppShell.Footer> */}
         </AppShell>
     );
 }
