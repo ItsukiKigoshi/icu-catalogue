@@ -267,7 +267,10 @@ const SearchPage = () => {
                                                 {value: "3", label: "300"}
                                             ]}
                                             value={filters.level || ''}
-                                            onChange={(value) => setFilters(prev => ({...prev, level: value || ''}))}
+                                            onChange={(value) => setFilters(prev => ({
+                                                ...prev,
+                                                level: value || ''
+                                            }))}
                                         />
                                     </Grid.Col>
                                     <Grid.Col span={{base: 12, sm: 6}}>
