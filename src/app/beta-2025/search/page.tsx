@@ -1,4 +1,4 @@
-// src/app/search/page.tsx
+// src/app/search/page.tsx.tsx
 "use client";
 
 import {useEffect, useRef, useState} from 'react';
@@ -24,9 +24,9 @@ import {
 } from '@mantine/core';
 import {useAtom} from "jotai";
 import {IconExternalLink, IconShoppingCart, IconTrash, IconX} from '@tabler/icons-react';
-import {selectedCoursesAtom} from "../../stories/atoms";
-import {Course, Schedule} from '../../lib/types';
-import {useLocalStorage} from "../../hooks/classic-2024/useLocalStorage";
+import {selectedCoursesAtom} from "../../../stories/atoms";
+import {Course, Schedule} from '../../../types/types';
+import {useLocalStorage} from "@/src/utils/classic-2024/useLocalStorage";
 
 // 日本語と英語のフィルターラベル
 const filterLabels: Record<string, { j: string; e: string }> = {

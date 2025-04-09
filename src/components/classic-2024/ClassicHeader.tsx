@@ -46,7 +46,7 @@ export function Header(props: {
                     />
                 </Group>
                 <Group gap={5}>
-                    <Button component={"a"} href="/" size="md" variant={"default"}>Go to Latest</Button>
+                    <Button component={"a"} href="/beta-2025" size="md" variant={"default"}>Go to Beta</Button>
                     <ActionIcon
                         color="gray"
                         variant="default"

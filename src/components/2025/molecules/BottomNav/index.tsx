@@ -8,9 +8,9 @@ import React from "react";
 import {usePathname, useRouter} from "next/navigation";
 
 const actionItems = [
-    {path: "/", label: "Timetable", icon: <CalendarMonthIcon/>},
-    {path: "/search", label: "Search", icon: <SearchIcon/>},
-    {path: "/plan", label: "Plan", icon: <MapIcon/>},
+    {path: "/beta-2025/", label: "Timetable", icon: <CalendarMonthIcon/>},
+    {path: "/beta-2025/search", label: "Search", icon: <SearchIcon/>},
+    {path: "/beta-2025/plan", label: "Plan", icon: <MapIcon/>},
 ];
 
 const BottomNav = () => {

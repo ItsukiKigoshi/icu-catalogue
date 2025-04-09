@@ -2,7 +2,7 @@
 
 import {NextResponse} from 'next/server';
 import supabase from '../../../lib/supabase';
-import {Course} from '../../../lib/types';
+import {Course} from '../../../types/types';
 
 // Filters without schedule
 const allowedFilters = [

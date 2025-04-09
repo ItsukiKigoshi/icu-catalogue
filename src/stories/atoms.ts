@@ -1,7 +1,7 @@
 // src/stroies/atoms.ts
 import {atom} from 'jotai';
 import {atomWithStorage} from 'jotai/utils';
-import {Course} from '../lib/types';
+import {Course} from '../types/types';
 
 // generate timeTable from selectedCourses Atom(DerivedAtom) 
 export interface TimetableCell {
