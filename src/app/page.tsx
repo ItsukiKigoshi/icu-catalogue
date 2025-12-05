@@ -1,6 +1,6 @@
 "use client";
-import {Alert, AppShell, em,} from "@mantine/core";
-import {useDisclosure, useMediaQuery} from "@mantine/hooks";
+import {Alert, AppShell,} from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks";
 import {notifications} from "@mantine/notifications";
 import {useState} from "react";
 import {Header} from "../components/Header";
@@ -13,9 +13,7 @@ import {IconAlertSquareRounded} from "@tabler/icons-react";
 
 export default function Page() {
     const [navbarOpened, {toggle: toggleNavbar}] = useDisclosure(false);
-
-    const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-
+    
     // This "weekdays" handler can be refactored by using useToggle hook
     const [weekdays, setWeekdays] = useLocalStorage<string[]>("weekdays", [
         "M",
@@ -258,17 +256,6 @@ export default function Page() {
                 />
             </AppShell.Navbar>
             <AppShell.Main>
-                <Timetable
-                    timetable={timetable}
-                    enrolledCourses={enrolledCoursesInSelectedTerm}
-                    courseController={{
-                        toggleIsEnrolled,
-                        updateCourse,
-                        deleteCourse,
-                    }}
-                    language={language}
-                    weekdays={weekdays}
-                />
                 <Alert
                     variant="light"
                     color="red"
@@ -283,6 +270,17 @@ export default function Page() {
                     質問，ご意見，感想，応援，文句等は<a
                     href="https://forms.gle/FH3pNW84weKYuQ1H8">こちらのフォーム</a>にお寄せください．
                 </Alert>
+                <Timetable
+                    timetable={timetable}
+                    enrolledCourses={enrolledCoursesInSelectedTerm}
+                    courseController={{
+                        toggleIsEnrolled,
+                        updateCourse,
+                        deleteCourse,
+                    }}
+                    language={language}
+                    weekdays={weekdays}
+                />
             </AppShell.Main>
         </AppShell>
     );
