@@ -7,12 +7,10 @@ Join [Discord Community](https://discord.gg/2gmKTs4ezk) ("ICU Catalogue") and Cr
 
 ## Project Overview
 ### App
-- https://www.catalogue.icu (redirected from https://www.catalogue.icu)
+- https://itsukikigoshi.github.io/icu-catalogue/
 - repo: https://github.com/ItsukiKigoshi/icu-catalogue
 ### API
-- https://api.catalogue.icu (not yet deployed)
 - repo: https://github.com/ItsukiKigoshi/icu-catalogue-api
-- API Docs: https://api.catalogue.icu/docs (not yet deployed)
 ### Docs
 - https://docs.catalogue.icu
 - repo: https://github.com/ItsukiKigoshi/icu-catalogue-docs
