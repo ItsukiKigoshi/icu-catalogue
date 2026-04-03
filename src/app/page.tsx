@@ -2,7 +2,7 @@
 import {AppShell} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";
 import {notifications} from "@mantine/notifications";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Header} from "../components/Header";
 import ModalSetting from "../components/ModalSetting";
 import {Navbar} from "../components/Navbar";
@@ -71,7 +71,7 @@ export default function Page() {
             ],
         },
     ];
-    const [selectedTermValue, setSelectedTermValue] = useState("2025Spring");
+    const [selectedTermValue, setSelectedTermValue] = useState("2026Spring");
     const selectedTerm: Term | undefined = terms
         .map((term) => term.items)
         .flat()
@@ -89,7 +89,7 @@ export default function Page() {
         {
             regno: 99997,
             season: "Spring",
-            ay: 2024,
+            ay: 2026,
             no: "CS101",
             lang: "E",
             e: "Example Spring Course",
@@ -101,12 +101,12 @@ export default function Page() {
             color: "#e64980",
             isEnrolled: true,
             note: "",
-            modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+            modified: new Date(),
         },
         {
             regno: 99998,
             season: "Autumn",
-            ay: 2024,
+            ay: 2026,
             no: "CS101",
             lang: "E",
             e: "Example Autumn Course",
@@ -118,12 +118,12 @@ export default function Page() {
             color: "#fd7e14",
             isEnrolled: true,
             note: "",
-            modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+            modified: new Date(),
         },
         {
             regno: 99999,
             season: "Winter",
-            ay: 2024,
+            ay: 2026,
             no: "CS101",
             lang: "E",
             e: "Example Winter Course",
@@ -135,7 +135,7 @@ export default function Page() {
             color: "#40c057",
             isEnrolled: true,
             note: "",
-            modified: new Date(2022, 5 - 1, 5, 6, 35, 20, 333),
+            modified: new Date(),
         },
     ]);
 
@@ -209,6 +209,17 @@ export default function Page() {
     const deleteCourse = (regno: number) => {
         setCourses(courses.filter((course: Course) => course.regno !== regno));
     };
+
+
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
+
 
     return (
         <AppShell

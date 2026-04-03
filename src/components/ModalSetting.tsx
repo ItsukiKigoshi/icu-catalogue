@@ -9,8 +9,6 @@ import {
   SegmentedControl,
   Stack,
   Text,
-  useComputedColorScheme,
-  useMantineColorScheme,
 } from "@mantine/core";
 import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import {
@@ -20,9 +18,7 @@ import {
   IconDownload,
   IconFileImport,
   IconInfoCircle,
-  IconMoon,
   IconSend,
-  IconSun,
 } from "@tabler/icons-react";
 import { saveAs } from "file-saver";
 import { useState } from "react";
@@ -40,10 +36,6 @@ export default function ModalSetting(props: {
   courses: Course[];
   setCourses: (courses: Course[]) => void;
 }) {
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme(useColorScheme(), {
-    getInitialValueInEffect: true,
-  });
   const [
     modalConfirmOpened,
     { open: modalConfirmOpen, close: modalConfirmClose },
@@ -60,32 +52,40 @@ export default function ModalSetting(props: {
       <Stack gap="xl">
         <Group justify="center">
           <Alert
-            variant="light"
-            color="red"
-            title="We are Moving!"
-            icon={<IconInfoCircle />}
+              variant="light"
+              color="red"
+              title="We are Moving! / お引越し中！ "
+              icon={<IconInfoCircle />}
           >
             {props.languageController.language == 'J' ? (
                 <section>
-                  <p>いつもICU Catalogueをご利用いただきありがとうございます！
-                    私たちは，ICU Catalogueでみなさまから頂いたフィードバックをもとにまったく新しいアプリ:
-                    <a href="https://timetable.icu/">ICUのじかんわり</a>をつくりました．</p>
-                  <ul>
-                    <li>コース一覧を検索</li>
-                    <li>Long4-7を含めた時間割表示</li>
-                    <li>ログインして同期</li>
-                  </ul>
-                 <p>などができます．ぜひ新しいアプリをお試しください．
-                ところで，ICU Catalogueの管理は最低限にとどまりますが，今後も提供は続けます．
-                これからもどうぞよろしくお願いします．開発者代表: 木越斎(itsuki@timetable.icu)
-                 </p>
+                  <h3>
+                    新アプリ「<a target="_blank" href="https://timetable.icu/"><b>ICUのじかんわり</b></a>」をリリースしました！
+                  </h3>
+                  <p>
+                    コース検索，L4-7対応，デバイス間同期で履修登録はお手の物． </p>
+                  <p>
+                    ICU Catalogueは最低限の管理のみを継続し，開発は新アプリが主体になります．
+                    ぜひこの機会に新アプリをお試しください． あなたのICU Catalogueへの愛のおかげで素敵な新版が誕生しました．
+                    これまでの，そしてこれからも，愛に感謝します！
+                  </p><p>
+                    開発者代表: 木越斎 (itsuki@timetable.icu)
+                  </p>
                 </section>
-              ) : (
-                <p> We are moving a developing resource to a whole new application <a href="https://timetable.icu/">Timetable.icu</a>!
-                  In the new app, you can search from course data and sync across devices.
-                  However, there is no plan to close this app. Thanks for using ICU Catalogue.
-                Lead Developer: Itsuki Kigoshi(itsuki@timetable.icu)</p>
-              )}
+            ) : (
+                <section>
+                  <h3>
+                    Try our new app: <a target="_blank" href="https://timetable.icu/"><b>Timetable.icu</b></a>!
+                  </h3>
+                  <p> Search courses and sync across devices.</p>
+                  <p>We continue to debug this site, but new features will not be added.
+                    Your kind feedbacks to this app motivated me to create a new (and more wonderful!) one.
+                    Thank you for your love to ICU Catalogue♡</p>
+                  <p>
+                    Lead Developer: Itsuki Kigoshi (itsuki@timetable.icu)
+                  </p>
+                </section>
+            )}
           </Alert>
         </Group>
         <Group justify="space-between" wrap="nowrap" gap="xl">
@@ -98,41 +98,13 @@ export default function ModalSetting(props: {
           />
         </Group>
         <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">Course Title Language</Text>
+          <Text fw="bold">Language</Text>
           <SegmentedControl
             data={["E", "J"]}
             fullWidth
             value={props.languageController.language}
             onChange={(value) => props.languageController.setLanguage(value)}
           />
-        </Group>
-        <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">Color</Text>
-          <Group>
-            <Button
-              onClick={() =>
-                setColorScheme(
-                  computedColorScheme === "light" ? "dark" : "light"
-                )
-              }
-              variant="default"
-              size="sm"
-              aria-label="Toggle color scheme"
-            >
-              {computedColorScheme === "dark" ? (
-                <IconSun stroke={1.5} />
-              ) : (
-                <IconMoon stroke={1.5} />
-              )}
-            </Button>
-            <Button
-              onClick={() => setColorScheme("auto")}
-              variant="default"
-              size="sm"
-            >
-              System
-            </Button>
-          </Group>
         </Group>
         <Group justify="center" grow>
           <Button

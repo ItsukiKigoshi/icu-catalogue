@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Badge,
   Burger,
   ComboboxData,
   Container,
@@ -7,7 +8,9 @@ import {
   NativeSelect,
   Text,
 } from "@mantine/core";
-import { IconSettings } from "@tabler/icons-react";
+import { IconSettings, IconExternalLink } from "@tabler/icons-react";
+import Image from 'next/image';
+import React from "react";
 
 export function Header(props: {
   navbarOpened: boolean;
@@ -32,16 +35,49 @@ export function Header(props: {
       >
         <Group gap={5}>
           <Burger
-            opened={props.navbarOpened}
-            onClick={() => {
-              props.toggleNavbar();
-            }}
-            hiddenFrom="sm"
-            size="sm"
+              opened={props.navbarOpened}
+              onClick={props.toggleNavbar}
+              hiddenFrom="sm"
+              size="sm"
           />
-          <Text size="lg" fw={700}>
+          <Image
+              src="/icon-72x72.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              style={{ display: 'block' }}
+          />
+          <Text size="lg" visibleFrom="sm" fw={700}>
             ICU Catalogue
           </Text>
+          <Badge
+              color="orange"
+              variant="light"
+              size="lg"
+              component="a"
+              target="_blank"
+              href="https://timetable.icu"
+              leftSection={
+                <Image
+                    src="/timetableicuicon.svg"
+                    alt="Logo for New App"
+                    width={14}
+                    height={14}
+                    style={{ display: 'block' }}
+                />
+              }
+              rightSection={<IconExternalLink size={12} />}
+              style={{ cursor: 'pointer' }}
+              styles={{
+                root: {
+                  '&:hover': { opacity: 0.8, textDecoration: 'none' },
+                },
+              }}
+          >
+            <Text component="span" visibleFrom="sm" size="inherit">
+              New App Available!
+            </Text>
+          </Badge>
         </Group>
         <Group gap={5}>
           <NativeSelect
