@@ -19,8 +19,8 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useState } from "react";
-import ModalConfirm from "../ModalConfirm";
-import ModalCourseEditor from "../ModalCourseEditor";
+import ModalConfirm from "./ModalConfirm";
+import ModalCourseEditor from "./ModalCourseEditor";
 
 export default function ModalDetail(props: {
   courses: Course[];

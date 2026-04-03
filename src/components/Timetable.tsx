@@ -3,7 +3,7 @@ import {Course} from "@/src/type/Types";
 import {Card, Divider, Flex, Grid, Stack, Text, UnstyledButton,} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
-import ModalDetail from "../ModalDetail";
+import ModalDetail from "./ModalDetail";
 
 export function Timetable(props: {
     timetable: { [key: string]: Course[] };
@@ -57,7 +57,7 @@ export function Timetable(props: {
                 </Grid.Col>
                 {props.weekdays.map((day) => {
                     return (
-                        <Grid.Col span={11 / props.weekdays.length}>
+                        <Grid.Col key={day} span={11 / props.weekdays.length}>
                             <Card radius="0" withBorder p="4">
                                 <Stack align="center" justify="center" gap="0" h="100%">
                                     <Text size="md" fw="bold">
@@ -90,7 +90,7 @@ export function Timetable(props: {
                             </Grid.Col>
                             {props.weekdays.map((day) => {
                                 return (
-                                    <Grid.Col span={11 / props.weekdays.length}>
+                                    <Grid.Col key={day}  span={11 / props.weekdays.length}>
                                         <Card radius="0" withBorder h="100%" mih="12vh" p="4px">
                                             <UnstyledButton
                                                 onClick={() => {

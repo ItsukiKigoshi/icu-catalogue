@@ -3,9 +3,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
-import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
-import { theme } from "../app/theme";
 
 export const metadata: Metadata = {
   title: "ICU Catalogue",
@@ -20,18 +18,20 @@ export default function RootLayout({ children }: { children: any }) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
-        <ColorSchemeScript defaultColorScheme="auto" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="shortcut icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png" />
+          <title>ICU Catalogue</title>
       </head>
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="auto">
+        <MantineProvider defaultColorScheme="auto">
           <Notifications />
           {children}
         </MantineProvider>
-        <Analytics />
+        {/*Cloudflare Web Analytics*/}
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5feda417a7d545c8a2b5c7fdeb7a2bf6"}'></script>
+        {/*End Cloudflare Web Analytics*/}
       </body>
     </html>
   );

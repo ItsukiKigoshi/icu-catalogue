@@ -275,13 +275,6 @@ export default function Page() {
                     weekdays={weekdays}
                 />
             </AppShell.Main>
-            {/* <AppShell.Footer
-        withBorder={false}
-        h="60px"
-        style={{ background: "rgba(0,0,0,0)" }}
-      >
-     
-      </AppShell.Footer> */}
         </AppShell>
     );
 }

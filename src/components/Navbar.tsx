@@ -5,8 +5,8 @@ import CourseCard from "@/src/components/CourseCard";
 import { Course, Term } from "@/src/type/Types";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import AddCourse from "../AddCourse";
-import ModalDetail from "../ModalDetail";
+import AddCourse from "./AddCourse";
+import ModalDetail from "./ModalDetail";
 
 export function Navbar(props: {
   courses: Course[];
