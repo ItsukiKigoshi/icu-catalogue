@@ -41,7 +41,7 @@ export function Header(props: {
               size="sm"
           />
           <Image
-              src="/icon-72x72.png"
+              src="/icu-catalogue/icon-72x72.png"
               alt="Logo"
               width={40}
               height={40}
@@ -59,7 +59,7 @@ export function Header(props: {
               href="https://timetable.icu"
               leftSection={
                 <Image
-                    src="/timetableicuicon.svg"
+                    src="/icu-catalogue/timetableicuicon.svg"
                     alt="Logo for New App"
                     width={14}
                     height={14}
