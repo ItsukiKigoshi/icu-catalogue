@@ -4,7 +4,6 @@ import {
   Alert,
   Button,
   Checkbox,
-  Flex,
   Group,
   Modal,
   SegmentedControl,
@@ -63,11 +62,30 @@ export default function ModalSetting(props: {
           <Alert
             variant="light"
             color="red"
-            title="Backup Your Data"
+            title="We are Moving!"
             icon={<IconInfoCircle />}
           >
-            We are planning a major update in ICU Catalogue. Please backup your
-            data via "Download JSON."
+            {props.languageController.language == 'J' ? (
+                <section>
+                  <p>いつもICU Catalogueをご利用いただきありがとうございます！
+                    私たちは，ICU Catalogueでみなさまから頂いたフィードバックをもとにまったく新しいアプリ:
+                    <a href="https://timetable.icu/">ICUのじかんわり</a>をつくりました．</p>
+                  <ul>
+                    <li>コース一覧を検索</li>
+                    <li>Long4-7を含めた時間割表示</li>
+                    <li>ログインして同期</li>
+                  </ul>
+                 <p>などができます．ぜひ新しいアプリをお試しください．
+                ところで，ICU Catalogueの管理は最低限にとどまりますが，今後も提供は続けます．
+                これからもどうぞよろしくお願いします．開発者代表: 木越斎(itsuki@timetable.icu)
+                 </p>
+                </section>
+              ) : (
+                <p> We are moving a developing resource to a whole new application <a href="https://timetable.icu/">Timetable.icu</a>!
+                  In the new app, you can search from course data and sync across devices.
+                  However, there is no plan to close this app. Thanks for using ICU Catalogue.
+                Lead Developer: Itsuki Kigoshi(itsuki@timetable.icu)</p>
+              )}
           </Alert>
         </Group>
         <Group justify="space-between" wrap="nowrap" gap="xl">
@@ -80,7 +98,7 @@ export default function ModalSetting(props: {
           />
         </Group>
         <Group justify="space-between" wrap="nowrap" gap="xl">
-          <Text fw="bold">Language</Text>
+          <Text fw="bold">Course Title Language</Text>
           <SegmentedControl
             data={["E", "J"]}
             fullWidth
@@ -88,22 +106,6 @@ export default function ModalSetting(props: {
             onChange={(value) => props.languageController.setLanguage(value)}
           />
         </Group>
-        {/* <Group
-        justify="space-between"
-        wrap="nowrap"
-        gap="xl"
-      >
-        <Text>ELA / JLP Core</Text>
-        <Input data-autofocus placeholder='Enter Section (e.g."5A")' />
-      </Group>
-      <Group
-        justify="space-between"
-        wrap="nowrap"
-        gap="xl"
-      >
-        <Text>ELA / JLP AS</Text>
-        <Input placeholder='Enter Section (e.g."5AS1")' />
-      </Group> */}
         <Group justify="space-between" wrap="nowrap" gap="xl">
           <Text fw="bold">Color</Text>
           <Group>

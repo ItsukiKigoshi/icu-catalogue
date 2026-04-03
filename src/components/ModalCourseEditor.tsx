@@ -188,7 +188,6 @@ export default function ModalCourseEditor(props: {
               label="Season"
               withAsterisk
               required
-              defaultValue={props.course.season}
               name="season"
               value={editedCourse.season}
               onChange={(event) =>
