@@ -2,7 +2,12 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    /* config options here */
-}
+    output: 'export',
+    basePath: '/icu-catalogue',
+    assetPrefix: '/icu-catalogue',
+    images: {
+        unoptimized: true,
+    },
+};
 
 module.exports = nextConfig
