@@ -18,10 +18,10 @@ export default function RootLayout({ children }: { children: any }) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-512x512.png" />
+        <link rel="icon" href="/icu-catalogue/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/icu-catalogue/favicon.ico" />
+        <link rel="manifest" href="/icu-catalogue/manifest.json" />
+        <link rel="apple-touch-icon" href="/icu-catalogue/icon-512x512.png" />
           <title>ICU Catalogue</title>
       </head>
       <body>
