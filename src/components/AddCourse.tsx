@@ -121,6 +121,13 @@ export default function AddCourse(props: {
       }
     }
   };
+  
+  // 最大のregnoを探して+1する関数を作成
+  const getNextRegno = () => {
+    if (props.courses.length === 0) return 10000; // データがない場合の初期値
+    const maxRegno = Math.max(...props.courses.map((c) => c.regno));
+    return maxRegno + 1;
+  };
 
   const randomColor = () => {
     return [
@@ -165,7 +172,7 @@ export default function AddCourse(props: {
                 </a>
               </Title>
               <Image
-                src="/HowTo-CourseOfferings.gif"
+                src="/icu-catalogue/HowTo-CourseOfferings.gif"
                 alt="Copy from Course Offerings"
               />
             </Stack>
@@ -174,7 +181,7 @@ export default function AddCourse(props: {
             <Stack>
               <Title order={5}>2. Paste Info and Press Enter!</Title>
               <Image
-                src="/HowTo-ICUCatalogue.gif"
+                src="/icu-catalogue/HowTo-ICUCatalogue.gif"
                 alt="Paste it to ICU Catalogue"
               />
             </Stack>
@@ -188,7 +195,7 @@ export default function AddCourse(props: {
       <ModalCourseEditor
         title={"Add Course Manually"}
         course={{
-          regno: 10000,
+          regno: getNextRegno(),
           season: props.selectedTerm?.season || "Spring",
           ay: Number(props.selectedTerm?.ay) || new Date().getFullYear(),
           no: "",
