@@ -185,7 +185,7 @@ export default function ModalSetting(props: {
             </ActionIcon>
             <ActionIcon
               component="a"
-              href="https://opencollective.com/icu-catalogue"
+              href="https://opencollective.com/timetable-icu"
               target="_blank"
               color="gray"
               variant="default"
